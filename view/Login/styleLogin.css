@@ -1,0 +1,31 @@
+body{
+	background-color: #2C001E;
+}
+div#geral{
+	margin: 0 auto;
+	font-family: Arial;
+}
+
+#login{
+	text-align: justify;
+	float: center;
+	margin:50px;
+}
+fieldset{
+	border: solid black;
+	background-color: white;
+	color: white;
+	text-shadow: 1.5px 1px black;
+	box-shadow: 5px 5px black;
+}
+#formLogin{
+	text-align: center;
+
+	margin: 30px auto;
+	padding: 150px 450px  100px 450px;
+	
+}
+input#login, #senha, #logar{
+	
+	margin: 5px;
+}
