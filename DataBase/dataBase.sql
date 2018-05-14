@@ -95,8 +95,6 @@ create table if not exists lanche(
 create table if not exists adicionais_lache(
 	id_adicionais integer not null,
     id_lanche integer not null,
-    id_produtos integer not null,
-    foreign key (id_produtos) references produtos (id),
     foreign key (id_adicionais) references adicionais (id),
     foreign key (id_lanche) references lanche (id)
 );
@@ -117,8 +115,6 @@ create table if not exists pizza(
 create table if not exists sabores_pizza(
 	id_sabor_pizza integer not null,
     id_pizza integer not null,
-    id_produtos integer not null,
-    foreign key (id_produtos) references produtos (id),
     foreign key(id_sabor_pizza) references sabor_pizza (id),
     foreign key(id_pizza) references pizza (id)
 );

@@ -4,6 +4,7 @@
         
         private $id;
         private $sabor;
+        private $adicionais;
         
         function __construct() {
             
@@ -24,6 +25,15 @@
         function setSabor($sabor) {
             $this->sabor = $sabor;
         }
+        function getAdicionais() {
+            return $this->adicionais;
+        }
+
+        function setAdicionais($adicionais) {
+            $this->adicionais = $adicionais;
+        }
+
+
 
 
 
