@@ -32,6 +32,7 @@ create table if not exists usuario(
     login varchar(50) not null,
     senha varchar(8) not null,
     id_funcionario integer not null,
+    permissao integer not null,
     foreign key (id_funcionario) references funcionario (id)
 );
 create table if not exists cliente(
@@ -129,15 +130,22 @@ create table if not exists porcao(
     foreign key (id_produtos) references produtos (id)
 );
 
+create table if not exists mesa(
+	id integer auto_increment primary key not null,
+    num_mesa integer not null
+);
+
 create table if not exists venda (
 	id integer auto_increment not null primary key,
     id_cliente integer not null,
     id_funcionario integer not null,
+    id_mesa integer not null,
     data_venda date not null,
     valor_total double not null,
     valor_desconto double not null,
 	foreign key (id_cliente) references cliente (id),
-    foreign key (id_funcionario) references funcionario (id)
+    foreign key (id_funcionario) references funcionario (id),
+    foreign key (id_mesa) references mesa (id)
 );
 
 create table if not exists produto_venda(
@@ -147,20 +155,41 @@ create table if not exists produto_venda(
     foreign key (id_venda) references venda (id)
 );
 
-create table if not exists mesa(
-	id integer auto_increment primary key not null,
-    numero_mesa integer not null,
-    id_venda integer not null,
-    foreign key (id_venda) references venda(id)
-);
 create table if not exists entrega(
 	id integer auto_increment primary key not null,
-    id_endereco integer not null
-
+    id_endereco integer not null,
+    id_venda integer not null,
+    foreign key (id_venda) references venda (id),
+    foreign key (id_endereco) references endereco (id),
+    foreign key (id_venda) references venda (id)
+);
+create table if not exists pedidos(
+	id integer auto_increment primary key not null,
+    id_venda integer not null,
+    data_pedido datetime not null,
+    situacao boolean not null,
+    foreign key (id_venda) references venda (id)
+);
+create table if not exists lancamentos(
+	id integer auto_increment primary key not null, 
+	valor double not null,
+    descricao varchar(50) not null
 );
 
-
-
+create table if not exists livro_caixa(
+	id integer auto_increment primary key not null,
+    data_abertura datetime not null,
+    data_fechamento datetime not null,
+    id_funcionario integer not null,
+    total double not null,
+    foreign key (id_funcionario) references funcionario (id)
+);
+ create table if not exists lancamentos_livro_caixa(
+	id_lancamentos integer not null,
+    id_livro_caixa integer not null,
+    foreign key (id_lancamentos) references lancamentos (id),
+    foreign key (id_livro_caixa) references livro_caixa (id)
+ );
 
 
 
