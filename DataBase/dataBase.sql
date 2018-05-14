@@ -148,10 +148,15 @@ create table if not exists produto_venda(
 );
 
 create table if not exists mesa(
-	id integer auto_increment primary key,
+	id integer auto_increment primary key not null,
     numero_mesa integer not null,
     id_venda integer not null,
     foreign key (id_venda) references venda(id)
+);
+create table if not exists entrega(
+	id integer auto_increment primary key not null,
+    id_endereco integer not null
+
 );
 
 
