@@ -21,8 +21,8 @@ create table if not exists pessoa(
 );
 create table if not exists funcionario(
 	id Integer auto_increment primary key,
-    data_de_admissao Integer,
-    cpf Integer(11) not null,
+    data_de_admissao date not null,
+    cpf varchar(14) not null,
     email varchar(50) not null,
     id_pessoa Integer not null,
     foreign key (id_pessoa) references pessoa(id)
@@ -37,7 +37,7 @@ create table if not exists usuario(
 );
 create table if not exists cliente(
 	id Integer auto_increment primary key,
-    cpf Integer(11) not null,
+    cpf varchar(14) not null,
     situacao boolean,
     id_pessoa Integer not null,
     foreign key (id_pessoa) references pessoa (id)
@@ -139,6 +139,7 @@ create table if not exists venda (
     data_venda date not null,
     valor_total double not null,
     valor_desconto double not null,
+    situacao boolean not null,
 	foreign key (id_cliente) references cliente (id),
     foreign key (id_funcionario) references funcionario (id),
     foreign key (id_mesa) references mesa (id)
