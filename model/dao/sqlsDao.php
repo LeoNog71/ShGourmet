@@ -30,7 +30,11 @@
 
         }
 
+    public function update() {
+        
     }
+
+}
         class FuncionarioDao extends QueryDao{
 
        
@@ -62,7 +66,11 @@
 
         }
 
+    public function update() {
+        
     }
+
+}
     
     class UsuarioDao extends QueryDao{
         

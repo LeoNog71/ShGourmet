@@ -20,12 +20,20 @@ fieldset{
 }
 #formLogin{
 	text-align: center;
-
 	margin: 30px auto;
 	padding: 150px 450px  100px 450px;
 	
 }
-input#login, #senha, #logar{
-	
+input#login, #senha{
 	margin: 5px;
+	
+}
+
+#logar{
+	color: white;
+	background-color: black;
+	text-shadow: 0.5px 0.5px black;
+}
+#logar:hover{
+	background-color: white;
 }
