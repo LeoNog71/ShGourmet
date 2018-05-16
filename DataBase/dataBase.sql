@@ -1,6 +1,6 @@
-/*drop schema shgourmet;
+drop schema shgourmet;
 create schema shgourmet;
-use shgourmet;*/
+use shgourmet;
 
 create table if not exists endereco(
 	id Integer auto_increment primary key,
@@ -187,6 +187,45 @@ create table if not exists livro_caixa(
     foreign key (id_lancamentos) references lancamentos (id),
     foreign key (id_livro_caixa) references livro_caixa (id)
  );
+ 
+ /*insert*/
+DELIMITER $$
+CREATE PROCEDURE insert_funcionario (in nome_f varchar(50),in data_nasc_f date, in cpf_f varchar(14), in email_f varchar(50), in data_admi_f date)
+BEGIN
+
+	INSERT INTO pessoa(nome, data_nascimento,id_endereco)
+		VALUES(nome_f,data_nasc_f((SELECT ID FROM endereco ORDER BY ID DESC LIMIT 1)));
+
+	INSERT INTO funcionario(data_de_admissao,cpf,email,id_pessoa)
+	values (data_admi_f,cpf_f,email_f,(SELECT ID FROM pessoa ORDER BY ID DESC LIMIT 1));
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE insert_cliente (in nome_c varchar(50),in data_nasc_c date, in cpf_c varchar(14), in situacao_c boolean)
+BEGIN
+
+	INSERT INTO pessoa(nome, data_nascimento,id_endereco)
+		VALUES(nome_c,data_nascimento((SELECT ID FROM endereco ORDER BY ID DESC LIMIT 1)));
+
+	INSERT INTO cliente(cpf,situacao,id_pessoa)
+	values (cpf_c,situacao_c,(SELECT ID FROM pessoa ORDER BY ID DESC LIMIT 1));
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE insert_usuario (in login_u varchar(50), in senha_u varchar(8), in id_funcionario_u integer,in permissao_u integer)
+BEGIN
+
+	INSERT INTO usuario (`login`,`senha`,`id_funcionario`,`permissao`)
+		VALUES (login_u, senha_u, id_funcionario_u , permissao_u);
+
+
+END $$
+DELIMITER ;
+
 
 
 
