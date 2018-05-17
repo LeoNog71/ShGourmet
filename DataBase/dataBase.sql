@@ -22,7 +22,7 @@ create table if not exists pessoa(
 create table if not exists funcionario(
 	id Integer auto_increment primary key,
     data_de_admissao date not null,
-    cpf varchar(14) not null,
+    cpf varchar(15) not null,
     email varchar(50) not null,
     id_pessoa Integer not null,
     foreign key (id_pessoa) references pessoa(id)
@@ -190,11 +190,11 @@ create table if not exists livro_caixa(
  
  /*insert*/
 DELIMITER $$
-CREATE PROCEDURE insert_funcionario (in nome_f varchar(50),in data_nasc_f date, in cpf_f varchar(14), in email_f varchar(50), in data_admi_f date)
+CREATE PROCEDURE insert_funcionario (in nome_f varchar(50),in data_nasc_f date, in cpf_f varchar(15), in email_f varchar(50), in data_admi_f date)
 BEGIN
 
 	INSERT INTO pessoa(nome, data_nascimento,id_endereco)
-		VALUES(nome_f,data_nasc_f((SELECT ID FROM endereco ORDER BY ID DESC LIMIT 1)));
+		VALUES(nome_f,data_nasc_f,((SELECT ID FROM endereco ORDER BY ID DESC LIMIT 1)));
 
 	INSERT INTO funcionario(data_de_admissao,cpf,email,id_pessoa)
 	values (data_admi_f,cpf_f,email_f,(SELECT ID FROM pessoa ORDER BY ID DESC LIMIT 1));
@@ -207,10 +207,10 @@ CREATE PROCEDURE insert_cliente (in nome_c varchar(50),in data_nasc_c date, in c
 BEGIN
 
 	INSERT INTO pessoa(nome, data_nascimento,id_endereco)
-		VALUES(nome_c,data_nascimento((SELECT ID FROM endereco ORDER BY ID DESC LIMIT 1)));
+		VALUES(nome_c,data_nasc_c,(SELECT ID FROM endereco ORDER BY ID DESC LIMIT 1));
 
 	INSERT INTO cliente(cpf,situacao,id_pessoa)
-	values (cpf_c,situacao_c,(SELECT ID FROM pessoa ORDER BY ID DESC LIMIT 1));
+		values (cpf_c,situacao_c,(SELECT ID FROM pessoa ORDER BY ID DESC LIMIT 1));
 
 END $$
 DELIMITER ;
@@ -223,6 +223,47 @@ BEGIN
 		VALUES (login_u, senha_u, id_funcionario_u , permissao_u);
 
 
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE insert_fornecedor(in nome_f varchar(50),in data_nasc_f date, in cnpj varchar(20) )
+BEGIN
+
+	INSERT INTO pessoa(nome, data_nascimento,id_endereco)
+		VALUES(nome_f, data_nasc_f, (SELECT ID FROM endereco ORDER BY ID DESC LIMIT 1));
+        
+    INSERT INTO fornecedor ( cnpj, id_pessoa )
+		VALUES(cnpj, (SELECT ID FROM pessoa ORDER BY ID DESC LIMIT 1));
+    
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE insert_endereco(rua_e varchar(200), numero_e integer, bairro_e varchar(50), cidade_e varchar(50), estado_e varchar(50))
+BEGIN
+	INSERT INTO endereco(rua, numero, bairro, cidade, estado)
+	VALUES(rua_e, numero_e, bairro_e, cidade_e, estado_e);
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE select_funcionario(nome_f varchar(50))
+BEGIN
+	SELECT 
+	pessoa.nome,
+	pessoa.data_nascimento,
+	funcionario.cpf,
+	funcionario.data_de_admissao,
+	funcionario.email,
+	endereco.rua,
+	endereco.numero,
+	endereco.cidade,
+	endereco.estado 
+	from pessoa
+	left join funcionario on pessoa.id = funcionario.id_pessoa
+	inner join endereco on endereco.id = pessoa.id_endereco 
+	where pessoa.nome = nome_f;
 END $$
 DELIMITER ;
 
