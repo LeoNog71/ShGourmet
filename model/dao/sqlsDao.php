@@ -35,7 +35,7 @@
     }
 
 }
-        class FuncionarioDao extends QueryDao{
+    class FuncionarioDao extends QueryDao{
 
        
 
@@ -51,7 +51,7 @@
             $stmt = $this->conn->prepare("INSERT INTO funcionario(data_de_admissao,cpf,email,id_pessoa)"
                     . "values (:admissao, :cpf, :email,(SELECT id FROM pessoa ORDER BY ID DESC LIMIT 1))");
             
-            $stmt->bindParam(":adimissao",$this->classe->getData_adimissao());
+            $stmt->bindParam(":admissao",$this->classe->getData_adimissao());
             $stmt->bindParam(":cpf",$this->classe->getCpf());
             $stmt->bindParam(":email",$this->classe->getEmail());
             $stmt->execute();
