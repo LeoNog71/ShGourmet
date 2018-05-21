@@ -53,6 +53,7 @@ create table if not exists produtos(
     nome varchar(50) not null,
     descricao varchar(300),
     preco_venda double not null,
+    quantidade integer not null,
     preco_compra double not null,
     disponivel boolean not null,
     id_fornecedor Integer not null,
@@ -62,7 +63,6 @@ create table if not exists bebida(
 	id integer auto_increment primary key,
     marca varchar(50) not null,
     tamanho varchar(10) not null,
-	quantidade double not null,
     id_produto Integer not null,
     foreign key (id_produto) references produtos (id)
 );
@@ -186,7 +186,7 @@ create table if not exists livro_caixa(
     foreign key (id_livro_caixa) references livro_caixa (id)
  );
  
- /*insert*/
+ /*inserts*/
 DELIMITER $$
 CREATE PROCEDURE insert_funcionario (in nome_f varchar(50),in data_nasc_f date, in cpf_f varchar(15), in email_f varchar(50), in data_admi_f date)
 BEGIN
@@ -246,12 +246,40 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE insert_bebida()
+CREATE PROCEDURE insert_produto(nome_p varchar(50), descricao_p varchar(300), preco_venda_p double, quantidade_p integer, preco_compra_p double,
+								disponivel_p boolean, id_fonecedor_p int)
 BEGIN
+	INSERT INTO produtos(nome, descricao, preco_venda, quantidade, preco_compra, disponivel, id_fornecedor)
+		VALUES(nome_p, descricao_p, preco_venda_p, quantidade_p, preco_compra_p, disponivel_p, id_fornecedor_p);
+
 END $$
 DELIMITER ;
 
+DELIMITER $$
+CREATE PROCEDURE insert_bebida(marca_b varchar(50), tamanho_b varchar(10))
+BEGIN
+	call insert_produto();
+	INSERT INTO bebida (marca, tamanho, id_produto)
+		VALUES (marca_b, tamanho_b,(SELECT id FROM produtos ORDER BY id DESC LIMIT 1) );
 
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE insert_suco(sabor_s varchar(20))
+BEGIN
+	INSERT INTO suco (sabor,id_bebida)
+		values (sabor_s, (SELECT id FROM bebida ORDER BY id DESC LIMIT 1));
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE insert_adicionais()
+BEGIN
+	INSERT INTO adicionais(id_produto)
+		VALUES ((SELECT id FROM produto ORDER BY id DESC LIMIT 1));
+END $$
+DELIMITER ;
 
 
 /*SELECT*/
