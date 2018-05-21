@@ -70,8 +70,6 @@ create table if not exists suco(
 	id integer auto_increment primary key,
     sabor varchar(20) not null,
     id_bebida Integer not null,
-    id_produto Integer not null,
-    foreign key (id_produto) references produtos (id),
     foreign key (id_bebida) references bebida (id)
 );
 create table if not exists adicionais(
@@ -248,6 +246,16 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
+CREATE PROCEDURE insert_bebida()
+BEGIN
+END $$
+DELIMITER ;
+
+
+
+
+/*SELECT*/
+DELIMITER $$
 CREATE PROCEDURE select_funcionario(nome_f varchar(50))
 BEGIN
 	SELECT 
@@ -266,6 +274,8 @@ BEGIN
 	where pessoa.nome = nome_f;
 END $$
 DELIMITER ;
+
+
 
 
 
