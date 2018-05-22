@@ -258,7 +258,7 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE insert_bebida(marca_b varchar(50), tamanho_b varchar(10))
 BEGIN
-	call insert_produto();
+	
 	INSERT INTO bebida (marca, tamanho, id_produto)
 		VALUES (marca_b, tamanho_b,(SELECT id FROM produtos ORDER BY id DESC LIMIT 1) );
 
