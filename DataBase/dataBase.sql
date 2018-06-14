@@ -186,7 +186,7 @@ create table if not exists livro_caixa(
     foreign key (id_livro_caixa) references livro_caixa (id)
  );
  
- /*inserts*/
+ /*funcionario*/
 DELIMITER $$
 CREATE PROCEDURE insert_funcionario (in nome_f varchar(50),in data_nasc_f date, in cpf_f varchar(15), in email_f varchar(50), in data_admi_f date)
 BEGIN
@@ -201,6 +201,50 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
+CREATE PROCEDURE select_funcionario(in nome_f varchar(50))
+BEGIN
+	SELECT
+    funcionario.id,
+	pessoa.nome,
+	pessoa.data_nascimento,
+	funcionario.cpf,
+	funcionario.data_de_admissao,
+	funcionario.email,
+	endereco.rua,
+	endereco.numero,
+	endereco.cidade,
+	endereco.estado 
+	from pessoa
+	left join funcionario on pessoa.id = funcionario.id_pessoa
+	inner join endereco on endereco.id = pessoa.id_endereco 
+	where pessoa.nome = nome_f;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE update_funcionario(in id_f int, in nome_f varchar(50),in data_nasc_f date, in cpf_f varchar(15), in email_f varchar(50), in data_admi_f date)
+BEGIN
+	
+    
+	UPDATE pessoa
+	SET
+	nome = nome_f,
+	data_nascimento = data_nasc_f
+	WHERE id = id_f;
+    
+    UPDATE funcionario
+	SET
+	data_de_admissao = data_admi_f,
+	cpf = cpf_f,
+	email = email_f
+	WHERE id = id_f;
+	
+END $$
+DELIMITER ;
+
+
+/*cliente*/
+DELIMITER $$
 CREATE PROCEDURE insert_cliente (in nome_c varchar(50),in data_nasc_c date, in cpf_c varchar(14), in situacao_c boolean)
 BEGIN
 
@@ -209,6 +253,35 @@ BEGIN
 
 	INSERT INTO cliente(cpf,situacao,id_pessoa)
 		values (cpf_c,situacao_c,(SELECT ID FROM pessoa ORDER BY ID DESC LIMIT 1));
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE select_cliente(in nome_c varchar(50))
+BEGIN
+	SELECT
+    cliente.id,
+	pessoa.nome,
+	pessoa.data_nascimento,
+	cliente.cpf,
+	cliente.situacao,
+	endereco.rua,
+	endereco.numero,
+	endereco.cidade,
+	endereco.estado 
+	from pessoa
+	left join cliente on pessoa.id = cliente.id_pessoa
+	inner join endereco on endereco.id = pessoa.id_endereco 
+	where pessoa.nome = nome_c AND pessoa.situacao <> false;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE update_cliente(in id_c int, in nome_c varchar(50),in data_nasc_c date, in cpf_c varchar(14), in situacao_c boolean)
+BEGIN
+
+	
 
 END $$
 DELIMITER ;
@@ -280,28 +353,18 @@ BEGIN
 		VALUES ((SELECT id FROM produto ORDER BY id DESC LIMIT 1));
 END $$
 DELIMITER ;
-
-
-/*SELECT*/
+/*
 DELIMITER $$
-CREATE PROCEDURE select_funcionario(nome_f varchar(50))
+CREATE PROCEDURE insert_
 BEGIN
-	SELECT 
-	pessoa.nome,
-	pessoa.data_nascimento,
-	funcionario.cpf,
-	funcionario.data_de_admissao,
-	funcionario.email,
-	endereco.rua,
-	endereco.numero,
-	endereco.cidade,
-	endereco.estado 
-	from pessoa
-	left join funcionario on pessoa.id = funcionario.id_pessoa
-	inner join endereco on endereco.id = pessoa.id_endereco 
-	where pessoa.nome = nome_f;
+	INSERT INTO 
+
 END $$
 DELIMITER ;
+
+*/
+/*SELECT*/
+
 
 
 

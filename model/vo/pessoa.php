@@ -10,7 +10,7 @@
         private $endereco;
         
         function __construct() {
-          
+          $this->endereco = new Endereco();
         }
 
         

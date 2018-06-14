@@ -7,8 +7,13 @@
 		private $cidade;
 		private $numero;
                 
-		function __construct(){
-			
+		function __construct($id, $rua, $bairro, $cidade, $numero){
+                    $this->id = $id;
+                    $this->rua = $rua;
+                    $this->bairro = $bairro;
+                    $this->cidade = $cidade;
+                    $this->numero = $numero;
+                        
 		}
 		public function getId(){
 			return $this->id;

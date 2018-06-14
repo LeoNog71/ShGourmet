@@ -1,5 +1,5 @@
 <?php
-    abstract class QueryDao{
+    abstract class CrudDao{
         private $classe;
         private $con;
         
@@ -10,7 +10,7 @@
         
         public abstract function insert();
         public abstract function update();
-        public abstract function select();
+        public abstract function select($consulta);
     }
 ?>
 
