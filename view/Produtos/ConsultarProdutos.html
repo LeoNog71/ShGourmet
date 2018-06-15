@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>SH Gourmet - Caixa</title>
+<title>SH Gourmet - Produtos</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -14,12 +14,12 @@
 <div class="w3-top">
   <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
     <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
-    <a href="#" class="w3-bar-item w3-button w3-theme-l1" id="logo" ">SH Gourmet</a>  
+    <a href="#" class="w3-bar-item w3-button w3-theme-l1" id="logo">SH Gourmet</a>
     <a href="../Pedidos/pedidos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Pedidos</a>
     <a href="../Cozinha/cozinha.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Cozinha</a>
-    <a href="../Produtos/ConsultarProdutos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Produtos</a>
+    <a href="ConsultarProdutos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Produtos</a>
     <a href="../Funcionarios/funcionarios.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Funcionarios</a>
-    <a href="caixa.html" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Caixa</a>
+    <a href="../Caixa/caixa.html" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Caixa</a>
   </div>
 </div>
 
@@ -28,9 +28,10 @@
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
     <i class="fa fa-remove"></i>
   </a>
-  <h4 class="w3-bar-item"><b>Caixa</b></h4>
-  <a class="w3-bar-item w3-button w3-hover-black" href="#">Receber</a>
-  <a class="w3-bar-item w3-button w3-hover-black" href="#">Registrados</a>
+  <h4 class="w3-bar-item"><b>Produtos</b></h4>
+  <a class="w3-bar-item w3-button w3-hover-black" href="ConsultarProdutos.html">Consultar</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="#">Excluir</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="CadastrarProdutos.html">Novo</a>
 </nav>
 
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -41,34 +42,59 @@
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal">Cadastrar Produto</h1>
+      <h1 class="w3-text-teal">Buscar Produto</h1>
       <form>
-        <input type="" name="">
+        <select class="w3-select" name="tipoProduto">
+          <option value="" disabled selected>Tipo de Produto</option>
+          <option value="1">Sabor Pizza</option>
+          <option value="2">Bebidas</option>
+          <option value="3">Sucos</option>
+          <option value="4">Lanche</option>
+          <option value="5">Porção</option>
+          <option value="6">Adicional</option>
+        </select><br><br>
+        <select class="w3-select" name="tipoBusca">
+          <option value="" disabled selected>Tipo de Busca</option>
+          <option value="1">Nome</option>
+          <option value="2">ID</option>
+        </select>
+        <br>
+        <br><input class="w3-input" type="text" name="nome" placeholder="Buscar"><br>
+        <button class="w3-btn w3-black w3-hover-white" type="submit">
+          Buscar!
+        </button><br><br>
+        <table class="w3-table-all w3-hoverable">
+           <thead>
+            <tr class="w3-light-grey">
+              <th width="50px">ID</th>
+              <th>Nome</th>
+              <th>Descrição</th>
+              <th width="50px">Preço(R$)</th>
+              <th width="50px">Disponível</th>
+            </tr>
+          </thead>
+            <tr>
+              <th>001</th>
+              <th>Teste</th>
+              <th>Isso é apenas um teste, aprendi com o cridao</th>
+              <th >14.99</th>
+              <th >YES</th>
+            </tr>
+        </table>
       </form>
     </div>
     <div class="w3-third w3-container">
-      <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
-      <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
-    </div>
-  
-
-  <!-- Pagination -->
-  <div class="w3-center w3-padding-32">
-    <div class="w3-bar">
-      <a class="w3-button w3-black" href="#">1</a>
-      <a class="w3-button w3-hover-black" href="#">2</a>
-      <a class="w3-button w3-hover-black" href="#">3</a>
-      <a class="w3-button w3-hover-black" href="#">4</a>
-      <a class="w3-button w3-hover-black" href="#">5</a>
-      <a class="w3-button w3-hover-black" href="#">»</a>
+      <p class=" w3-padding-32 w3-center">
+          <img src="../Resources/imagens/Buscar.png" alt="Buscar" style="width: 120%;">
+      </p>
     </div>
   </div>
-
+<!--
   <footer id="myFooter">
-    <div class="w3-container w3-theme-l1 w3-padding-12">
+    <div class="w3-container w3-theme-l2 w3-padding-32">
       <h4>Footer</h4>
     </div>
-  </footer>
+  </footer> -->
 
 <!-- END MAIN -->
 </div>

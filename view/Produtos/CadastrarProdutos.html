@@ -14,14 +14,22 @@
 <div class="w3-top">
   <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
     <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-large" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
     <a href="#" class="w3-bar-item w3-button w3-theme-l1" id="logo">SH Gourmet</a>
     <a href="../Pedidos/pedidos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Pedidos</a>
     <a href="../Cozinha/cozinha.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Cozinha</a>
-    <a href="produtos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Produtos</a>
+    <a href="ConsultarProdutos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Produtos</a>
     <a href="../Funcionarios/funcionarios.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Funcionarios</a>
     <a href="../Caixa/caixa.html" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Caixa</a>
   </div>
 </div>
+
+<div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="../Pedidos/pedidos.html" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
+    <a href="../Cozinha/cozinha.html" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
+    <a href="ConsultarProdutos.html" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
+    <a href="../Funcionarios/funcionarios.html" class="w3-bar-item w3-button w3-padding-large">Link 4</a>
+  </div>
 
 <!-- Sidebar -->
 <nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l1 w3-animate-left" id="mySidebar">
@@ -29,9 +37,9 @@
     <i class="fa fa-remove"></i>
   </a>
   <h4 class="w3-bar-item"><b>Produtos</b></h4>
-  <a class="w3-bar-item w3-button w3-hover-black" href="#">Consultar</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="ConsultarProdutos.html">Consultar</a>
   <a class="w3-bar-item w3-button w3-hover-black" href="#">Excluir</a>
-  <a class="w3-bar-item w3-button w3-hover-black" href="#">Novo</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="CadastrarProdutos.html">Novo</a>
 </nav>
 
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -44,8 +52,8 @@
     <div class="w3-twothird w3-container">
       <h1 class="w3-text-teal">Cadastrar Produto</h1>
       <form>
-        <select class="w3-select" name="tipo">
-          <option value="" disabled selected>Tipo</option>
+        <select class="w3-select" name="tipoProduto">
+          <option value="" disabled selected>Tipo de Produto</option>
           <option value="1">Sabor Pizza</option>
           <option value="2">Bebidas</option>
           <option value="3">Sucos</option>
@@ -104,6 +112,16 @@ function w3_close() {
     mySidebar.style.display = "none";
     overlayBg.style.display = "none";
 }
+
+function myFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+
 </script>
 
 </body>
