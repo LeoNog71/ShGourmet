@@ -28,13 +28,19 @@ create table if not exists funcionario(
     id_pessoa Integer not null,
     foreign key (id_pessoa) references pessoa(id)
 );
+create table if not exists permissao(
+	id integer auto_increment primary key,
+    nome varchar(50) not null
+);
 create table if not exists usuario(
 	id integer auto_increment primary key,
     login varchar(50) not null,
     senha varchar(8) not null,
     id_funcionario integer not null,
-    permissao integer not null,
-    foreign key (id_funcionario) references funcionario (id)
+    id_permissao integer not null,
+    situacao boolean not null,
+    foreign key (id_funcionario) references funcionario (id),
+    foreign key (id_permissao) references permissao (id)
 );
 create table if not exists cliente(
 	id Integer auto_increment primary key,
@@ -180,6 +186,8 @@ create table if not exists livro_caixa(
     foreign key (id_livro_caixa) references livro_caixa (id)
  );
  
+ INSERT INTO usuario
+ 
  /*funcionario*/
 DELIMITER $$
 CREATE PROCEDURE insert_funcionario (in nome_f varchar(50),in data_nasc_f date, in cpf_f varchar(15), in email_f varchar(50), in data_admi_f date)
@@ -280,22 +288,76 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE update_cliente(in id_c int, in nome_c varchar(50),in data_nasc_c date, in cpf_c varchar(14), in situacao_c boolean)
+CREATE PROCEDURE update_cliente(in id_c int, in nome_c varchar(50),in data_nasc_c date, in cpf_c varchar(14))
 BEGIN
 
+	UPDATE pessoa
+	SET
+	nome = nome_c,
+	data_nascimento = data_nasc_c
+	WHERE id = id_c;
+    
+    UPDATE cliente
+	SET
+	cpf = cpf_f
+	WHERE id = id_f;
 	
 
 END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE insert_usuario (in login_u varchar(50), in senha_u varchar(8), in id_funcionario_u integer,in permissao_u integer)
+CREATE PROCEDURE delete_cliente(in id_c int)
+BEGIN
+	UPDATE pessoa
+	SET
+	situacao = false
+	WHERE id = id_c;
+END $$
+DELIMITER ;
+
+/*usuario*/
+
+DELIMITER $$
+CREATE PROCEDURE insert_usuario (in login_u varchar(50), in senha_u varchar(8), in id_funcionario_u integer,in id_permissao_u integer)
 BEGIN
 
-	INSERT INTO usuario (`login`,`senha`,`id_funcionario`,`permissao`)
-		VALUES (login_u, senha_u, id_funcionario_u , permissao_u);
+	INSERT INTO usuario (`login`,`senha`,`id_funcionario`,`id_permissao`,situacao)
+		VALUES (login_u, senha_u, id_funcionario_u , id_permissao_u, true);
 
 
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE select_ususario(in id_f int)
+BEGIN
+	select usuario.login, usuario.senha, usuario.id_permissao
+	from usuario
+	where usuario.id_funcionario =id_f;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE update_usuario(in id_u int, in login_u varchar(50), in senha_u varchar(8),in id_permissao_u integer)
+BEGIN
+	UPDATE usuario
+	SET
+	`login` = login_u,
+	`senha` = senha_u,
+	`id_permissao` = id_permissao_u
+	WHERE `id` = id_u;
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE delete_usuario(in id_u int)
+BEGIN
+	UPDATE usuario
+	SET
+	situacao = false
+	WHERE id = id_u;
 END $$
 DELIMITER ;
 
