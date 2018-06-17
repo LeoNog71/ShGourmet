@@ -1,0 +1,18 @@
+@font-face{
+  font-family: "orange-juice";
+  src: url(orange-juice.ttf);
+}
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
+.w3-sidebar{
+  z-index: 3;
+  width: 176px;
+  top: 43px;
+  bottom: 0;
+  height: inherit;
+}
+#logo{
+  font-family: "orange-juice";
+  font-size: 30px;
+  margin-top: -10px;
+  margin-bottom: -10px;
+}
