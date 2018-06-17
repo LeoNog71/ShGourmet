@@ -11,16 +11,16 @@
 
         public function insert() {
             
-            $stmt = $conn->prepare("CALL insert_funcionario (':nome', ':data_nasc', ':cpf', ':email', ':data_admi' )");
-            $a = $classe->getNome();
+            $stmt = $this->conn->prepare("CALL insert_funcionario (':nome', ':data_nasc', ':cpf', ':email', ':data_admi' )");
+            $a = $this->classe->getNome();
             $stmt->bindParam(":nome", $a);
-            $b = $classe->getData_nascimento();
-            $stmt->bindParam(":data_nasc", $c);
-            $c = $classe->getCpf();
+            $b = $this->classe->getData_nascimento();
+            $stmt->bindParam(":data_nasc", $b);
+            $c = $this->classe->getCpf();
             $stmt->bindParam(":cpf", $c);
-            $d = $classe->getEmail();
+            $d = $this->classe->getEmail();
             $stmt->bindParam(":email", $d);
-            $e = $calsse->getData_adimissao();
+            $e = $this->classe->getData_adimissao();
             $stmt->bindParam(":data_admi", $e);
           
             $stmt->execute();
@@ -28,41 +28,46 @@
         }
 
         public function select($consulta) {
-            $stmt = $conn->prepare("CALL select_funcionario('".$consulta."')");
+            $stmt = $this->conn->prepare("CALL select_funcionario('".$consulta."')");
             
             $result = $stmt->fetch(PDO::FETCH_OBJ);
             
-            $classe->setId($result->id);
-            $classe->setNome($result->nome);
-            $classe->setData_nascimento($result->data_nascimento);
-            $classe->setCpf($result->cpf);
-            $classe->setsetData_admissao($result->data_admissao);
-            $classe->setEmail($result->email);
+            $this->classe->setId($result->id);
+            $this->classe->setNome($result->nome);
+            $this->classe->setData_nascimento($result->data_nascimento);
+            $this->classe->setCpf($result->cpf);
+            $this->classe->setData_admissao($result->data_admissao);
+            $this->classe->setEmail($result->email);
+            $endereco = new Endereco($result->id_endereco, $result->rua, $result->bairro, $result->cidade, $result->numero);
             
-            $endereco = new Endereco($reuslt->id, $result->rua, $result->bairro, $result->cidade, $result->numero);
+            $this->classe->setEndereco($endereco);
             
-            $classe->setEndereco($endereco);
-            
-            return $classe;
+            return $this->classe;
         }
 
         public function update() {
-            $stmt = $conn->prepare("CALL update_funcionario (:id,':nome', ':data_nasc', ':cpf', ':email' , ':data_admi' )");
-            $id = $classe->getId();
+            $stmt = $this->conn->prepare("CALL update_funcionario (:id,':nome', ':data_nasc', ':cpf', ':email' , ':data_admi' )");
+            $id = $this->classe->getId();
             $stmt->bindParam(":id",$id);
-            $a = $classe->getNome();
+            $a = $this->classe->getNome();
             $stmt->bindParam(":nome", $a);
-            $b = $classe->getData_nascimento();
-            $stmt->bindParam(":data_nasc", $c);
-            $c = $classe->getCpf();
+            $b = $this->classe->getData_nascimento();
+            $stmt->bindParam(":data_nasc", $b);
+            $c = $this->classe->getCpf();
             $stmt->bindParam(":cpf", $c);
-            $d = $classe->getEmail();
+            $d = $this->classe->getEmail();
             $stmt->bindParam(":email", $d);
-            $e = $calsse->getData_adimissao();
+            $e = $this->classe->getData_adimissao();
             $stmt->bindParam(":data_admi", $e);
           
             $stmt->execute();
             
+        }
+        public function delete() {
+            $id = $this->classe->getId();
+            $stmt = $this->conn->prepare("CALL delete_funcionario ($id)");
+
+            $stmt->execute();
         }
     }
     class ClienteDAO extends CrudDao{
@@ -71,14 +76,14 @@
             parent::__construct($classe);
         }
         public function insert() {
-            $stmt = $conn->prepare("CALL insert_cliente (':nome', ':data_nasc', ':cpf', :situacao )");
-            $a = $classe->getNome();
+            $stmt = $this->conn->prepare("CALL insert_cliente (':nome', ':data_nasc', ':cpf', :situacao )");
+            $a = $this->classe->getNome();
             $stmt->bindParam(":nome", $a);
-            $b = $classe->getData_nascimento();
-            $stmt->bindParam(":data_nasc", $c);
-            $c = $classe->getCpf();
+            $b = $this->classe->getData_nascimento();
+            $stmt->bindParam(":data_nasc", $b);
+            $c = $this->classe->getCpf();
             $stmt->bindParam(":cpf", $c);
-            $d = $classe->getSituacao();
+            $d = $this->classe->getSituacao();
             $stmt->bindParam(":situacao", $d);
           
             $stmt->execute();
@@ -86,11 +91,25 @@
         }
 
         public function select($consulta) {
+             $stmt = $this->conn->prepare("CALL select_cliente('".$consulta."')");
             
+            $result = $stmt->fetch(PDO::FETCH_OBJ);
+            
+            $this->classe->setId($result->id);
+            $this->classe->setNome($result->nome);
+            $this->classe->setData_nascimento($result->data_nascimento);
+            $this->classe->setCpf($result->cpf);
+            $this->classe->setSituacao($result->data_admissao);
+            
+            $endereco = new Endereco($result->id, $result->rua, $result->bairro, $result->cidade, $result->numero);
+            
+            $this->classe->setEndereco($endereco);
+            
+            return $this->classe;
         }
 
-        public function update() {
-
+        public function update($consulta) {
+            
         }
 
     }

@@ -1,16 +1,26 @@
 <?php
-    abstract class CrudDao{
+    include_once 'IDAO.php';
+    abstract class CrudDao implements IDAO{
         private $classe;
-        private $con;
+        private $conn;
         
         public function __construct($classe) {
             $this->classe = $classe;
-            $this->con = new ConexaoDao().getConection();
+            $this->conn = new ConexaoDao().getConection();
+        }
+        public function insert(){
+            
+        }
+        public function select($consulta) {
+            
+        }
+        public function update() {
+            
+        }
+        public function delete(){
+            
         }
         
-        public abstract function insert();
-        public abstract function update();
-        public abstract function select($consulta);
     }
 ?>
 
