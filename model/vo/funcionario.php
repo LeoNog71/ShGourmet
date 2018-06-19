@@ -9,9 +9,11 @@
         private $email;
         
         function __construct() {
+            parent::__construct();
             
         }
         
+                
         function getId() {
             return $this->id;
         }

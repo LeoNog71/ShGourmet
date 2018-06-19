@@ -30,19 +30,9 @@
         public function select($consulta) {
             $stmt = $this->conn->prepare("CALL select_funcionario('".$consulta."')");
             
-            $result = $stmt->fetch(PDO::FETCH_OBJ);
-            
-            $this->classe->setId($result->id);
-            $this->classe->setNome($result->nome);
-            $this->classe->setData_nascimento($result->data_nascimento);
-            $this->classe->setCpf($result->cpf);
-            $this->classe->setData_admissao($result->data_admissao);
-            $this->classe->setEmail($result->email);
-            $endereco = new Endereco($result->id_endereco, $result->rua, $result->bairro, $result->cidade, $result->numero);
-            
-            $this->classe->setEndereco($endereco);
-            
-            return $this->classe;
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
         }
 
         public function update() {

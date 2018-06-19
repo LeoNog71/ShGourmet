@@ -361,18 +361,6 @@ BEGIN
 END $$
 DELIMITER ;
 
-DELIMITER $$
-CREATE PROCEDURE insert_fornecedor(in nome_f varchar(50),in data_nasc_f date, in cnpj varchar(20) )
-BEGIN
-
-	INSERT INTO pessoa(nome, data_nascimento,id_endereco)
-		VALUES(nome_f, data_nasc_f, (SELECT ID FROM endereco ORDER BY ID DESC LIMIT 1));
-        
-    INSERT INTO fornecedor ( cnpj, id_pessoa )
-		VALUES(cnpj, (SELECT ID FROM pessoa ORDER BY ID DESC LIMIT 1));
-    
-END $$
-DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE insert_endereco(rua_e varchar(200), numero_e integer, bairro_e varchar(50), cidade_e varchar(50), estado_e varchar(50))
