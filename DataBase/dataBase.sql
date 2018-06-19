@@ -366,7 +366,8 @@ CREATE PROCEDURE select_ususario(in id_f int)
 BEGIN
 	select usuario.login, usuario.senha, usuario.id_permissao
 	from usuario
-	where usuario.id_funcionario =id_f;
+	where usuario.id_funcionario =id_f
+    AND usuario.situacao = true;
 END $$
 DELIMITER ;
 
