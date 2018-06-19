@@ -1,8 +1,9 @@
 <?php
     include_once 'CrudDAO.php';
-    include_once 'funcionario.php';
-    include_once 'endereco.php';
-    include_once 'cliente.php';
+    include_once '..\vo\funcionario.php';
+    include_once '..\vo\enderecos.php';
+    include_once '..\vo\cliente.php';
+
     
     class funcionarioDAO extends CrudDao{
         

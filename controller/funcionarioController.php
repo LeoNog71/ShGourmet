@@ -1,11 +1,16 @@
 <?php
+    include_once '..\model\vo\funcionario.php';
+    @include '..\model\dao\ClasseDao.php';
+    include_once '..\Interfaces\IController.php';
     class FuncionarioController implements IController{
         private $classe;
+        private $json;
         public function __construct() {
             $this->classe = new Funcionario();
         }
 
-        public function recebeJson($json){
+        public function recebeJson(){
+            $this->json = file_get_contents('php://input');
             $array = json_decode($json);
             $this->classe->setId($array->id);
             $this->classe->setNome($array->nome);
@@ -21,8 +26,10 @@
         }
 
         public function enviaJson($array){
+            
             return json_encode($array);
         }
+        
 
 }
 ?>

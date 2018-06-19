@@ -1,5 +1,5 @@
 <?php
-    include_once 'endereco.php';
+    include_once 'enderecos.php';
     
     class Pessoa{
         

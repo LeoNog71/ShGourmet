@@ -2,6 +2,7 @@
     
     include_once 'pessoa.php';
     
+    
     class Funcionario extends Pessoa{
         private $id;
         private $data_adimissao;
