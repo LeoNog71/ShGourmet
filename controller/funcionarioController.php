@@ -3,34 +3,56 @@
     @include '..\model\dao\ClasseDao.php';
     include_once '..\Interfaces\IController.php';
     class FuncionarioController implements IController{
-        private $classe;
+        
         private $json;
         public function __construct() {
-            $this->classe = new Funcionario();
+            
         }
 
         public function recebeJson(){
+            
+            $classe = new Funcionario();
             $this->json = file_get_contents('php://input');
-            $array = json_decode($json);
-            $this->classe->setId($array->id);
-            $this->classe->setNome($array->nome);
-            $this->classe->setData_nascimento($array->data_nascimento);
-            $this->classe->setCpf($array->cpf);
-            $this->classe->setData_admissao($array->data_admissao);
-            $this->classe->setEmail($array->email);
+            $array = json_decode($this->json);
+            
+            $classe->setId($array->id);
+            $classe->setNome($array->nome);
+            $classe->setData_nascimento($array->data_nascimento);
+            $classe->setCpf($array->cpf);
+            $classe->setData_admissao($array->data_admissao);
+            $classe->setEmail($array->email);
             $endereco = new Endereco($array->id_endereco, $array->rua, $array->bairro, $array->cidade, $array->numero);
             
-            $this->classe->setEndereco($endereco);
+            $classe->setEndereco($endereco);
             
             return $this->classe;
         }
 
         public function enviaJson($array){
             
-            return json_encode($array);
+            echo json_encode($array);
         }
-        
 
+        public function atualizar() {
+           $f  = new funcionarioDAO($this->recebeJson());
+           $f->update();
+        }
+
+        public function cadastrar() {
+           $f  = new funcionarioDAO($this->recebeJson());
+           $f->insert();
+        }
+
+        public function excluir() {
+           $f  = new funcionarioDAO($this->recebeJson());
+           $f->delete();
+        }
+
+        public function pesquisa() {
+            $consulta = $this->recebeJson();
+            $f = new funcionarioDAO(NULL);
+            $this->enviaJson($f->select($consulta->getNome()));
+        }
 }
 ?>
 
