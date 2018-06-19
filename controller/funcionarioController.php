@@ -3,12 +3,26 @@
     @include '..\model\dao\ClasseDao.php';
     include_once '..\Interfaces\IController.php';
    
-
-    function recebeJson(){
+    if(file_get_contents('php://input')){
+       $json = file_get_contents('php://input');
+       $array = json_decode($this->json);
+       if($array->operacao == 1){
+           cadastrar($array);
+       }
+       if($array->operacao == 2){
+           atualizar($array);
+       }
+       if($array->operacao == 3){
+           excluir($array);
+       }
+       if($array->operacao ==4){
+           pesquisa($array);
+       }
+    }
+    function recebeJson($array){
             
         $classe = new Funcionario();
-        $this->json = file_get_contents('php://input');
-        $array = json_decode($this->json);
+        
 
         $classe->setId($array->id);
         $classe->setNome($array->nome);
@@ -20,33 +34,33 @@
 
         $classe->setEndereco($endereco);
 
-        return $this->classe;
+        return $classe;
     }
-
+    
      function enviaJson($array){
             
         echo json_encode($array);
     }
 
-    function atualizar() {
-        $f  = new funcionarioDAO($this->recebeJson());
+    function atualizar($array) {
+        $f  = new funcionarioDAO(recebeJson($array));
         $f->update();
     }
 
-    function cadastrar() {
-       $f  = new funcionarioDAO($this->recebeJson());
+    function cadastrar($array) {
+       $f  = new funcionarioDAO(recebeJson($array));
        $f->insert();
     }
 
-    function excluir() {
-       $f  = new funcionarioDAO($this->recebeJson());
+    function excluir($array) {
+       $f  = new funcionarioDAO(recebeJson($array));
        $f->delete();
     }
 
-    function pesquisa() {
-        $consulta = $this->recebeJson();
+    function pesquisa($array) {
+        $consulta = recebeJson($array);
         $f = new funcionarioDAO(NULL);
-        $this->enviaJson($f->select($consulta->getNome()));
+        enviaJson($f->select($consulta->getNome()));
     }
 
 ?>
