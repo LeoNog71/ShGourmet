@@ -18,4 +18,6 @@ VALUES
 select usuario.login, usuario.senha, usuario.id_permissao
 from usuario
 where usuario.id_funcionario = 1;
+select *from endereco;
+select *from endereco where rua = 'RUA' and numero = 2 ;
 

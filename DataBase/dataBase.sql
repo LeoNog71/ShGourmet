@@ -186,7 +186,39 @@ create table if not exists livro_caixa(
     foreign key (id_livro_caixa) references livro_caixa (id)
  );
  
- INSERT INTO usuario
+ /*endereco*/
+ DELIMITER $$
+CREATE PROCEDURE insert_endereco(in rua_e varchar(200), in numero_e integer, in bairro_e varchar(50), in cidade_e varchar(50), in estado_e varchar(50))
+BEGIN
+	INSERT INTO endereco(rua, numero, bairro, cidade, estado)
+	VALUES(rua_e, numero_e, bairro_e, cidade_e, estado_e);
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE update_endereco(in id_e int, in rua_e varchar(200), in numero_e integer, in bairro_e varchar(50), in cidade_e varchar(50), in estado_e varchar(50))
+BEGIN
+	UPDATE endereco
+	SET
+	`rua` = rua_e,
+	`numero` = numero_e,
+	`bairro` = bairro_e,
+	`cidade` = cidade_e,
+	`estado` = estado_e
+	WHERE `id` = id_e;
+
+END $$
+DELIMITER ;
+
+CREATE PROCEDURE select_endereco(in rua_e varchar(200), in numero_e integer)
+BEGIN
+	
+	select *from endereco 
+    where rua = rua_e 
+    and numero = numero_e
+
+END $$
+DELIMITER ;
  
  /*funcionario*/
 DELIMITER $$
@@ -361,15 +393,7 @@ BEGIN
 END $$
 DELIMITER ;
 
-
-DELIMITER $$
-CREATE PROCEDURE insert_endereco(rua_e varchar(200), numero_e integer, bairro_e varchar(50), cidade_e varchar(50), estado_e varchar(50))
-BEGIN
-	INSERT INTO endereco(rua, numero, bairro, cidade, estado)
-	VALUES(rua_e, numero_e, bairro_e, cidade_e, estado_e);
-END $$
-DELIMITER ;
-
+/*produtos*/
 DELIMITER $$
 CREATE PROCEDURE insert_produto(nome_p varchar(50), descricao_p varchar(300), preco_venda_p double, quantidade_p integer, preco_compra_p double,
 								disponivel_p boolean, id_fonecedor_p int)
@@ -379,13 +403,28 @@ BEGIN
 
 END $$
 DELIMITER ;
-
+/*bebida*/
 DELIMITER $$
-CREATE PROCEDURE insert_bebida(marca_b varchar(50), tamanho_b varchar(10))
+CREATE PROCEDURE insert_bebida(nome_p varchar(50), descricao_p varchar(300), preco_venda_p double, quantidade_p integer, preco_compra_p double,fonecedor_p varchar(50),marca_b varchar(50), tamanho_b varchar(10))
 BEGIN
-	
+	INSERT INTO produtos(nome, descricao, preco_venda, quantidade, preco_compra, disponivel, fornecedor)
+		VALUES(nome_p, descricao_p, preco_venda_p, quantidade_p, preco_compra_p, true, fornecedor_p);
 	INSERT INTO bebida (marca, tamanho, id_produto)
 		VALUES (marca_b, tamanho_b,(SELECT id FROM produtos ORDER BY id DESC LIMIT 1) );
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE select_bebida(nome_p varchar(50))
+BEGIN
+	
+	SELECT bebida.id, produtos.nome, produtos.descricao,
+    produtos.preco_venda,produtos.quantidade, produtos.fornecedor,
+    bebida.marca,bebida.tamanho
+    FROM bebida
+    JOIN produtos on produtos.id = bebida.id_produto
+    Where produtos.nome = nome_p;
 
 END $$
 DELIMITER ;

@@ -2,6 +2,7 @@
     include_once 'CrudDAO.php';
     include_once 'funcionario.php';
     include_once 'endereco.php';
+    include_once 'cliente.php';
     
     class funcionarioDAO extends CrudDao{
         
@@ -81,19 +82,9 @@
         public function select($consulta) {
             $stmt = $this->conn->prepare("CALL select_cliente('".$consulta."')");
             
-            $result = $stmt->fetch(PDO::FETCH_OBJ);
-            
-            $this->classe->setId($result->id);
-            $this->classe->setNome($result->nome);
-            $this->classe->setData_nascimento($result->data_nascimento);
-            $this->classe->setCpf($result->cpf);
-            $this->classe->setSituacao($result->data_admissao);
-            
-            $endereco = new Endereco($result->id, $result->rua, $result->bairro, $result->cidade, $result->numero);
-            
-            $this->classe->setEndereco($endereco);
-            
-            return $this->classe;
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
         }
 
         public function update() {
@@ -140,9 +131,26 @@
         }
         
         public function select($consulta) {
+            $stmt = $this->conn->prepare("CALL select_usuario('".$consulta."')");
             
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
         }
         public function update(){
+            
+            $stmt = $this->conn->prepare("CALL insert_usuario(:id,':login', ':senha', :permissao, :funcionario )");
+            $id = $this->classe->getId();
+            $stmt->bindParam(":id", $id);
+            $a = $this->classe->getLogin();
+            $stmt->bindParam(":login", $a);
+            $b = $this->classe->getSenha();
+            $stmt->bindParam(":senha", $b);
+            $c = $this->classe->getPermissao();
+            $stmt->bindParam(":permissao", $c);
+            $d = $this->classe->getFuncionario();
+            $stmt->bindParam(":funcionario", $d);
+            $stmt->execute();
             
         }
 
@@ -152,5 +160,57 @@
 
             $stmt->execute();
         }
+    }
+    class EnderecoDAO implements IDAO{
+        
+        public function __construct($classe) {
+            parent::__construct($classe);
+        }
+        
+        public function delete() {
+        
+        }
+
+        public function insert() {
+            
+            $stmt = $this->conn->prepare("CALL insert_endereco(':rua', ':numero', :bairro, :cidade )");
+            $a = $this->classe->getRua();
+            $stmt->bindParam(":rua", $a);
+            $b = $this->classe->getNumero();
+            $stmt->bindParam(":numero", $b);
+            $c = $this->classe->getBairro();
+            $stmt->bindParam(":bairro", $c);
+            $d = $this->classe->getCidade();
+            $stmt->bindParam(":cidade", $d);
+            
+            $stmt->execute();
+            
+        }
+
+        public function select($consulta) {
+            $stmt = $this->conn->prepare("CALL select_endereco('".$consulta."')");
+            
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
+        }
+
+        public function update() {
+            
+            $stmt = $this->conn->prepare("CALL update_endereco(:id,':rua', ':numero', :bairro, :cidade )");
+            $id = $this->classe->getId();
+            $stmt->bindParam(":id",$id);
+            $a = $this->classe->getRua();
+            $stmt->bindParam(":rua", $a);
+            $b = $this->classe->getNumero();
+            $stmt->bindParam(":numero", $b);
+            $c = $this->classe->getBairro();
+            $stmt->bindParam(":bairro", $c);
+            $d = $this->classe->getCidade();
+            $stmt->bindParam(":cidade", $d);
+            
+            $stmt->execute();
+        }
+
     }
 ?>
