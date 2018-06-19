@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>SH Gourmet - Produtos</title>
+<title>SH Gourmet - Funcionários</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -17,8 +17,8 @@
     <a href="#" class="w3-bar-item w3-button w3-theme-l1" id="logo">SH Gourmet</a>
     <a href="../Pedidos/pedidos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Pedidos</a>
     <a href="../Cozinha/cozinha.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Cozinha</a>
-    <a href="ConsultarProdutos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Produtos</a>
-    <a href="../Funcionario/ConsultarFuncionario.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Funcionarios</a>
+    <a href="../Produtos/ConsultarProdutos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Produtos</a>
+    <a href="ConsultarFuncionario.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Funcionarios</a>
     <a href="../Caixa/caixa.html" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Caixa</a>
   </div>
 </div>
@@ -27,7 +27,7 @@
 <div id="navDemo" class="w3-bar-block w3-theme w3-hide w3-hide-large w3-hide-medium w3-large">
   <a href="../Pedidos/pedidos.html" class="w3-bar-item w3-button w3-hover-white">Pedidos</a>
   <a href="../Cozinha/cozinha.html" class="w3-bar-item w3-button w3-hover-white">Cozinha</a>
-  <a href="ConsultarProdutos.html" class="w3-bar-item w3-button w3-hover-white">Produtos</a>
+  <a href="../Produtos/ConsultarProdutos.html" class="w3-bar-item w3-button w3-hover-white">Produtos</a>
   <a href="../Funcionarios/ConsultarFuncionario.html" class="w3-bar-item w3-button w3-hover-white">Funcionarios</a>
   <a href="../Caixa/caixa.html" class="w3-bar-item w3-button w3-hover-white">Caixa</a>
 </div>
@@ -38,9 +38,9 @@
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
     <i class="fa fa-remove"></i>
   </a>
-  <h4 class="w3-bar-item"><b>Produtos</b></h4>
-  <a class="w3-bar-item w3-button w3-hover-black" href="ConsultarProdutos.html">Consultar</a>
-  <a class="w3-bar-item w3-button w3-hover-black" href="CadastrarProdutos.html">Novo</a>
+  <h4 class="w3-bar-item"><b>Funcionarios</b></h4>
+  <a class="w3-bar-item w3-button w3-hover-black" href="ConsultarFuncionario.html">Buscar</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="CadastrarFuncionario.html">Novo</a>
 </nav>
 
 <!-- Barra Lateral Responsiva -->
@@ -51,21 +51,13 @@
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal">Buscar Produto</h1>
+      <h1 class="w3-text-teal">Buscar Funcionário</h1>
       <form>
-        <select class="w3-select" name="tipoProduto">
-          <option value="" disabled selected>Tipo de Produto</option>
-          <option value="1">Sabor Pizza</option>
-          <option value="2">Bebidas</option>
-          <option value="3">Sucos</option>
-          <option value="4">Lanche</option>
-          <option value="5">Porção</option>
-          <option value="6">Adicional</option>
-        </select><br><br>
+        
         <select class="w3-select" name="tipoBusca">
           <option value="" disabled selected>Tipo de Busca</option>
           <option value="1">Nome</option>
-          <option value="2">ID</option>
+          <option value="2">CPF</option>
         </select>
         <br>
         <br><input class="w3-input" type="text" name="busca" placeholder="Buscar"><br>
@@ -75,19 +67,19 @@
         <table class="w3-table-all w3-hoverable">
            <thead>
             <tr class="w3-light-grey">
-              <th width="50px">ID</th>
-              <th>Nome</th>
-              <th>Descrição</th>
-              <th width="50px">Preço(R$)</th>
-              <th width="50px">Disponível</th>
+              <th width="30px">ID</th>
+              <th >Nome</th>
+              <th>Endereço</th>
+              <th width="50px">Nascimento</th>
+              <th width="50px">Admissão</th>
             </tr>
           </thead>
             <tr>
-              <th>001</th>
-              <th>Teste</th>
-              <th>Isso é apenas um teste, aprendi com o cridao</th>
-              <th >14.99</th>
-              <th >YES</th>
+              <th>10646286994</th>
+              <th>Alecsander Johan Pontes de Andrade</th>
+              <th>Avenida Brasil, 179, Diamante D'Oeste</th>
+              <th >30/04/1997</th>
+              <th >14/05/2018</th>
             </tr>
         </table>
       </form>

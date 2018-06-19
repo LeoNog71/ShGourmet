@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="../Resources/stylePadrao.css">
 <body>
 
-<!-- Navbar -->
+<!-- Barra Superior -->
 <div class="w3-top">
   <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
     <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
@@ -18,12 +18,22 @@
     <a href="../Pedidos/pedidos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Pedidos</a>
     <a href="cozinha.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Cozinha</a>
     <a href="../Produtos/ConsultarProdutos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Produtos</a>
-    <a href="../Funcionarios/funcionarios.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Funcionarios</a>
+    <a href="../Funcionario/ConsultarFuncionario.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Funcionarios</a>
     <a href="../Caixa/caixa.html" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Caixa</a>
   </div>
 </div>
 
-<!-- Sidebar -->
+<!-- Barra Superior Responsiva -->
+<div id="navDemo" class="w3-bar-block w3-theme w3-hide w3-hide-large w3-hide-medium w3-large">
+  <a href="../Pedidos/pedidos.html" class="w3-bar-item w3-button w3-hover-white">Pedidos</a>
+  <a href="cozinha.html" class="w3-bar-item w3-button w3-hover-white">Cozinha</a>
+  <a href="../Produtos/ConsultarProdutos.html" class="w3-bar-item w3-button w3-hover-white">Produtos</a>
+  <a href="../Funcionarios/ConsultarFuncionario.html" class="w3-bar-item w3-button w3-hover-white">Funcionarios</a>
+  <a href="../Caixa/caixa.html" class="w3-bar-item w3-button w3-hover-white">Caixa</a>
+</div>
+
+
+<!-- Barra Lateral -->
 <nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l1 w3-animate-left" id="mySidebar">
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
     <i class="fa fa-remove"></i>
@@ -33,7 +43,7 @@
   <a class="w3-bar-item w3-button w3-hover-black" href="#">Finalizados</a>
 </nav>
 
-<!-- Overlay effect when opening sidebar on small screens -->
+<!-- Barra Lateral Responsiva -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
@@ -95,31 +105,8 @@
 
 <!-- END MAIN -->
 </div>
+<script src="../Resources/jsPadrao.js"/>
 
-<script>
-// Get the Sidebar
-var mySidebar = document.getElementById("mySidebar");
-
-// Get the DIV with overlay effect
-var overlayBg = document.getElementById("myOverlay");
-
-// Toggle between showing and hiding the sidebar, and add overlay effect
-function w3_open() {
-    if (mySidebar.style.display === 'block') {
-        mySidebar.style.display = 'none';
-        overlayBg.style.display = "none";
-    } else {
-        mySidebar.style.display = 'block';
-        overlayBg.style.display = "block";
-    }
-}
-
-// Close the sidebar with the close button
-function w3_close() {
-    mySidebar.style.display = "none";
-    overlayBg.style.display = "none";
-}
-</script>
 
 </body>
 </html>
