@@ -26,12 +26,12 @@
         
 
         $classe->setId($array->id);
-        $classe->setNome($array->nome);
+        $classe->setNome(strtoupper($array->nome));
         $classe->setData_nascimento($array->data_nascimento);
         $classe->setCpf($array->cpf);
         $classe->setData_admissao($array->data_admissao);
         $classe->setEmail($array->email);
-        $classe->setEndereco($array->endereco);
+        $classe->setEndereco(strtoupper($array->endereco));
 
         return $classe;
     }
@@ -59,7 +59,7 @@
     function pesquisa($array) {
         $consulta = recebeJson($array);
         $f = new FuncionarioDAO(NULL);
-        enviaJson($f->select($consulta->getNome()));
+        enviaJson($f->select(strtoupper($consulta->getNome())));
     }
     /*$f = new FuncionarioDAO(null);
     enviaJson($f->select('LEONARDO'));*/

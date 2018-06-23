@@ -26,10 +26,10 @@
         
 
         $classe->setId($array->id);
-        $classe->setNome($array->nome);
+        $classe->setNome(strtoupper($array->nome));
         $classe->setData_nascimento($array->data_nascimento);
         $classe->setCpf($array->cpf);
-        $classe->setEndereco($array->endereco);
+        $classe->setEndereco(strtoupper($array->endereco));
 
         
 
@@ -59,7 +59,7 @@
     function pesquisa($array) {
         $consulta = recebeJson($array);
         $f = new ClienteDAO(NULL);
-        enviaJson($f->select($consulta->getNome()));
+        enviaJson($f->select(strtoupper($consulta->getNome())));
     }
     
 ?>
