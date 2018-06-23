@@ -1,21 +1,22 @@
 <?php
-    include_once '..\model\vo\funcionario.php';
-    @include '..\model\dao\ClasseDao.php';
-    include_once '..\Interfaces\IController.php';
+
+    #include_once '..\model\vo\funcionario.php';
+    @include_once '..\model\dao\FuncionarioDAO.php';
+   # include_once '..\Interfaces\IDAO.php';
    
     if(file_get_contents('php://input')){
        $json = file_get_contents('php://input');
        $array = json_decode($this->json);
-       if($array->operacao == 1){
+       if($array->operacao == '1'){
            cadastrar($array);
        }
-       if($array->operacao == 2){
+       if($array->operacao == '2'){
            atualizar($array);
        }
-       if($array->operacao == 3){
+       if($array->operacao == '3'){
            excluir($array);
        }
-       if($array->operacao ==4){
+       if($array->operacao =='4'){
            pesquisa($array);
        }
     }
@@ -62,6 +63,7 @@
         $f = new funcionarioDAO(NULL);
         enviaJson($f->select($consulta->getNome()));
     }
-
+    $f = new FuncionarioDAO(null);
+    enviaJson($f->select('LEONARDO'));
 ?>
 
