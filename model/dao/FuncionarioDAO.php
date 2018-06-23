@@ -14,7 +14,7 @@
 
         public function insert() {
             
-            $stmt = $this->conn->prepare("CALL insert_funcionario (':nome', ':data_nasc', ':cpf', ':email', ':data_admi' )");
+            $stmt = $this->conn->prepare("CALL insert_funcionario (':nome', ':data_nasc', ':cpf', ':email', ':data_admi',':endereco' )");
             $a = $this->classe->getNome();
             $stmt->bindParam(":nome", $a);
             $b = $this->classe->getData_nascimento();
@@ -25,6 +25,8 @@
             $stmt->bindParam(":email", $d);
             $e = $this->classe->getData_adimissao();
             $stmt->bindParam(":data_admi", $e);
+            $f = $this->classe->getEndereco();
+            $stmt->bindParam(":endereco",$f);
           
             $stmt->execute();
             
@@ -39,7 +41,7 @@
         }
 
         public function update() {
-            $stmt = $this->conn->prepare("CALL update_funcionario (:id,':nome', ':data_nasc', ':cpf', ':email' , ':data_admi' )");
+            $stmt = $this->conn->prepare("CALL update_funcionario (:id,':nome', ':data_nasc', ':cpf', ':email' , ':data_admi',':endereco' )");
             $id = $this->classe->getId();
             $stmt->bindParam(":id",$id);
             $a = $this->classe->getNome();
@@ -52,6 +54,8 @@
             $stmt->bindParam(":email", $d);
             $e = $this->classe->getData_adimissao();
             $stmt->bindParam(":data_admi", $e);
+            $f = $this->classe->getEndereco();
+            $stmt->bindParam(":endereco",$f);
           
             $stmt->execute();
             

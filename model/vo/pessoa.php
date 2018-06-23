@@ -1,5 +1,5 @@
 <?php
-    include_once 'enderecos.php';
+    
     
     class Pessoa{
         
@@ -10,7 +10,7 @@
         private $endereco;
         
         function __construct() {
-          $this->endereco = new Endereco();
+          
         }
 
         
