@@ -1,7 +1,8 @@
 <?php
 
+ 
     #include_once '..\model\vo\funcionario.php';
-    @include_once '..\model\dao\ClienteDAO.php';
+    @include_once '..\model\dao\UsuarioDAO.php';
    # include_once '..\Interfaces\IDAO.php';
    
     if(file_get_contents('php://input')){
@@ -22,14 +23,14 @@
     }
     function recebeJson($array){
             
-        $classe = new Cliente();
-        
-
+        $classe = new Usuario();
+       
         $classe->setId((int)$array->id);
-        $classe->setNome(strtoupper($array->nome));
-        $classe->setData_nascimento($array->data_nascimento);
-        $classe->setCpf($array->cpf);
-        $classe->setEndereco(strtoupper($array->endereco));
+        $classe->setLogin($array->login);
+        $classe->setSenha($array->senha);
+        $classe->setIdFuncionario((int)$array->id_funcionario);
+        $classe->setPermissao((int)$array->id_permissao);
+        
 
         
 
@@ -42,25 +43,25 @@
     }
 
     function atualizar($array) {
-        $f  = new ClienteDAO(recebeJson($array));
+        $f  = new UsuarioDAO(recebeJson($array));
         $f->update();
     }
 
     function cadastrar($array) {
-       $f  = new ClienteDAO(recebeJson($array));
+       $f  = new UsuarioDAO(recebeJson($array));
        $f->insert();
     }
 
     function excluir($array) {
-       $f  = new ClienteDAO(recebeJson($array));
+       $f  = new UsuarioDAO(recebeJson($array));
        $f->delete();
     }
 
     function pesquisa($array) {
         $consulta = recebeJson($array);
-        $f = new ClienteDAO(NULL);
+        $f = new UsuarioDAO(NULL);
         enviaJson($f->select(strtoupper($consulta->getNome())));
     }
-    
-?>
 
+
+?>

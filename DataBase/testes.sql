@@ -1,7 +1,5 @@
-call insert_endereco('RUA', 2,'kk', 'kk', 'parana');
 
-call insert_funcionario('LEONARDO','2008-10-10', "55", "LSSA", '2008-10-10',"rua");
-
+call insert_funcionario ('VIVIANE','2008-10-10', "55", "LSSA", '2008-10-10', "rua");
 call select_funcionario('LEONARDO');
 call update_funcionario(1,'LEONARDO N','2008-10-10', "55", "LSSA", '2008-10-10');
 

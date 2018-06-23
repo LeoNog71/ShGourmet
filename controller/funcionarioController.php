@@ -25,7 +25,7 @@
         $classe = new Funcionario();
         
 
-        $classe->setId($array->id);
+        $classe->setId((int)$array->id);
         $classe->setNome(strtoupper($array->nome));
         $classe->setData_nascimento($array->data_nascimento);
         $classe->setCpf($array->cpf);

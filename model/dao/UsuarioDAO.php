@@ -2,10 +2,10 @@
     
     @include_once '..\vo\usuario.php';
 
-    
-
     class UsuarioDAO {
         
+        private $classe;
+        private $conn;
         public function __construct($classe) {
             $this->classe = $classe;
             $this->conn = new PDO("mysql:dbname=shgourmet;host=127.0.0.1", "shgourmet", "");
@@ -13,15 +13,15 @@
 
         public function insert() {
             
-            $stmt = $this->conn->prepare("CALL insert_usuario(':login', ':senha', :permissao, :funcionario )");
+            $stmt = $this->conn->prepare("CALL insert_usuario(':login', ':senha', :permissao, :id_funcionario )");
             $a = $this->classe->getLogin();
             $stmt->bindParam(":login", $a);
             $b = $this->classe->getSenha();
             $stmt->bindParam(":senha", $b);
             $c = $this->classe->getPermissao();
             $stmt->bindParam(":permissao", $c);
-            $d = $this->classe->getFuncionario();
-            $stmt->bindParam(":funcionario", $d);
+            $d = $this->classe->getIdFuncionario();
+            $stmt->bindParam(":id_funcionario",(int) $d);
             $stmt->execute();
             
         }
@@ -57,56 +57,5 @@
             $stmt->execute();
         }
     }
-    class EnderecoDAO implements IDAO{
-        
-        public function __construct($classe) {
-            parent::__construct($classe);
-        }
-        
-        public function delete() {
-        
-        }
-
-        public function insert() {
-            
-            $stmt = $this->conn->prepare("CALL insert_endereco(':rua', ':numero', :bairro, :cidade )");
-            $a = $this->classe->getRua();
-            $stmt->bindParam(":rua", $a);
-            $b = $this->classe->getNumero();
-            $stmt->bindParam(":numero", $b);
-            $c = $this->classe->getBairro();
-            $stmt->bindParam(":bairro", $c);
-            $d = $this->classe->getCidade();
-            $stmt->bindParam(":cidade", $d);
-            
-            $stmt->execute();
-            
-        }
-
-        public function select($consulta) {
-            $stmt = $this->conn->prepare("CALL select_endereco('".$consulta."')");
-            $stmt->execute();  
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            return $result;
-        }
-
-        public function update() {
-            
-            $stmt = $this->conn->prepare("CALL update_endereco(:id,':rua', ':numero', :bairro, :cidade )");
-            $id = $this->classe->getId();
-            $stmt->bindParam(":id",$id);
-            $a = $this->classe->getRua();
-            $stmt->bindParam(":rua", $a);
-            $b = $this->classe->getNumero();
-            $stmt->bindParam(":numero", $b);
-            $c = $this->classe->getBairro();
-            $stmt->bindParam(":bairro", $c);
-            $d = $this->classe->getCidade();
-            $stmt->bindParam(":cidade", $d);
-            
-            $stmt->execute();
-        }
-
-    }
+ 
 ?>

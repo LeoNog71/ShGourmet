@@ -1,7 +1,8 @@
 <?php
  include_once '..\vo\cliente.php';
-    class ClienteDAO extends CrudDao{
-
+    class ClienteDAO {
+            private $classe;
+            private $conn;
             public function __construct($classe) {
                 $this->classe = $classe;
                 $this->conn = new PDO("mysql:dbname=shgourmet;host=127.0.0.1", "shgourmet", "");

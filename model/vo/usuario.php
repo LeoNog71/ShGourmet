@@ -1,15 +1,15 @@
 <?php
-    include_once 'funcionario.php';
-    class Usuario extends Funcionario{
+    include_once 'idFuncionario.php';
+    class Usuario extends idFuncionario{
         private $id;
         private $login;
         private $senha;
         private $permissao;
-        private $funcionario;
+        private $IdidFuncionario;
         
-        function __construct($funcionario) {
-            $this->funcionario = $funcionario;
-            $this->login = funcionario.getEmail();
+        function __construct($idFuncionario) {
+            $this->idFuncionario = $idFuncionario;
+            $this->login = idFuncionario.getEmail();
         }
         function getId() {
             return $this->id;
@@ -27,8 +27,8 @@
             return $this->permissao;
         }
 
-        function getFuncionario() {
-            return $this->funcionario;
+        function getIdFuncionario() {
+            return $this->idFuncionario;
         }
 
         function setId($id) {
@@ -47,8 +47,8 @@
             $this->permissao = $permissao;
         }
 
-        function setFuncionario($funcionario) {
-            $this->funcionario = $funcionario;
+        function setIdFuncionario($idFuncionario) {
+            $this->idFuncionario = $idFuncionario;
         }
 
 

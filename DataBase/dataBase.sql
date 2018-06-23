@@ -2,23 +2,14 @@ drop schema shgourmet;
 create schema shgourmet;
 use shgourmet;
 
-create table if not exists endereco(
-	id Integer auto_increment primary key,
-    rua varchar(200) not null,
-    numero Integer not null,
-    bairro varchar(50) not null,
-    cidade varchar(50) not null,
-    estado varchar(50) not null
-    
-);
+
 create table if not exists pessoa(
 	id Integer auto_increment primary key,
     nome varchar(200) not null,
     data_nascimento date not null,
 	situacao boolean not null,
-    id_endereco Integer not null,
-    FOREIGN KEY (id_endereco)     
-	REFERENCES endereco (id)
+    endereco varchar(500) not null
+
 );
 create table if not exists funcionario(
 	id Integer auto_increment primary key,
@@ -152,10 +143,8 @@ create table if not exists produto_venda(
 
 create table if not exists entrega(
 	id integer auto_increment primary key not null,
-    id_endereco integer not null,
+    endereco varchar(500) not null,
     id_venda integer not null,
-    foreign key (id_venda) references venda (id),
-    foreign key (id_endereco) references endereco (id),
     foreign key (id_venda) references venda (id)
 );
 create table if not exists pedidos(
@@ -186,54 +175,21 @@ create table if not exists livro_caixa(
     foreign key (id_livro_caixa) references livro_caixa (id)
  );
  
- /*endereco*/
- DELIMITER $$
-CREATE PROCEDURE insert_endereco(in rua_e varchar(200), in numero_e integer, in bairro_e varchar(50), in cidade_e varchar(50), in estado_e varchar(50))
-BEGIN
-	INSERT INTO endereco(rua, numero, bairro, cidade, estado)
-	VALUES(rua_e, numero_e, bairro_e, cidade_e, estado_e);
-END $$
-DELIMITER ;
-
-DELIMITER $$
-CREATE PROCEDURE update_endereco(in id_e int, in rua_e varchar(200), in numero_e integer, in bairro_e varchar(50), in cidade_e varchar(50), in estado_e varchar(50))
-BEGIN
-	UPDATE endereco
-	SET
-	`rua` = rua_e,
-	`numero` = numero_e,
-	`bairro` = bairro_e,
-	`cidade` = cidade_e,
-	`estado` = estado_e
-	WHERE `id` = id_e;
-
-END $$
-DELIMITER ;
-
-CREATE PROCEDURE select_endereco(in rua_e varchar(200), in numero_e integer)
-BEGIN
-	
-	select *from endereco 
-    where rua = rua_e 
-    and numero = numero_e
-
-END $$
-DELIMITER ;
  
  /*funcionario*/
 DELIMITER $$
-CREATE PROCEDURE insert_funcionario (in nome_f varchar(50),in data_nasc_f date, in cpf_f varchar(15), in email_f varchar(50), in data_admi_f date)
+CREATE PROCEDURE insert_funcionario (in nome_f varchar(50),in data_nasc_f date, in cpf_f varchar(15), in email_f varchar(50), in data_admi_f date, in endereco_f varchar(500))
 BEGIN
 
-	INSERT INTO pessoa(nome, data_nascimento,id_endereco,situacao)
-		VALUES(nome_f,data_nasc_f,((SELECT ID FROM endereco ORDER BY ID DESC LIMIT 1)),true);
+	INSERT INTO pessoa(nome, data_nascimento,endereco,situacao)
+		VALUES(nome_f,data_nasc_f,endereco_f,true);
 
 	INSERT INTO funcionario(data_de_admissao,cpf,email,id_pessoa)
 	values (data_admi_f,cpf_f,email_f,(SELECT ID FROM pessoa ORDER BY ID DESC LIMIT 1));
 
 END $$
 DELIMITER ;
-
+pessoa
 DELIMITER $$
 CREATE PROCEDURE select_funcionario(in nome_f varchar(50))
 BEGIN
@@ -244,26 +200,22 @@ BEGIN
 	funcionario.cpf,
 	funcionario.data_de_admissao,
 	funcionario.email,
-    pessoa.id_endereco,
-	endereco.rua,
-	endereco.numero,
-	endereco.cidade,
-	endereco.estado 
+    pessoa.endereco
 	from pessoa
 	left join funcionario on pessoa.id = funcionario.id_pessoa
-	inner join endereco on endereco.id = pessoa.id_endereco 
 	where pessoa.nome = nome_f AND pessoa.situacao = true;
 END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE update_funcionario(in id_f int, in nome_f varchar(50),in data_nasc_f date, in cpf_f varchar(15), in email_f varchar(50), in data_admi_f date)
+CREATE PROCEDURE update_funcionario(in id_f int, in nome_f varchar(50),in data_nasc_f date, in cpf_f varchar(15), in email_f varchar(50), in data_admi_f date, endereco_f varchar(500))
 BEGIN
 
 	UPDATE pessoa
 	SET
 	nome = nome_f,
-	data_nascimento = data_nasc_f
+	data_nascimento = data_nasc_f,
+    endereco = endereco_f
 	WHERE id = id_f;
     
     UPDATE funcionario
@@ -288,11 +240,11 @@ DELIMITER ;
 
 /*cliente*/
 DELIMITER $$
-CREATE PROCEDURE insert_cliente (in nome_c varchar(50),in data_nasc_c date, in cpf_c varchar(14))
+CREATE PROCEDURE insert_cliente (in nome_c varchar(50),in data_nasc_c date, in cpf_c varchar(14), in endereco_c varchar(500))
 BEGIN
 
-	INSERT INTO pessoa(nome, data_nascimento,id_endereco,situacao)
-		VALUES(nome_c,data_nasc_c,((SELECT ID FROM endereco ORDER BY ID DESC LIMIT 1)),true);
+	INSERT INTO pessoa(nome, data_nascimento,endereco,situacao)
+		VALUES(nome_c,data_nasc_c,endereco_c,true);
 
 	INSERT INTO cliente(cpf,id_pessoa)
 		values (cpf_c,(SELECT ID FROM pessoa ORDER BY ID DESC LIMIT 1));
@@ -314,19 +266,19 @@ BEGIN
 	endereco.estado 
 	from pessoa 
 	left join cliente on pessoa.id = cliente.id_pessoa
-	inner join endereco on endereco.id = pessoa.id_endereco 
 	where pessoa.nome = nome_c AND pessoa.situacao = true;
 END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE update_cliente(in id_c int, in nome_c varchar(50),in data_nasc_c date, in cpf_c varchar(14))
+CREATE PROCEDURE update_cliente(in id_c int, in nome_c varchar(50),in data_nasc_c date, in cpf_c varchar(14),in endereco_c varchar(500))
 BEGIN
 
 	UPDATE pessoa
 	SET
 	nome = nome_c,
-	data_nascimento = data_nasc_c
+	data_nascimento = data_nasc_c,
+    endereco = endereco_c
 	WHERE id = id_c;
     
     UPDATE cliente
@@ -406,12 +358,36 @@ END $$
 DELIMITER ;
 /*bebida*/
 DELIMITER $$
-CREATE PROCEDURE insert_bebida(nome_p varchar(50), descricao_p varchar(300), preco_venda_p double, quantidade_p integer, preco_compra_p double,fonecedor_p varchar(50),marca_b varchar(50), tamanho_b varchar(10))
+CREATE PROCEDURE insert_bebida(in nome_p varchar(50), in descricao_p varchar(300), in preco_venda_p double, in quantidade_p integer, in preco_compra_p double, in fornecedor_p varchar(50), in marca_b varchar(50), in tamanho_b varchar(10))
 BEGIN
 	INSERT INTO produtos(nome, descricao, preco_venda, quantidade, preco_compra, disponivel, fornecedor)
 		VALUES(nome_p, descricao_p, preco_venda_p, quantidade_p, preco_compra_p, true, fornecedor_p);
 	INSERT INTO bebida (marca, tamanho, id_produto)
 		VALUES (marca_b, tamanho_b,(SELECT id FROM produtos ORDER BY id DESC LIMIT 1) );
+
+END $$
+DELIMITER ;
+DELIMITER $$
+CREATE PROCEDURE update_bebida(in id_b int, in nome_p varchar(50), in descricao_p varchar(300), in preco_venda_p double, in quantidade_p integer, in preco_compra_p double, in fornecedor_p varchar(50), in marca_b varchar(50), in tamanho_b varchar(10))
+BEGIN
+	
+    UPDATE produtos
+	SET
+	`nome` = nome_p,
+	`descricao` = descricao_p,
+	`preco_venda` = preco_venda_p,
+	`quantidade` = quantidade_p,
+	`preco_compra` = preco_compra_p,
+	`fornecedor` = fornecedor_p
+	WHERE `id` = id_b ;
+
+
+	UPDATE bebida
+	SET
+	`marca` = marca_b,
+	`tamanho` = tamanho_b
+	WHERE `id` = id_b;
+
 
 END $$
 DELIMITER ;
