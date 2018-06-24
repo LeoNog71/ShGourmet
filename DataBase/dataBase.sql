@@ -367,6 +367,7 @@ BEGIN
 
 END $$
 DELIMITER ;
+
 DELIMITER $$
 CREATE PROCEDURE update_bebida(in id_b int, in nome_p varchar(50), in descricao_p varchar(300), in preco_venda_p double, in quantidade_p integer, in preco_compra_p double, in fornecedor_p varchar(50), in marca_b varchar(50), in tamanho_b varchar(10))
 BEGIN
@@ -407,10 +408,59 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE insert_suco(sabor_s varchar(20))
+CREATE PROCEDURE insert_suco(in nome_p varchar(50), in descricao_p varchar(300), in preco_venda_p double, in quantidade_p integer, in preco_compra_p double, in fornecedor_p varchar(50), in marca_b varchar(50), in tamanho_b varchar(10),sabor_s varchar(20))
 BEGIN
+	INSERT INTO produtos(nome, descricao, preco_venda, quantidade, preco_compra, disponivel, fornecedor)
+		VALUES(nome_p, descricao_p, preco_venda_p, quantidade_p, preco_compra_p, true, fornecedor_p);
+	INSERT INTO bebida (marca, tamanho, id_produto)
+		VALUES (marca_b, tamanho_b,(SELECT id FROM produtos ORDER BY id DESC LIMIT 1) );
 	INSERT INTO suco (sabor,id_bebida)
 		values (sabor_s, (SELECT id FROM bebida ORDER BY id DESC LIMIT 1));
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE select_suco(in nome_s varchar(50))
+BEGIN
+
+	SELECT suco.id, produtos.nome, produtos.descricao,suco.sabor,
+    produtos.preco_venda,produtos.quantidade, produtos.fornecedor,
+    bebida.marca
+    FROM suco
+    JOIN bebida on bebida.id = suco.id_bebida
+    left join produtos on produtos.id = bebida.id_produto
+    Where produtos.nome = nome_s;
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE update_suco(in id_s int, in nome_p varchar(50), in descricao_p varchar(300), in preco_venda_p double, in quantidade_p integer, in preco_compra_p double, in fornecedor_p varchar(50), in marca_b varchar(50), in tamanho_b varchar(10),sabor_s varchar(20))
+BEGIN
+	
+    UPDATE produtos
+	SET
+	`nome` = nome_p,
+	`descricao` = descricao_p,
+	`preco_venda` = preco_venda_p,
+	`quantidade` = quantidade_p,
+	`preco_compra` = preco_compra_p,
+	`fornecedor` = fornecedor_p
+	WHERE `id` = id_s ;
+
+
+	UPDATE bebida
+	SET
+	`marca` = marca_b,
+	`tamanho` = tamanho_b
+	WHERE `id` = id_s;
+	
+    UPDATE `shgourmet`.`suco`
+	SET
+	`sabor` = sabor_s
+	WHERE `id` = id_s;
+
+
 END $$
 DELIMITER ;
 

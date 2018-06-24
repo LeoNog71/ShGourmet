@@ -2,7 +2,7 @@
 
  
     #include_once '..\model\vo\funcionario.php';
-    @include_once '..\model\dao\BebidaDAO.php';
+    @include_once '..\model\dao\SucoDAO.php';
    # include_once '..\Interfaces\IDAO.php';
    
     if(file_get_contents('php://input')){
@@ -20,20 +20,13 @@
     }
     function recebeJson($array){
             
-        $classe = new Bebida();
+        $classe = new suco();
        
-       $classe->setNome($array->nome);
-       $classe->setDescricao($array->descricao);
-       $classe->setPreco_venda((double)$array->preco_venda);
-       $classe->setQuantidade((int)$array->quantidade);
-       
-       $classe->setPreco_compra((double));
-        $f = $this->classe->getFornecedor();
-        $stmt->bindParam(":fornecedor", $f);
-        $g = $this->classe->getMarca();
-        $stmt->bindParam(":marca", $g);
-        $h = $this->classe->getTamanho();
-        $stmt->bindParam(":tamanho", $h);
+        $classe->setId((int)$array->id);
+        $classe->setNome($array->nome);
+        $classe->setDescricao($array->descricao);
+        $classe->setIdFuncionario((int)$array->id_funcionario);
+        $classe->setPermissao((int)$array->id_permissao);
         
 
         
@@ -63,7 +56,7 @@
 
     function pesquisa($array) {
         $consulta = recebeJson($array);
-        $f = new BeibidaDAO(NULL);
+        $f = new SucoDAO(NULL);
         enviaJson($f->select(strtoupper($consulta->getNome())));
     }
 
