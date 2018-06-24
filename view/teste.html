@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script type="text/javascript">
+		
+		var app = angular.module('aplication', []);
+		app.controller('func',['$scope' , '$http' , function($scope, $http){
+				
+				$scope.enviar = function(){
+					
+					$http.post('http://localhost/Shgourmet/controller/funcionarioController.php', {data : {funcionario : {
+							id : '',
+							nome : 'LEONARDO',
+							email : 'aaa@aaaa.com',
+							cpf : '10646286994',
+							data_admissao : '1997-12-12',
+							data_nascimento : '1997-12-12',
+							operacao : '1',
+							endereco : 'rua rio de janeiro'
+						}}
+					}).then(function mySucess(response){
+						alert('bug');
+						console.log(response);
+						
+
+					}, function myError(response){
+						console.log(response)
+						console.log('cu');
+					});
+			}	;
+		}]);
+	</script>
+</head>
+<body >
+	<div ng-app="aplication" ng-controller="func">
+		<input type="button" value="Enviar" ng-click="enviar()" />
+	</div>
+</body>
+</html>
