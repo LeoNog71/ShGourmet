@@ -11,7 +11,7 @@
 				
 				$scope.enviar = function(){
 					
-					$http.post('http://localhost/Shgourmet/controller/funcionarioController.php', {data : {funcionario : {
+					$http.post('http://localhost/Shgourmet/controller/funcionarioController.php', {
 							id : '',
 							nome : 'LEONARDO',
 							email : 'aaa@aaaa.com',
@@ -20,7 +20,7 @@
 							data_nascimento : '1997-12-12',
 							operacao : '1',
 							endereco : 'rua rio de janeiro'
-						}}
+						
 					}).then(function mySucess(response){
 						alert('bug');
 						console.log(response);

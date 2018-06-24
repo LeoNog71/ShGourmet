@@ -19,7 +19,7 @@
             return $this->id;
         }
 
-        function getData_adimissao() {
+        function getData_admissao() {
             return $this->data_adimissao;
         }
 
@@ -35,7 +35,7 @@
             $this->id = $id;
         }
 
-        function setData_adimissao($data_adimissao) {
+        function setData_admissao($data_adimissao) {
             $this->data_adimissao = $data_adimissao;
         }
 
