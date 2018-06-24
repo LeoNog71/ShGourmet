@@ -1,11 +1,5 @@
 
 call insert_funcionario ('VIVIANE','2008-10-10', "55", "LSSA", '2008-10-10', "rua");
-call select_funcionario('LEONARDO');
-call update_funcionario(1,'LEONARDO N','2008-10-10', "55", "LSSA", '2008-10-10');
-
-call insert_endereco('RUA', 3,'kk', 'kk', 'parana');
-
-call insert_cliente('LEONARDO','2008-10-10', "55");
 call insert_suco('SUCO NATURAL', 'SUCO DE FRUTA', 5.00, 1, 3.50, 'PROPRIO','DA CASA', 'UNICO','LARANJA');
 
 

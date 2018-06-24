@@ -63,17 +63,8 @@ create table if not exists suco(
     id_bebida Integer not null,
     foreign key (id_bebida) references bebida (id)
 );
-create table if not exists adicionais(
-	id integer auto_increment primary key,
-    id_produtos integer not null,
-    foreign key (id_produtos) references produtos (id)
-);
-create table if not exists adicionais_suco(
-	id_suco integer not null,
-    id_adicionais integer not null,
-    foreign key (id_suco) references suco (id),
-    foreign key (id_adicionais) references adicionais (id)
-);
+
+
 
 create table if not exists lanche(
 	id integer auto_increment primary key,
@@ -81,12 +72,6 @@ create table if not exists lanche(
     foreign key (id_produto) references produtos (id)
 );
 
-create table if not exists adicionais_lache(
-	id_adicionais integer not null,
-    id_lanche integer not null,
-    foreign key (id_adicionais) references adicionais (id),
-    foreign key (id_lanche) references lanche (id)
-);
 
 create table if not exists sabor_pizza(
 	id integer auto_increment primary key,
@@ -95,7 +80,6 @@ create table if not exists sabor_pizza(
 );
 create table if not exists pizza(
 	id integer auto_increment primary key,
-    tamanho varchar(10) not null,
     id_produtos integer not null,
     foreign key (id_produtos) references produtos (id)
     
