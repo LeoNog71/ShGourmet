@@ -1,4 +1,4 @@
-drop schema shgourmet;
+/*drop schema if exists shgourmet;*/
 create schema shgourmet;
 use shgourmet;
 
