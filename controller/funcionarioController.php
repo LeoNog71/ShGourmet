@@ -1,10 +1,10 @@
 <?php
 
-    #include_once '..\model\vo\funcionario.php';
+    @include_once '..\model\vo\funcionario.php';
     @include_once '..\model\dao\FuncionarioDAO.php';
    # include_once '..\Interfaces\IDAO.php';
    
-    if(file_get_contents('php://input')){
+      
        $json = file_get_contents('php://input');
        $array = json_decode($json);
        if($array->operacao == '1'){
@@ -19,7 +19,7 @@
        if($array->operacao =='4'){
            pesquisa($array);
        }
-    }
+    
     function recebeJson($array){
             
         $classe = new Funcionario();

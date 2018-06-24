@@ -14,7 +14,7 @@
 
         public function insert() {
             
-            $stmt = $this->conn->prepare("CALL insert_funcionario (':nome', ':data_nasc', ':cpf', ':email', ':data_admi',':endereco' )");
+            $stmt = $this->conn->prepare("CALL insert_funcionario (:nome, :data_nasc, :cpf, :email, :data_admi,:endereco )");
             $a = $this->classe->getNome();
             $stmt->bindParam(":nome", $a);
             $b = $this->classe->getData_nascimento();
@@ -23,7 +23,7 @@
             $stmt->bindParam(":cpf", $c);
             $d = $this->classe->getEmail();
             $stmt->bindParam(":email", $d);
-            $e = $this->classe->getData_adimissao();
+            $e = $this->classe->getData_admissao();
             $stmt->bindParam(":data_admi", $e);
             $f = $this->classe->getEndereco();
             $stmt->bindParam(":endereco",$f);
