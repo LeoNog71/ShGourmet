@@ -9,7 +9,7 @@
         
         public function __construct($classe) {
             $this->classe = $classe;
-            $this->conn = new PDO("mysql:dbname=shgourmet;host=127.0.0.1", "root", "");
+            $this->conn = new PDO("mysql:dbname=shgourmet;host=127.0.0.1", "shgourmet", "");
         }
 
         public function insert() {

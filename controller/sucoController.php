@@ -20,16 +20,19 @@
     }
     function recebeJson($array){
             
-        $classe = new suco();
+        $classe = new Suco();
        
-        $classe->setId((int)$array->id);
-        $classe->setNome($array->nome);
-        $classe->setDescricao($array->descricao);
-        $classe->setIdFuncionario((int)$array->id_funcionario);
-        $classe->setPermissao((int)$array->id_permissao);
-        
-
-        
+       $classe->setId((int)$array->id);
+       $classe->setNome($array->nome);
+       $classe->setSabor($array->sabor);
+       $classe->setDescricao($array->descricao);
+       $classe->setPreco_venda((double)$array->preco_venda);
+       $classe->setQuantidade((int)$array->quantidade);
+       
+       $classe->setPreco_compra((double)$array->preco_compra);
+       $classe->setFornecedor($array->fornecedor);
+       $classe->setMarca($array->marca);
+       $classe->setTamanho($array->tamanho);
 
         return $classe;
     }

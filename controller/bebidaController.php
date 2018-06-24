@@ -1,7 +1,7 @@
 <?php
 
  
-    #include_once '..\model\vo\funcionario.php';
+    @include_once '..\model\vo\bebida.php';
     @include_once '..\model\dao\BebidaDAO.php';
    # include_once '..\Interfaces\IDAO.php';
    
@@ -20,23 +20,18 @@
     }
     function recebeJson($array){
             
-        $classe = new Bebida();
+       $classe = new Bebida();
        
+       $classe->setId((int)$array->id);
        $classe->setNome($array->nome);
        $classe->setDescricao($array->descricao);
        $classe->setPreco_venda((double)$array->preco_venda);
        $classe->setQuantidade((int)$array->quantidade);
        
-       $classe->setPreco_compra((double));
-        $f = $this->classe->getFornecedor();
-        $stmt->bindParam(":fornecedor", $f);
-        $g = $this->classe->getMarca();
-        $stmt->bindParam(":marca", $g);
-        $h = $this->classe->getTamanho();
-        $stmt->bindParam(":tamanho", $h);
-        
-
-        
+       $classe->setPreco_compra((double)$array->preco_compra);
+       $classe->setFornecedor($array->fornecedor);
+       $classe->setMarca($array->marca);
+       $classe->setTamanho($array->tamanho);
 
         return $classe;
     }
@@ -47,17 +42,17 @@
     }
 
     function atualizar($array) {
-        $f  = new UsuarioDAO(recebeJson($array));
+        $f  = new BebidaDAO(recebeJson($array));
         $f->update();
     }
 
     function cadastrar($array) {
-       $f  = new UsuarioDAO(recebeJson($array));
+       $f  = new BebidaAO(recebeJson($array));
        $f->insert();
     }
 
     function excluir($array) {
-       $f  = new UsuarioDAO(recebeJson($array));
+       $f  = new BebidaDAO(recebeJson($array));
        $f->delete();
     }
 
