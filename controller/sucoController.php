@@ -1,7 +1,7 @@
 <?php
 
  
-    #include_once '..\model\vo\funcionario.php';
+    @include_once '..\model\vo\suco.php';
     @include_once '..\model\dao\SucoDAO.php';
    # include_once '..\Interfaces\IDAO.php';
    

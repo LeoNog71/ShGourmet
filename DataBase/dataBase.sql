@@ -1,4 +1,4 @@
-/*drop schema if exists shgourmet;*/
+drop schema if exists shgourmet;
 create schema shgourmet;
 use shgourmet;
 
@@ -81,6 +81,7 @@ create table if not exists sabor_pizza(
 create table if not exists pizza(
 	id integer auto_increment primary key,
     id_produtos integer not null,
+	tamanho varchar(10) not null,
     foreign key (id_produtos) references produtos (id)
     
 );
@@ -449,22 +450,78 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE insert_adicionais()
+CREATE PROCEDURE insert_lanche(in nome_p varchar(50), in descricao_p varchar(300), in preco_venda_p double, in quantidade_p integer, in preco_compra_p double, in fornecedor_p varchar(50))
 BEGIN
-	INSERT INTO adicionais(id_produto)
-		VALUES ((SELECT id FROM produto ORDER BY id DESC LIMIT 1));
+	INSERT INTO produtos(nome, descricao, preco_venda, quantidade, preco_compra, disponivel, fornecedor)
+		VALUES(nome_p, descricao_p, preco_venda_p, quantidade_p, preco_compra_p, true, fornecedor_p);
+	INSERT INTO lanche(id_produto)
+		VALUES((SELECT id FROM produtos ORDER BY id DESC LIMIT 1));
 END $$
 DELIMITER ;
-/*
+
 DELIMITER $$
-CREATE PROCEDURE insert_
+CREATE PROCEDURE update_lanche(in id_l int, in nome_p varchar(50), in descricao_p varchar(300), in preco_venda_p double, in quantidade_p integer, in preco_compra_p double, in fornecedor_p varchar(50))
 BEGIN
-	INSERT INTO 
+	
+	UPDATE produtos
+	SET
+	`nome` = nome_p,
+	`descricao` = descricao_p,
+	`preco_venda` = preco_venda_p,
+	`quantidade` = quantidade_p,
+	`preco_compra` = preco_compra_p,
+	`fornecedor` = fornecedor_p
+	WHERE `id` = id_l ;
 
 END $$
 DELIMITER ;
 
-*/
+
+DELIMITER $$
+CREATE PROCEDURE select_lanche(in nome_l varchar(50))
+BEGIN
+	SELECT lanche.id, produtos.nome, produtos.descricao,
+    produtos.preco_venda,produtos.quantidade, produtos.fornecedor
+    from lanche
+    join produtos on produtos.id = lanche.id_produto
+    where produtos.nome = nome_l;
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE insert_pizza(in nome_p varchar(50), in descricao_p varchar(300), in preco_venda_p double, in quantidade_p integer, in preco_compra_p double, in fornecedor_p varchar(50), in tamanho_p varchar(10))
+BEGIN
+	INSERT INTO produtos(nome, descricao, preco_venda, quantidade, preco_compra, disponivel, fornecedor)
+		VALUES(nome_p, descricao_p, preco_venda_p, quantidade_p, preco_compra_p, true, fornecedor_p);
+	INSERT INTO pizza(id_produto,tamanho)
+		VALUES((SELECT id FROM produtos ORDER BY id DESC LIMIT 1), tamanho_p);
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE update_pizza(in id_p int, in nome_p varchar(50), in descricao_p varchar(300), in preco_venda_p double, in quantidade_p integer, in preco_compra_p double, in fornecedor_p varchar(50), in tamanho_p varchar(10))
+BEGIN
+	
+	UPDATE produtos
+	SET
+	`nome` = nome_p,
+	`descricao` = descricao_p,
+	`preco_venda` = preco_venda_p,
+	`quantidade` = quantidade_p,
+	`preco_compra` = preco_compra_p,
+	`fornecedor` = fornecedor_p
+	WHERE `id` = id_p ;
+    
+    UPDATE `shgourmet`.`pizza`
+	SET
+	`tamanho` = tamanho_p
+	WHERE `id` = id_p;
+
+
+END $$
+DELIMITER ;
+
 /*SELECT*/
 
 

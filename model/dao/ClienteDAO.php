@@ -8,7 +8,7 @@
                 $this->conn = new PDO("mysql:dbname=shgourmet;host=127.0.0.1", "shgourmet", "");
             }
             public function insert() {
-                $stmt = $this->conn->prepare("CALL insert_cliente (':nome', ':data_nasc', ':cpf' ':endereco)'");
+                $stmt = $this->conn->prepare("CALL insert_cliente (:nome, :data_nasc, :cpf :endereco);");
                 $a = $this->classe->getNome();
                 $stmt->bindParam(":nome", $a);
                 $b = $this->classe->getData_nascimento();
@@ -31,7 +31,7 @@
             }
 
             public function update() {
-                $stmt = $this->conn->prepare("CALL update_cliente (:id,':nome', ':data_nasc', ':cpf', ':email' , ':data_admi', ':endereco')");
+                $stmt = $this->conn->prepare("CALL update_cliente (:id,:nome, :data_nasc, :cpf, :email , :data_admi, :endereco);");
                 $id = $this->classe->getId();
                 $stmt->bindParam(":id",$id);
                 $a = $this->classe->getNome();

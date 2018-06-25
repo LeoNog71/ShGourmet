@@ -41,7 +41,7 @@
         }
 
         public function update() {
-            $stmt = $this->conn->prepare("CALL update_funcionario (:id,':nome', ':data_nasc', ':cpf', ':email' , ':data_admi',':endereco' )");
+            $stmt = $this->conn->prepare("CALL update_funcionario (:id, :nome, :data_nasc, :cpf, :email , :data_admi, :endereco);");
             $id = $this->classe->getId();
             $stmt->bindParam(":id",$id);
             $a = $this->classe->getNome();

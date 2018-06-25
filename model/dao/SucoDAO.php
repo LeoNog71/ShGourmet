@@ -12,7 +12,7 @@
             }
             public function insert() {
                 
-                $stmt = $this->conn->prepare("call insert_suco(':nome', ':descricao', :preco_venda, :unidade, :preco_compra,':fornecedor',':marca', ':tamanho',':sabor');");
+                $stmt = $this->conn->prepare("call insert_suco(:nome, :descricao, :preco_venda, :unidade, :preco_compra,:fornecedor,:marca,:tamanho,:sabor);");
                 $a = $this->classe->getNome();
                 $stmt->bindParam(":nome", $a);
                 $b = $this->classe->getDescricao();
@@ -45,7 +45,7 @@
             }
 
             public function update() {      
-                $stmt = $this->conn->prepare("call update_suco(:id,':nome', ':descricao', :preco_venda, :unidade, :preco_compra,':fornecedor',':marca', ':tamanho',':sabor');");
+                $stmt = $this->conn->prepare("call update_suco(:id,:nome, :descricao, :preco_venda, :unidade, :preco_compra,:fornecedor,:marca, :tamanho,:sabor);");
                 $id = $this->classe->getId();
                 $stmt->bindParam(":id",(int)$id);
                 $a = $this->classe->getNome();

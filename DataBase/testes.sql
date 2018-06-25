@@ -1,16 +1,17 @@
-
 call insert_funcionario ('VIVIANE','2008-10-10', "55", "LSSA", '2008-10-10', "rua");
-call insert_suco('SUCO NATURAL', 'SUCO DE FRUTA', 5.00, 1, 3.50, 'PROPRIO','DA CASA', 'UNICO','LARANJA');
+call select_funcionario('LEONARDO');
+call update_funcionario(1,'LEONARDO N','2008-10-10', "55", "LSSA", '2008-10-10');
 
+call insert_endereco('RUA', 3,'kk', 'kk', 'parana');
 
-SELECT suco.id, produtos.nome, produtos.descricao,suco.sabor,
-    produtos.preco_venda,produtos.quantidade, produtos.fornecedor,
-    bebida.marca
-    FROM suco
-    JOIN bebida on bebida.id = suco.id_bebida
-    left join produtos on produtos.id = bebida.id_produto
-    Where produtos.nome = 'SUCO NATURAL';
+call insert_cliente('LEONARDO','2008-10-10', "55","rua");
 
+call insert_bebida('SUCO NATURAL', 'SUCO DE FRUTAS NATURAL', 5.00, 100, 3.50,'PROPRIO','CASA', 'UNICO');
+call update_bebida(1,'SUC NATURAL', 'SUCO DE FRUTAS NATURAL', 5.00, 100, 3.50,'PROPRIO','CASA', 'UNICO');
+call select_bebida('SUC NATURAL');
+call insert_lanche('X-SALADA','X-SALADA',8.50,100,5.00,'CASA');
+
+call select_lanche('X-SALADA');
 /*
 call select_cliente('LEONARDO');
 INSERT INTO `shgourmet`.`permissao`

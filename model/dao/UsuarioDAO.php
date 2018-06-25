@@ -13,7 +13,7 @@
 
         public function insert() {
             
-            $stmt = $this->conn->prepare("CALL insert_usuario(':login', ':senha', :permissao, :id_funcionario )");
+            $stmt = $this->conn->prepare("CALL insert_usuario(:login, :senha, :permissao, :id_funcionario )");
             $a = $this->classe->getLogin();
             $stmt->bindParam(":login", $a);
             $b = $this->classe->getSenha();
@@ -35,7 +35,7 @@
         }
         public function update(){
             
-            $stmt = $this->conn->prepare("CALL insert_usuario(:id,':login', ':senha', :permissao, :funcionario )");
+            $stmt = $this->conn->prepare("CALL insert_usuario(:id,:login, :senha, :permissao, :funcionario )");
             $id = $this->classe->getId();
             $stmt->bindParam(":id", $id);
             $a = $this->classe->getLogin();

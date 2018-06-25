@@ -1,6 +1,6 @@
 <?php
 
-    #include_once '..\model\vo\funcionario.php';
+    @include_once '..\model\vo\cliente.php';
     @include_once '..\model\dao\ClienteDAO.php';
    # include_once '..\Interfaces\IDAO.php';
    
