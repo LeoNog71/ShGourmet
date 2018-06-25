@@ -12,7 +12,13 @@
 <script>
   var app = angular.module('funcionario', []);
   app.controller('busca', ['$scope', '$http', function($scope, $http){
-    $scope.enviar = function(){
+    $scope.enviar = function(tipoBusca){
+      var op = '';
+      if(tipoBusca == '1'){
+        op = '4';
+      }else if(tipoBusca == '2'){
+        op = '5'
+      }
       $http.post(
         'http://localhost/Shgourmet/controller/funcionarioController.php',
         {
@@ -22,7 +28,7 @@
 					cpf : '',
 					data_admissao : '',
 					data_nascimento : '',
-					operacao : '4',
+					operacao : op,
 					endereco : ''
         }
       ).then(
@@ -30,14 +36,8 @@
             if(response.data == '\nfalse\n'){
               alert('Nada Encontrado');
             }
-            console.log(response.data)
-            $scope.resposta = response.data
-						$scope.nome = response.data.nome;
-            $scope.nascimento = new Date(response.data.data_nascimento);
-            $scope.admissao = new Date(response.data.data_de_admissao);
-            $scope.endereco = response.data.endereco;
-            $scope.id = response.data.id;
-            $scope.email = response.data.email;
+            console.log(response.data);
+						$scope.resposta = response.data;
 					}, 
           function myError(response){
 						alert('Erro Contate o Administrador!');
@@ -92,14 +92,14 @@
       <h1 class="w3-text-teal">Buscar Funcionário</h1>
       <form ng-controller="busca">
         
-        <select class="w3-select" name="tipoBusca">
+        <select class="w3-select" name="tipoBusca" ng-model="tipoBusca">
           <option value="" disabled selected>Tipo de Busca</option>
           <option value="1">Nome</option>
           <option value="2">CPF</option>
         </select>
         <br>
         <br><input class="w3-input" type="text" name="busca" placeholder="Buscar" ng-model="busca"><br>
-        <button class="w3-btn w3-black w3-hover-white" type="submit" ng-click="enviar()">
+        <button class="w3-btn w3-black w3-hover-white" type="submit" ng-click="enviar(tipoBusca)">
           Buscar!
         </button><br><br>
         <table class="w3-table-all w3-hoverable">
@@ -118,8 +118,8 @@
               <th>{{x.nome}}</th>
               <th>{{x.email}}</th>
               <th>{{x.endereco}}</th>
-              <th>{{x.nascimento | date:"dd/MM/yyyy"}}</th>
-              <th>{{x.admissao | date:"dd/MM/yyyy"}}</th>
+              <th>{{x.data_nascimento | date:"dd/MM/yyyy"}}</th>
+              <th>{{x.data_de_admissao | date:"dd/MM/yyyy"}}</th>
             </tr>
         </table>
       </form>
