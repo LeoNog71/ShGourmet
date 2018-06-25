@@ -31,6 +31,7 @@
               alert('Nada Encontrado');
             }
             console.log(response.data)
+            $scope.resposta = response.data
 						$scope.nome = response.data.nome;
             $scope.nascimento = new Date(response.data.data_nascimento);
             $scope.admissao = new Date(response.data.data_de_admissao);
@@ -52,8 +53,8 @@
   <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
     <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     <a href="#" class="w3-bar-item w3-button w3-theme-l1" id="logo">SH Gourmet</a>
-    <a href="../Pedidos/pedidos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Pedidos</a>
-    <a href="../Cozinha/cozinha.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Cozinha</a>
+    <a href="../Pedidos/ConsultarPedidos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Pedidos</a>
+    <a href="../Cozinha/FilaCozinha.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Cozinha</a>
     <a href="../Produtos/ConsultarProdutos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Produtos</a>
     <a href="ConsultarFuncionario.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Funcionarios</a>
     <a href="../Caixa/caixa.html" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Caixa</a>
@@ -62,8 +63,8 @@
 
 <!-- Barra Superior Responsiva -->
 <div id="navDemo" class="w3-bar-block w3-theme w3-hide w3-hide-large w3-hide-medium w3-large">
-  <a href="../Pedidos/pedidos.html" class="w3-bar-item w3-button w3-hover-white">Pedidos</a>
-  <a href="../Cozinha/cozinha.html" class="w3-bar-item w3-button w3-hover-white">Cozinha</a>
+  <a href="../Pedidos/ConsultarPedidos.html" class="w3-bar-item w3-button w3-hover-white">Pedidos</a>
+  <a href="../Cozinha/FilaCozinha.html" class="w3-bar-item w3-button w3-hover-white">Cozinha</a>
   <a href="../Produtos/ConsultarProdutos.html" class="w3-bar-item w3-button w3-hover-white">Produtos</a>
   <a href="../Funcionarios/ConsultarFuncionario.html" class="w3-bar-item w3-button w3-hover-white">Funcionarios</a>
   <a href="../Caixa/caixa.html" class="w3-bar-item w3-button w3-hover-white">Caixa</a>
@@ -105,20 +106,20 @@
            <thead>
             <tr class="w3-light-grey">
               <th width="30px">ID</th>
-              <th >Nome</th>
-              <th width="50px">Email</th>
-              <th>Endereço</th>
+              <th width="50px">Nome</th>
+              <th width="30px">Email</th>
+              <th width="50px">Endereço</th>
               <th width="50px">Nascimento</th>
               <th width="50px">Admissão</th>
             </tr>
           </thead>
-            <tr>
-              <th>{{id}}</th>
-              <th>{{nome}}</th>
-              <th>{{email}}</th>
-              <th>{{endereco}}</th>
-              <th>{{nascimento | date:"dd/MM/yyyy"}}</th>
-              <th>{{admissao | date:"dd/MM/yyyy"}}</th>
+            <tr ng-repeat="x in resposta">
+              <th>{{x.id}}</th>
+              <th>{{x.nome}}</th>
+              <th>{{x.email}}</th>
+              <th>{{x.endereco}}</th>
+              <th>{{x.nascimento | date:"dd/MM/yyyy"}}</th>
+              <th>{{x.admissao | date:"dd/MM/yyyy"}}</th>
             </tr>
         </table>
       </form>

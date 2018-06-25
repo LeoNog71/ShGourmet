@@ -18,17 +18,17 @@
 							cpf : '10646286994',
 							data_admissao : '1997-12-12',
 							data_nascimento : '1997-12-12',
-							operacao : '1',
+							operacao : '4',
 							endereco : 'rua rio de janeiro'
 						
 					}).then(function mySucess(response){
-						alert('bug');
-						console.log(response);
+						
+						console.log(response.data);
 						
 
 					}, function myError(response){
-						console.log(response)
-						console.log('cu');
+						console.log(response);
+
 					});
 			}	;
 		}]);

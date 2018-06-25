@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>SH Gourmet - Produtos</title>
+<title>SH Gourmet - Pedidos</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -15,19 +15,19 @@
   <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
     <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     <a href="#" class="w3-bar-item w3-button w3-theme-l1" id="logo">SH Gourmet</a>
-    <a href="../Pedidos/ConsultarPedidos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Pedidos</a>
+    <a href="ConsultarPedidos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Pedidos</a>
     <a href="../Cozinha/FilaCozinha.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Cozinha</a>
-    <a href="ConsultarProdutos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Produtos</a>
+    <a href="../Produtos/ConsultarProdutos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Produtos</a>
     <a href="../Funcionario/ConsultarFuncionario.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Funcionarios</a>
-    <a href="../Caixa/caixa.html" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Caixa</a>
+    <a href="../caixa/caixa.html" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Caixa</a>
   </div>
 </div>
 
 <!-- Barra Superior Responsiva -->
 <div id="navDemo" class="w3-bar-block w3-theme w3-hide w3-hide-large w3-hide-medium w3-large">
-  <a href="../Pedidos/ConsultarPedidos.html" class="w3-bar-item w3-button w3-hover-white">Pedidos</a>
+  <a href="pedidos.html" class="w3-bar-item w3-button w3-hover-white">Pedidos</a>
   <a href="../Cozinha/FilaCozinha.html" class="w3-bar-item w3-button w3-hover-white">Cozinha</a>
-  <a href="ConsultarProdutos.html" class="w3-bar-item w3-button w3-hover-white">Produtos</a>
+  <a href="../Produtos/ConsultarProdutos.html" class="w3-bar-item w3-button w3-hover-white">Produtos</a>
   <a href="../Funcionarios/ConsultarFuncionario.html" class="w3-bar-item w3-button w3-hover-white">Funcionarios</a>
   <a href="../Caixa/caixa.html" class="w3-bar-item w3-button w3-hover-white">Caixa</a>
 </div>
@@ -35,12 +35,12 @@
 
 <!-- Barra Lateral -->
 <nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l1 w3-animate-left" id="mySidebar">
-  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-small w3-hover-white w3-hide-large" title="Close Menu">
     <i class="fa fa-remove"></i>
   </a>
-  <h4 class="w3-bar-item"><b>Produtos</b></h4>
-  <a class="w3-bar-item w3-button w3-hover-black" href="ConsultarProdutos.html">Consultar</a>
-  <a class="w3-bar-item w3-button w3-hover-black" href="CadastrarProdutos.html">Novo</a>
+  <h4 class="w3-bar-item" style="font-family: 'orange-juice' "><b>PEDIDOS</b></h4>
+  <a class="w3-bar-item w3-button w3-hover-black" href="ConsultarPedidos.html">Abertos</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="CadastrarPedido.html">Novo</a>
 </nav>
 
 <!-- Barra Lateral Responsiva -->
@@ -51,35 +51,21 @@
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal">Buscar Produto</h1>
+      <h1 class="w3-text-teal">Pedidos Abertos</h1>
       <form>
-        <select class="w3-select" name="tipoProduto">
-          <option value="" disabled selected>Tipo de Produto</option>
-          <option value="1">Sabor Pizza</option>
-          <option value="2">Bebidas</option>
-          <option value="3">Sucos</option>
-          <option value="4">Lanche</option>
-          <option value="5">Porção</option>
-          <option value="6">Adicional</option>
-        </select><br><br>
-        <select class="w3-select" name="tipoBusca">
-          <option value="" disabled selected>Tipo de Busca</option>
-          <option value="1">Nome</option>
-          <option value="2">ID</option>
-        </select>
-        <br>
-        <br><input class="w3-input" type="text" name="busca" placeholder="Buscar"><br>
-        <button class="w3-btn w3-black w3-hover-white" type="submit">
-          Buscar!
+        
+        <br><input class="w3-input" type="text" name="busca" placeholder="Cód do Pedido"><br>
+        <button class="w3-btn w3-black w3-hover-white" type="button">
+          Cancelar!
         </button><br><br>
         <table class="w3-table-all w3-hoverable">
            <thead>
             <tr class="w3-light-grey">
               <th width="50px">ID</th>
-              <th>Nome</th>
-              <th>Descrição</th>
+              <th>Cód do Cliente</th>
+              <th>Cód do Funcionário</th>
               <th width="50px">Preço(R$)</th>
-              <th width="50px">Disponível</th>
+              
             </tr>
           </thead>
             <tr>
@@ -87,7 +73,7 @@
               <th>Teste</th>
               <th>Isso é apenas um teste, aprendi com o cridao</th>
               <th >14.99</th>
-              <th >YES</th>
+              
             </tr>
         </table>
       </form>
@@ -107,7 +93,6 @@
 
 <!-- END MAIN -->
 </div>
-
 <script src="../Resources/jsPadrao.js"/>
 
 </body>
