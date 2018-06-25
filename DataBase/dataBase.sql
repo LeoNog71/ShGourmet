@@ -863,6 +863,13 @@ BEGIN
 	`cancelado`)
 	VALUES
 	(id_cliente_v, id_funcionario_v, id_mesa_v, data_venda_v,0.0, false,false);
+	
+    
+    call insert_venda(id_cliente_v, id_funcionario_v, id_mesa_v, data_venda_v, 0.0, 0.0, false);
+    UPDATE `shgourmet`.`mesa`
+	SET
+	`disponivel` = false
+	WHERE `id` = id_mesa;
 
 END $$
 DELIMITER ;
@@ -886,10 +893,9 @@ DELIMITER $$
 CREATE PROCEDURE cancela_pedido(in id_v int)
 BEGIN
 	IF (select pedidos.cancelado from pedidos where pedidos.id = id_v) then
-		INSERT INTO `shgourmet`.`pedidos`
-		(`cancelado`)
-		VALUES
-		(true);
+		Update`shgourmet`.`pedidos`
+		set `cancelado` = true
+        Where id = id_v;
     END IF;
 END $$
 delimiter $$
@@ -938,6 +944,46 @@ BEGIN
 	(id_pr, id_pe);
     call soma_pedido(id_pe);
 
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE finalizar_pedido(in id_pe int)
+BEGIN
+	DECLARE done INT DEFAULT 0;
+	declare a,b,c int;
+    declare d double;
+    declare e date;
+	DECLARE curs CURSOR FOR (select pedidos.id_cliente,pedidos.id_funcionario,pedidos.id_mesa, pedidos.valor_total,pedidos.data_pedido from pedidos where pedidos.id = id_pe);
+    
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+	 OPEN curs;
+
+	 REPEAT
+
+		FETCH curs INTO a,b,c,d,e;
+			IF NOT done THEN
+				call update_venda(id_pe,a,b,c,e,d,0.0);
+				
+			END IF;
+ UNTIL done END REPEAT;
+
+ CLOSE curs;
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE finaliza_pedido(in id_pe int)
+BEGIN
+	
+	Update`shgourmet`.`pedidos`
+	set situacao = true
+    where id = id_pe;
+        call decrementa_estoque(id_pe);
+        call finalizar_pedido(id_pe);
+        
 END $$
 DELIMITER ;
 
