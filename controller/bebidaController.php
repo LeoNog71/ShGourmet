@@ -5,19 +5,18 @@
     @include_once '..\model\dao\BebidaDAO.php';
    # include_once '..\Interfaces\IDAO.php';
    
-    if(file_get_contents('php://input')){
-       $json = file_get_contents('php://input');
-       $array = json_decode($json);
-       if($array->operacao == '1'){
-           cadastrar($array);
-       }
-       if($array->operacao == '2'){
-           atualizar($array);
-       }
-       if($array->operacao =='4'){
-           pesquisa($array);
-       }
+    $json = file_get_contents('php://input');
+    $array = json_decode($json);
+    if($array->operacao == '1'){
+        cadastrar($array);
     }
+    if($array->operacao == '2'){
+        atualizar($array);
+    }
+    if($array->operacao =='4'){
+        pesquisa($array);
+    }
+   
     function recebeJson($array){
             
        $classe = new Bebida();
@@ -47,7 +46,7 @@
     }
 
     function cadastrar($array) {
-       $f  = new BebidaAO(recebeJson($array));
+       $f  = new BebidaDAO(recebeJson($array));
        $f->insert();
     }
 
@@ -58,7 +57,7 @@
 
     function pesquisa($array) {
         $consulta = recebeJson($array);
-        $f = new BeibidaDAO(NULL);
+        $f = new BebidaDAO(NULL);
         enviaJson($f->select(strtoupper($consulta->getNome())));
     }
 
