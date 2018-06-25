@@ -102,6 +102,20 @@ create table if not exists mesa(
     disponivel boolean not null
 );
 
+create table if not exists pedidos(
+	id integer auto_increment not null primary key,
+    id_cliente integer not null,
+    id_funcionario integer not null,
+    id_mesa integer not null,
+    data_pedido date not null,
+    valor_total double not null,
+    situacao boolean not null,
+    cancelado boolean not null,
+	foreign key (id_cliente) references cliente (id),
+    foreign key (id_funcionario) references funcionario (id),
+    foreign key (id_mesa) references mesa (id)
+);
+
 create table if not exists venda (
 	id integer auto_increment not null primary key,
     id_cliente integer not null,
@@ -111,15 +125,22 @@ create table if not exists venda (
     valor_total double not null,
     valor_desconto double not null,
     situacao boolean not null,
-	foreign key (id_cliente) references cliente (id),
+    foreign key (id_cliente) references cliente (id),
     foreign key (id_funcionario) references funcionario (id),
     foreign key (id_mesa) references mesa (id)
 );
 
-create table if not exists produto_venda(
+create table if not exists produto_pedido(
 	id_produto integer not null,
-    id_venda integer not null,
+    id_pedido integer not null,
     foreign key (id_produto) references produtos (id),
+    foreign key (id_pedido) references pedidos (id)
+);
+
+create table if not exists pedidos_venda(
+	id_venda integer not null,
+    id_pedido integer not null,
+	foreign key (id_pedido) references pedidos (id),
     foreign key (id_venda) references venda (id)
 );
 
@@ -129,13 +150,7 @@ create table if not exists entrega(
     id_venda integer not null,
     foreign key (id_venda) references venda (id)
 );
-create table if not exists pedidos(
-	id integer auto_increment primary key not null,
-    id_venda integer not null,
-    data_pedido datetime not null,
-    situacao boolean not null,
-    foreign key (id_venda) references venda (id)
-);
+
 create table if not exists lancamentos(
 	id integer auto_increment primary key not null, 
 	valor double not null,
@@ -804,20 +819,128 @@ BEGIN
 END $$
 DELIMITER ;
 
+delimiter $$
+create procedure decrementa_estoque(in id_p int)
+ begin
+
+ DECLARE done INT DEFAULT 0;
+ DECLARE var1 BIGINT;
+
+ DECLARE curs CURSOR FOR (SELECT produto_pedido.id_produto FROM produto_pedido WHERE produto_pedido.id_pedido = id_p);
+
+ DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+ OPEN curs;
+
+ REPEAT
+
+ 	FETCH curs INTO var1;
+		IF NOT done THEN
+			UPDATE produtos
+			SET
+			quantidade = (quantidade - 1)
+			WHERE `id` = var1 ;
+		END IF;
+ UNTIL done END REPEAT;
+
+ CLOSE curs;
+
+ end $$
+delimiter ;
+
 DELIMITER $$
-CREATE PROCEDURE finaliza_venda(in id_v int,in valor_total_v double ,in valor_desconto_v double, in situacao_v boolean)
+CREATE PROCEDURE insert_pedido(in id_cliente_v integer, id_funcionario_v integer,
+in id_mesa_v integer, in data_venda_v date )
 BEGIN
-	UPDATE `shgourmet`.`venda`
-	SET
-	`valor_total` = valor_total_v,
-	`valor_desconto` = valor_desconto_v,
-     situacao = situacao_v
-	WHERE `id` = id_v;
-	
-    select id_produto from produto_venda
+	INSERT INTO `shgourmet`.`pedidos`
+	(`id`,
+	`id_cliente`,
+	`id_funcionario`,
+	`id_mesa`,
+	`data_pedido`,
+	`valor_total`,
+	`situacao`,
+	`cancelado`)
+	VALUES
+	(id_cliente_v, id_funcionario_v, id_mesa_v, data_venda_v,0.0, false,false);
 
 END $$
 DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE update_pedidos(in id_v int,in id_cliente_v integer, id_funcionario_v integer,
+in id_mesa_v integer, in data_venda_v date )
+BEGIN
+	UPDATE pedidos
+	SET
+	`id_cliente` = id_cliente_v,
+	`id_funcionario` = id_funcionario_v,
+	`id_mesa` = id_mesa_v,
+	`data_venda` = data_venda_v
+	WHERE `id` = id_v;
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE cancela_pedido(in id_v int)
+BEGIN
+	IF (select pedidos.cancelado from pedidos where pedidos.id = id_v) then
+		INSERT INTO `shgourmet`.`pedidos`
+		(`cancelado`)
+		VALUES
+		(true);
+    END IF;
+END $$
+delimiter $$
+
+delimiter $$
+create procedure soma_pedido (in id_v int)
+ begin
+
+ DECLARE done INT DEFAULT 0;
+ DECLARE var1 BIGINT;
+ DECLARE var2 double;
+ DECLARE curs CURSOR FOR (
+	SELECT produto_pedido.id_produto FROM produto_pedido where produto_pedido.id_pedido = id_v
+	);
+
+ DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+ OPEN curs;
+
+ REPEAT
+
+ 	FETCH curs INTO var1;
+	
+		IF NOT done THEN
+			set var2 = (SELECT produtos.preco_venda from produtos where produtos.id = var1);
+            UPDATE `shgourmet`.`pedidos`
+			SET
+			`valor_total` = (valor_total + var2)
+			WHERE `id` = id_v;
+
+            
+		END IF;
+ UNTIL done END REPEAT;
+
+ CLOSE curs;
+
+ end $$
+delimiter ;
+
+DELIMITER $$
+CREATE PROCEDURE insert_pedido_produto(in id_pe int, in id_pr int )
+BEGIN
+	INSERT INTO `shgourmet`.`produto_pedido`
+	(`id_produto`, `id_pedido`)
+	VALUES
+	(id_pr, id_pe);
+    call soma_pedido(id_pe);
+
+END $$
+DELIMITER ;
+
 
 
 

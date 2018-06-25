@@ -68,7 +68,7 @@
     function pesquisaId($array) {
         $consulta = recebeJson($array);
         $f = new PizzaDAO(NULL);
-        enviaJson($f->selectID($consulta->getId()));
+        enviaJson($f->selectID($consulta->getNome()));
     }
     function pesquisaAll() {
         

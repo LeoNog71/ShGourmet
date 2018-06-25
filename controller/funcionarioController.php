@@ -68,7 +68,7 @@
     function pesquisaId($array) {
         $consulta = recebeJson($array);
         $f = new FuncionarioDAO(NULL);
-        enviaJson($f->selectId($consulta->getId()));
+        enviaJson($f->selectID($consulta->getNome()));
     }
     /*$f = new FuncionarioDAO(null);
     enviaJson($f->select('LEONARDO'));*/

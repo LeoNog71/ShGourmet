@@ -64,7 +64,7 @@
     function pesquisaId($array) {
         $consulta = recebeJson($array);
         $f = new LancheDAO(NULL);
-        enviaJson($f->selectID($consulta->getId()));
+        enviaJson($f->selectID($consulta->getNome()));
     }
 
 

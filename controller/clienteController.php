@@ -67,7 +67,8 @@
     function pesquisaCPF($array) {
         $consulta = recebeJson($array);
         $f = new ClienteDAO(NULL);
-        enviaJson($f->selectCPF(strtoupper($consulta->getCpf())));
+        enviaJson($f->selectCPF(strtoupper($consulta->getNome())));
+        
     }
     
 ?>
