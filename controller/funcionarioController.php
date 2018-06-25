@@ -26,13 +26,13 @@
         $classe = new Funcionario();
         
 
-        $classe->setId((int)$array->data->funcionario->id);
-        $classe->setNome(strtoupper($array->data->funcionario->nome));
-        $classe->setData_nascimento($array->data->funcionario->data_nascimento);
-        $classe->setCpf($array->data->funcionario->cpf);
-        $classe->setData_admissao($array->data->funcionario->data_admissao);
-        $classe->setEmail($array->data->funcionario->email);
-        $classe->setEndereco(strtoupper($array->data->funcionario->endereco));
+        $classe->setId((int)$array->id);
+        $classe->setNome(strtoupper($array->nome));
+        $classe->setData_nascimento($array->data_admissao);
+        $classe->setCpf($array->cpf);
+        $classe->setData_admissao($array->data_admissao);
+        $classe->setEmail($array->email);
+        $classe->setEndereco(strtoupper($array->endereco));
 
         return $classe;
     }
