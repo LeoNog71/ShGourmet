@@ -1,4 +1,4 @@
-/*drop schema if exists shgourmet;*/
+drop schema if exists shgourmet;
 create schema shgourmet;
 use shgourmet;
 
@@ -202,6 +202,23 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
+CREATE PROCEDURE selectID_funcionario(in id_f int)
+BEGIN
+	SELECT
+    funcionario.id,
+	pessoa.nome,
+	pessoa.data_nascimento,
+	funcionario.cpf,
+	funcionario.data_de_admissao,
+	funcionario.email,
+    pessoa.endereco
+	from pessoa
+	left join funcionario on pessoa.id = funcionario.id_pessoa
+	where funcionario.id = id_f AND pessoa.situacao = true;
+END $$
+DELIMITER ;
+
+DELIMITER $$
 CREATE PROCEDURE update_funcionario(in id_f int, in nome_f varchar(50),in data_nasc_f date, in cpf_f varchar(15), in email_f varchar(50), in data_admi_f date, endereco_f varchar(500))
 BEGIN
 
@@ -265,6 +282,25 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
+CREATE PROCEDURE selectCPF_cliente(in cpf_c varchar(14))
+BEGIN
+	SELECT
+    cliente.id,
+	pessoa.nome,
+	pessoa.data_nascimento,
+	cliente.cpf,
+	endereco.rua,
+	endereco.numero,
+	endereco.cidade,
+	endereco.estado 
+	from pessoa 
+	left join cliente on pessoa.id = cliente.id_pessoa
+	where pessoa.cpf = cpf_c AND pessoa.situacao = true;
+END $$
+DELIMITER ;
+	
+
+DELIMITER $$
 CREATE PROCEDURE update_cliente(in id_c int, in nome_c varchar(50),in data_nasc_c date, in cpf_c varchar(14),in endereco_c varchar(500))
 BEGIN
 
@@ -308,11 +344,12 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE select_usuario(in id_f int)
+CREATE PROCEDURE select_usuario(in login_u varchar(50), in senha_u varchar(8))
 BEGIN
 	select usuario.login, usuario.senha, usuario.id_permissao
 	from usuario
-	where usuario.id_funcionario =id_f
+	where usuario.login =login_u
+    AND usuario.senha = senha_u
     AND usuario.situacao = true;
 END $$
 DELIMITER ;
@@ -340,16 +377,6 @@ BEGIN
 END $$
 DELIMITER ;
 
-/*produtos*/
-DELIMITER $$
-CREATE PROCEDURE insert_produto(nome_p varchar(50), descricao_p varchar(300), preco_venda_p double, quantidade_p integer, preco_compra_p double,
-								disponivel_p boolean, id_fonecedor_p int)
-BEGIN
-	INSERT INTO produtos(nome, descricao, preco_venda, quantidade, preco_compra, disponivel, id_fornecedor)
-		VALUES(nome_p, descricao_p, preco_venda_p, quantidade_p, preco_compra_p, disponivel_p, id_fornecedor_p);
-
-END $$
-DELIMITER ;
 /*bebida*/
 DELIMITER $$
 CREATE PROCEDURE insert_bebida(in nome_p varchar(50), in descricao_p varchar(300), in preco_venda_p double, in quantidade_p integer, in preco_compra_p double, in fornecedor_p varchar(50), in marca_b varchar(50), in tamanho_b varchar(10))
@@ -402,6 +429,20 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
+CREATE PROCEDURE selectID_bebida(id_b int)
+BEGIN
+	
+	SELECT bebida.id, produtos.nome, produtos.descricao,
+    produtos.preco_venda,produtos.quantidade, produtos.fornecedor,
+    bebida.marca,bebida.tamanho
+    FROM bebida
+    JOIN produtos on produtos.id = bebida.id_produto
+    Where bebida.id = id_b;
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
 CREATE PROCEDURE insert_suco(in nome_p varchar(50), in descricao_p varchar(300), in preco_venda_p double, in quantidade_p integer, in preco_compra_p double, in fornecedor_p varchar(50), in marca_b varchar(50), in tamanho_b varchar(10),sabor_s varchar(20))
 BEGIN
 	INSERT INTO produtos(nome, descricao, preco_venda, quantidade, preco_compra, disponivel, fornecedor)
@@ -424,6 +465,21 @@ BEGIN
     JOIN bebida on bebida.id = suco.id_bebida
     left join produtos on produtos.id = bebida.id_produto
     Where produtos.nome = nome_s;
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE select_sucoID(in id_s int)
+BEGIN
+
+	SELECT suco.id, produtos.nome, produtos.descricao,suco.sabor,
+    produtos.preco_venda,produtos.quantidade, produtos.fornecedor,
+    bebida.marca
+    FROM suco
+    JOIN bebida on bebida.id = suco.id_bebida
+    left join produtos on produtos.id = bebida.id_produto
+    Where suco.id = id_s;
 
 END $$
 DELIMITER ;
@@ -543,6 +599,17 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
+CREATE PROCEDURE selectID_pizza (in id_p int)
+BEGIN
+	SELECT pizza.id, produtos.nome, pizza.tamanho, produtos.descricao,
+    produtos.preco_venda,produtos.quantidade, produtos.fornecedor
+    from pizza
+    join produtos on produtos.id = pizza.id_produtos
+    where produtos.nome = id_p;
+END $$
+DELIMITER ;
+
+DELIMITER $$
 CREATE PROCEDURE select_all_pizza ()
 BEGIN
 	SELECT pizza.id, produtos.nome, pizza.tamanho, produtos.descricao,
@@ -576,11 +643,12 @@ BEGIN
 END $$
 DELIMITER ;
 
+
 DELIMITER $$
-CREATE PROCEDURE select_sabor_pizza (in sabor_p varchar(50))
+CREATE PROCEDURE selectID_sabor_pizza (in id_p int)
 BEGIN
 	select * from sabor_pizza
-	where sabor = sabor_p;
+	where sabor_pizza.id_produtos = id_p;
 
 END $$
 DELIMITER ;
@@ -638,6 +706,17 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
+CREATE PROCEDURE selectID_porcao (in id_p int)
+BEGIN
+	SELECT porcao.id, produtos.nome, porcao.tamanho, produtos.descricao,
+    produtos.preco_venda,produtos.quantidade, produtos.fornecedor
+    from porcao
+    join produtos on produtos.id = porcao.id_produtos
+    where porcao.id = id_p;
+END $$
+DELIMITER ;
+
+DELIMITER $$
 CREATE PROCEDURE select_all_porcao ()
 BEGIN
 	SELECT porcao.id, produtos.nome, porcao.tamanho, produtos.descricao,
@@ -656,6 +735,25 @@ BEGIN
 	(num_mesa, disponivel)
 	VALUES
 	(numero_m,true);
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE select_mesa(in numero_m int)
+BEGIN
+	select * from mesa
+    where mesa.num_mesa = numero_m
+    and mesa.disponivel = true;
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE select_all_mesa()
+BEGIN
+	select * from mesa
+    where mesa.disponivel = true;
 
 END $$
 DELIMITER ;
@@ -720,9 +818,6 @@ BEGIN
 
 END $$
 DELIMITER ;
-
-
-
 
 
 

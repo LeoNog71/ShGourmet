@@ -1,8 +1,8 @@
 <?php
 
  
-    @include_once '..\model\vo\bebida.php';
-    @include_once '..\model\dao\BebidaDAO.php';
+    @include_once '..\model\vo\porcao.php';
+    @include_once '..\model\dao\PorcaoDAO.php';
    # include_once '..\Interfaces\IDAO.php';
    
     $json = file_get_contents('php://input');
@@ -22,7 +22,7 @@
    
     function recebeJson($array){
             
-       $classe = new Bebida();
+       $classe = new Porcao();
        
        $classe->setId((int)$array->id);
        $classe->setNome($array->nome);
@@ -32,7 +32,6 @@
        
        $classe->setPreco_compra((double)$array->preco_compra);
        $classe->setFornecedor($array->fornecedor);
-       $classe->setMarca($array->marca);
        $classe->setTamanho($array->tamanho);
 
         return $classe;
@@ -44,28 +43,28 @@
     }
 
     function atualizar($array) {
-        $f  = new BebidaDAO(recebeJson($array));
+        $f  = new PorcaoDAO(recebeJson($array));
         $f->update();
     }
 
     function cadastrar($array) {
-       $f  = new BebidaDAO(recebeJson($array));
+       $f  = new PorcaoDAO(recebeJson($array));
        $f->insert();
     }
 
     function excluir($array) {
-       $f  = new BebidaDAO(recebeJson($array));
+       $f  = new PorcaoDAO(recebeJson($array));
        $f->delete();
     }
 
     function pesquisa($array) {
         $consulta = recebeJson($array);
-        $f = new BebidaDAO(NULL);
+        $f = new PorcaoDAO(NULL);
         enviaJson($f->select(strtoupper($consulta->getNome())));
     }
     function pesquisaId($array) {
         $consulta = recebeJson($array);
-        $f = new BebidaDAO(NULL);
+        $f = new PorcaoDAO(NULL);
         enviaJson($f->selectID($consulta->getId()));
     }
 

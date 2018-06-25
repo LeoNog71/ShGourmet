@@ -19,6 +19,9 @@
     if($array->operacao =='4'){
         pesquisa($array);
     }
+    if($array->operacao =='5'){
+        pesquisaCPF($array);
+    }
 
     function recebeJson($array){
             
@@ -60,6 +63,11 @@
         $consulta = recebeJson($array);
         $f = new ClienteDAO(NULL);
         enviaJson($f->select(strtoupper($consulta->getNome())));
+    }
+    function pesquisaCPF($array) {
+        $consulta = recebeJson($array);
+        $f = new ClienteDAO(NULL);
+        enviaJson($f->selectCPF(strtoupper($consulta->getCpf())));
     }
     
 ?>

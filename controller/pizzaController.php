@@ -16,6 +16,12 @@
     if($array->operacao =='4'){
         pesquisa($array);
     }
+    if($array->operacao =='5'){
+        pesquisaId($array);
+    }
+    if($array->operacao =='6'){
+        pesquisaAll($array);
+    }
    
     function recebeJson($array){
             
@@ -58,6 +64,16 @@
         $consulta = recebeJson($array);
         $f = new PizzaDAO(NULL);
         enviaJson($f->select(strtoupper($consulta->getNome())));
+    }
+    function pesquisaId($array) {
+        $consulta = recebeJson($array);
+        $f = new PizzaDAO(NULL);
+        enviaJson($f->selectID($consulta->getId()));
+    }
+    function pesquisaAll() {
+        
+        $f = new PizzaDAO(NULL);
+        enviaJson($f->selectALL());
     }
 
 

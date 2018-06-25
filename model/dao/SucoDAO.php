@@ -43,6 +43,13 @@
                 $stmt->execute();  
                 return $result;
             }
+            public function selectID($consulta) {
+                $stmt = $this->conn->prepare("CALL selectID_suco($consulta)");
+
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                $stmt->execute();  
+                return $result;
+            }
 
             public function update() {      
                 $stmt = $this->conn->prepare("call update_suco(:id,:nome, :descricao, :preco_venda, :unidade, :preco_compra,:fornecedor,:marca, :tamanho,:sabor);");

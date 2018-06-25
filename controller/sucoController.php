@@ -17,6 +17,9 @@
     if($array->operacao =='4'){
         pesquisa($array);
     }
+    if($array->operacao =='5'){
+        pesquisaId($array);
+    }
 
     function recebeJson($array){
             
@@ -61,6 +64,11 @@
         $consulta = recebeJson($array);
         $f = new SucoDAO(NULL);
         enviaJson($f->select(strtoupper($consulta->getNome())));
+    }
+    function pesquisaId($array) {
+        $consulta = recebeJson($array);
+        $f = new SucoDAO(NULL);
+        enviaJson($f->selectID($consulta->getId()));
     }
 
 

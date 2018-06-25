@@ -26,8 +26,8 @@
             
         }
         
-        public function select($consulta) {
-            $stmt = $this->conn->prepare("CALL select_usuario('".$consulta."')");
+        public function select($login,$senha) {
+            $stmt = $this->conn->prepare("CALL select_usuario('".$login."','".$senha."'')");
             $stmt->execute();  
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 

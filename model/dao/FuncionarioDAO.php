@@ -35,11 +35,18 @@
         public function select($consulta) {
             $stmt = $this->conn->prepare("CALL select_funcionario('".$consulta."')");
             $stmt->execute();  
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $result;
         }
+        public function selectId($consulta) {
+            $stmt = $this->conn->prepare("CALL selectID_funcionario($consulta)");
+            $stmt->execute();  
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+            return $result;
+        }
+        
         public function update() {
             $stmt = $this->conn->prepare("CALL update_funcionario (:id, :nome, :data_nasc, :cpf, :email , :data_admi, :endereco);");
             $id = $this->classe->getId();

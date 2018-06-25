@@ -26,7 +26,7 @@
         $classe = new Usuario();
        
         $classe->setId((int)$array->id);
-        $classe->setLogin($array->login);
+        $classe->setLogin(strtoupper($array->login));
         $classe->setSenha($array->senha);
         $classe->setIdFuncionario((int)$array->id_funcionario);
         $classe->setPermissao((int)$array->id_permissao);
@@ -60,7 +60,7 @@
     function pesquisa($array) {
         $consulta = recebeJson($array);
         $f = new UsuarioDAO(NULL);
-        enviaJson($f->select(strtoupper($consulta->getNome())));
+        enviaJson($f->select(strtoupper($consulta->getLogin()),$consulta->getSenha()));
     }
 
 

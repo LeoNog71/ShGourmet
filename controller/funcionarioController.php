@@ -20,6 +20,9 @@
        if($array->operacao =='4'){
            pesquisa($array);
        }
+       if($array->operacao =='5'){
+           pesquisaId($array);
+       }
 
     function recebeJson($array){
             
@@ -28,7 +31,7 @@
 
         $classe->setId((int)$array->id);
         $classe->setNome(strtoupper($array->nome));
-        $classe->setData_nascimento($array->data_admissao);
+        $classe->setData_nascimento($array->data_nascimento);
         $classe->setCpf($array->cpf);
         $classe->setData_admissao($array->data_admissao);
         $classe->setEmail($array->email);
@@ -61,6 +64,11 @@
         $consulta = recebeJson($array);
         $f = new FuncionarioDAO(NULL);
         enviaJson($f->select(strtoupper($consulta->getNome())));
+    }
+    function pesquisaId($array) {
+        $consulta = recebeJson($array);
+        $f = new FuncionarioDAO(NULL);
+        enviaJson($f->selectId($consulta->getId()));
     }
     /*$f = new FuncionarioDAO(null);
     enviaJson($f->select('LEONARDO'));*/

@@ -1,7 +1,7 @@
 <?php
 
- include_once '..\vo\bebida.php';
-    class BebidaDAO {
+ include_once '..\vo\porcao.php';
+    class PorcaoDAO {
              
             private $classe;
             private $conn;
@@ -12,7 +12,7 @@
             }
             public function insert() {
                 
-                $stmt = $this->conn->prepare("call insert_bebida(:nome, :descricao, :preco_venda, :unidade, :preco_compra,:fornecedor,:marca, :tamanho);");
+                $stmt = $this->conn->prepare("call insert_porcao(:nome, :descricao, :preco_venda, :unidade, :preco_compra,:fornecedor, :tamanho);");
                 $a = $this->classe->getNome();
                 $stmt->bindParam(":nome", $a);
                 $b = $this->classe->getDescricao();
@@ -25,8 +25,7 @@
                 $stmt->bindParam(":preco_compra", $e);
                 $f = $this->classe->getFornecedor();
                 $stmt->bindParam(":fornecedor", $f);
-                $g = $this->classe->getMarca();
-                $stmt->bindParam(":marca", $g);
+                
                 $h = $this->classe->getTamanho();
                 $stmt->bindParam(":tamanho", $h);
 
@@ -35,14 +34,14 @@
             }
 
             public function select($consulta) {
-                $stmt = $this->conn->prepare("CALL select_bebida('".$consulta."')");
+                $stmt = $this->conn->prepare("CALL select_porcao('".$consulta."')");
 
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $stmt->execute();  
                 return $result;
             }
-            public function selectID($consulta) {
-                $stmt = $this->conn->prepare("CALL selectID_bebida($consulta)");
+             public function selectID($consulta) {
+                $stmt = $this->conn->prepare("CALL selectID_porcao($consulta)");
 
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $stmt->execute();  
@@ -51,7 +50,7 @@
 
             public function update() {
                 
-                $stmt = $this->conn->prepare("call update_bebida(:id,:nome, :descricao, :preco_venda, :unidade, :preco_compra,:fornecedor,:marca, :tamanho);");
+                $stmt = $this->conn->prepare("call update_porcao(:id,:nome, :descricao, :preco_venda, :unidade, :preco_compra,:fornecedor, :tamanho);");
                 $id = $this->classe->getId();
                 $stmt->bindParam(":id",(int)$id);
                 $a = $this->classe->getNome();
@@ -66,8 +65,6 @@
                 $stmt->bindParam(":preco_compra", $e);
                 $f = $this->classe->getFornecedor();
                 $stmt->bindParam(":fornecedor", $f);
-                $g = $this->classe->getMarca();
-                $stmt->bindParam(":marca", $g);
                 $h = $this->classe->getTamanho();
                 $stmt->bindParam(":tamanho", $h);
 
