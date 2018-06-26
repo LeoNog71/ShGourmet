@@ -12,10 +12,9 @@
 <script type="text/javascript">
   var  app = angular.module('pedidos', []);
   app.controller('novo',['$scope', '$http', function($scope, $http){
-    var produto_pedido;
+    var produto_pedido=[];
     $scope.inserir=function(){
       var op='5';
-      $scope.quantidade=1
       if($scope.tipoProduto == '2'){
         
         $http.post(
@@ -36,6 +35,9 @@
               function mySucess(response){
                 console.log(response.data);
                 $scope.produto_pedido = response.data;
+                produto_pedido.push($scope.codProduto);
+                console.log(produto_pedido);
+                $scope.produto_pedido.qntd = produto_pedido.lenght;
 
               }, 
               function myError(response){
@@ -63,6 +65,9 @@
               function mySucess(response){
                 console.log(response.data);
                 $scope.produto_pedido = response.data;
+                produto_pedido.push($scope.codProduto);
+                console.log(produto_pedido);
+                $scope.produto_pedido.qntd = produto_pedido.lenght;
               }, 
               function myError(response){
                 console.log(response.data);
@@ -86,6 +91,9 @@
               function mySucess(response){
                 console.log(response.data);
                 $scope.produto_pedido = response.data;
+                produto_pedido.push($scope.codProduto);
+                console.log(produto_pedido);
+                $scope.produto_pedido.qntd = produto_pedido.lenght;
               }, 
               function myError(response){
                 console.log(response.data);
@@ -110,6 +118,9 @@
               function mySucess(response){
                 console.log(response.data);
                 $scope.produto_pedido = response.data;
+                produto_pedido.push($scope.codProduto);
+                console.log(produto_pedido);
+                $scope.produto_pedido.qntd = produto_pedido.lenght;
               }, 
               function myError(response){
                 console.log(response.data);
@@ -134,6 +145,9 @@
               function mySucess(response){
                 console.log(response.data);
                 $scope.produto_pedido = response.data;
+                produto_pedido.push($scope.codProduto);
+                console.log(produto_pedido);
+                $scope.produto_pedido.qntd = produto_pedido.lenght;
               }, 
               function myError(response){
                 console.log(response.data);
@@ -141,8 +155,7 @@
               }
             );
           }
-          produto_pedido=$scope.produto_pedido.concat(produto_pedido);
-          $scope.quantidade = produto_pedido.length;
+
           
     }
     $scope.enviar=function(){
@@ -158,7 +171,7 @@
           pedido_produto : $scope.produto_pedido
         }
 
-        )then(function mySucess(response){
+        ).then(function mySucess(response){
                 console.log(response.data);
                 alert('Pedido Solicitado');
               }, 
@@ -254,7 +267,7 @@
             <tr ng-repeat="x in produto_pedido">
               <th>{{x.id}}</th>
               <th>{{x.nome}}</th>
-              <th>{{quantidade}}</th>
+              <th>{{qntd}}</th>
               <th>{{x.preco_venda}}</th>
               <th>{{x.fornecedor}}</th>
             </tr>
