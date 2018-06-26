@@ -24,7 +24,7 @@
     }
 
     function recebeJson($array){
-            
+         
         $classe = new Cliente();
         
 
@@ -33,9 +33,7 @@
         $classe->setData_nascimento($array->data_nascimento);
         $classe->setCpf($array->cpf);
         $classe->setEndereco(strtoupper($array->endereco));
-
         
-
         return $classe;
     }
     
@@ -44,13 +42,13 @@
         echo json_encode($array);
     }
 
-    function atualizar($array) {
+    function atualizar($array) {       
         $f  = new ClienteDAO(recebeJson($array));
         $f->update();
     }
 
     function cadastrar($array) {
-       $f  = new ClienteDAO(recebeJson($array));
+       $f  = new ClienteDAO(recebeJson($array));    
        $f->insert();
     }
 
@@ -67,7 +65,7 @@
     function pesquisaCPF($array) {
         $consulta = recebeJson($array);
         $f = new ClienteDAO(NULL);
-        enviaJson($f->selectCPF(strtoupper($consulta->getNome())));
+        enviaJson($f->selectCPF($consulta->getNome()));
         
     }
     

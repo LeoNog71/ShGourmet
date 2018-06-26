@@ -20,12 +20,14 @@ call selectAll_pedido();
 call insert_pedido_produto(1);
 CALL cancela_pedido(1);
 
+select * from pessoa;
+
 select pedidos.id as pedido_id, pedidos.id_cliente as cliente_id,COUNT(produtos.id) as quantidade, produtos.nome as produto ,produtos.preco_venda, pedidos.valor_total
 	from produto_pedido 
     join produtos on produtos.id = produto_pedido.id_produto
     left join pedidos on pedidos.id = produto_pedido.id_pedido
-    where pedidos.situacao = false
-    and pedidos.cancelado = false  GROUP BY pedidos.id asc;
+    where pedidos.situacao = false 
+    and pedidos.cancelado = false  GROUP BY pedido_id asc ;
     
 select sum(produtos.preco_venda)
 	from produto_pedido 

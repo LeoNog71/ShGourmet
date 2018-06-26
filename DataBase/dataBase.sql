@@ -243,10 +243,7 @@ BEGIN
 	pessoa.nome,
 	pessoa.data_nascimento,
 	cliente.cpf,
-	endereco.rua,
-	endereco.numero,
-	endereco.cidade,
-	endereco.estado 
+	pessoa.endereco
 	from pessoa 
 	left join cliente on pessoa.id = cliente.id_pessoa
 	where pessoa.nome = nome_c AND pessoa.situacao = true;
@@ -261,13 +258,10 @@ BEGIN
 	pessoa.nome,
 	pessoa.data_nascimento,
 	cliente.cpf,
-	endereco.rua,
-	endereco.numero,
-	endereco.cidade,
-	endereco.estado 
+	pessoa.endereco
 	from pessoa 
 	left join cliente on pessoa.id = cliente.id_pessoa
-	where pessoa.cpf = cpf_c AND pessoa.situacao = true;
+	where cliente.cpf = cpf_c AND pessoa.situacao = true;
 END $$
 DELIMITER ;
 	

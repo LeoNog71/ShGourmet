@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>SH Gourmet - Cozinha</title>
+<title>SH Gourmet - Funcionários</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -9,61 +9,41 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="../Resources/stylePadrao.css">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-<script type="text/javascript">
-  var app = angular.module('cozinha', []);
-  app.controller('abertos', ['$scope', '$http', function($scope, $http){
-    var carregar = function(){
+<script>
+  var app = angular.module('funcionario', []);
+  app.controller('busca', ['$scope', '$http', function($scope, $http){
+    $scope.enviar = function(tipoBusca){
+      var op = '';
+      if(tipoBusca == '1'){
+        op = '4';
+      }else if(tipoBusca == '2'){
+        op = '5'
+      }
       $http.post(
-        'http://localhost/Shgourmet/controller/pedidosController.php',
-            {
-              id : '',
-              nome : '',
-              descricao : '',
-              preco_venda : '',
-              quantidade : '',
-              preco_compra : '',
-              fornecedor : '',
-              tamanho : '' ,
-              operacao : '6'
+        'http://localhost/Shgourmet/controller/clienteController.php',
+        {
+          id : '',
+					nome : $scope.busca,
+					email : '',
+					cpf : '',
+					data_admissao : '',
+					data_nascimento : '',
+					operacao : op,
+					endereco : ''
+        }
+      ).then(
+          function mySucess(response){
+            if(response.data == '\nfalse\n'){
+              alert('Nada Encontrado');
             }
-          ).then(
-              function mySucess(response){
-                console.log(response.data);
-                $scope.resposta = response.data;
-              }, 
-              function myError(response){
-                console.log(response.data);
-                alert('Falha no servidor');
-              }  
+            console.log(response.data);
+						$scope.resposta = response.data;
+					}, 
+          function myError(response){
+						alert('Erro Contate o Administrador!');
+					}
         );
     }
-    carregar();
-    $scope.finalizar = function(){
-      $http.post(
-        'http://localhost/Shgourmet/controller/pedidosController.php',
-            {
-              id : $scope.busca,
-              nome : '',
-              descricao : '',
-              preco_venda : '',
-              quantidade : '',
-              preco_compra : '',
-              fornecedor : '',
-              tamanho : '' ,
-              operacao : '8'
-            }
-          ).then(
-              function mySucess(response){
-                console.log(response.data);
-                alert('Pedido Finalizado');
-                carregar();
-              }, 
-              function myError(response){
-                console.log(response.data);
-                alert('Falha no servidor');
-              }  
-        );
-    }    
   }]);
 </script>
 <body>
@@ -74,7 +54,7 @@
     <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     <a href="#" class="w3-bar-item w3-button w3-theme-l1" id="logo">SH Gourmet</a>
     <a href="../Pedidos/ConsultarPedidos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Pedidos</a>
-    <a href="FilaCozinha.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Cozinha</a>
+    <a href="../Cozinha/FilaCozinha.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Cozinha</a>
     <a href="../Produtos/ConsultarProdutos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Produtos</a>
     <a href="../Funcionario/ConsultarFuncionario.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Funcionarios</a>
     <a href="../Cliente/ConsultarCliente.html" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Cliente</a>
@@ -84,7 +64,7 @@
 <!-- Barra Superior Responsiva -->
 <div id="navDemo" class="w3-bar-block w3-theme w3-hide w3-hide-large w3-hide-medium w3-large">
   <a href="../Pedidos/ConsultarPedidos.html" class="w3-bar-item w3-button w3-hover-white">Pedidos</a>
-  <a href="FilaCozinha.html" class="w3-bar-item w3-button w3-hover-white">Cozinha</a>
+  <a href="../Cozinha/FilaCozinha.html" class="w3-bar-item w3-button w3-hover-white">Cozinha</a>
   <a href="../Produtos/ConsultarProdutos.html" class="w3-bar-item w3-button w3-hover-white">Produtos</a>
   <a href="../Funcionarios/ConsultarFuncionario.html" class="w3-bar-item w3-button w3-hover-white">Funcionarios</a>
   <a href="../Cliente/ConsultarCliente.html" class="w3-bar-item w3-button w3-hover-white">Cliente</a>
@@ -96,42 +76,47 @@
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
     <i class="fa fa-remove"></i>
   </a>
-  <h4 class="w3-bar-item"><b>Cozinha</b></h4>
-  <a class="w3-bar-item w3-button w3-hover-black" href="FilaCozinha.html">Fila</a>
-  <a class="w3-bar-item w3-button w3-hover-black" href="FinalizadosCozinha.html">Finalizados</a>
+  <h4 class="w3-bar-item"><b>Cliente</b></h4>
+  <a class="w3-bar-item w3-button w3-hover-black" href="ConsultarCliente.html">Buscar</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="CadastrarCliente.html">Novo</a>
 </nav>
 
 <!-- Barra Lateral Responsiva -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
 <!-- Inicio da Busca -->
-<div class="w3-main" style="margin-left:250px" ng-app="cozinha">
+<div class="w3-main" style="margin-left:250px" ng-app="funcionario">
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal">Pedidos Abertos</h1>
-      <form ng-controller="abertos">
+      <h1 class="w3-text-teal">Buscar Cliente</h1>
+      <form ng-controller="busca">
         
-        <br><input class="w3-input" type="text" name="busca" placeholder="Cód do Pedido" ng-model="busca"><br>
-        <button class="w3-btn w3-black w3-hover-white" type="button" ng-click="finalizar()">
-          Finalizar!
+        <select class="w3-select" name="tipoBusca" ng-model="tipoBusca">
+          <option value="" disabled selected>Tipo de Busca</option>
+          <option value="1">Nome</option>
+          <option value="2">CPF</option>
+        </select>
+        <br>
+        <br><input class="w3-input" type="text" name="busca" placeholder="Buscar" ng-model="busca"><br>
+        <button class="w3-btn w3-black w3-hover-white" type="submit" ng-click="enviar(tipoBusca)">
+          Buscar!
         </button><br><br>
         <table class="w3-table-all w3-hoverable">
            <thead>
             <tr class="w3-light-grey">
-              <th width="50px">ID</th>
-              <th>ID do Cliente</th>
-              <th>Produto</th>
-              <th width="50px">Preço(R$)</th>
-              
+              <th width="30px">ID</th>
+              <th width="50px">Nome</th>
+              <th width="50px">Endereço</th>
+              <th width="50px">Nascimento</th>
+
             </tr>
           </thead>
             <tr ng-repeat="x in resposta">
-              
-              <th>{{x.pedido_id}}</th>
-              <th>{{x.cliente_id}}</th>
-              <th>{{x.produto}}</th>
-              <th>{{x.quantidade}}</th>
-              <th >{{x.valor_total}}</th>
+              <th>{{x.id}}</th>
+              <th>{{x.nome}}</th>
+              <th>{{x.endereco}}</th>
+              <th>{{x.data_nascimento | date:"dd/MM/yyyy"}}</th>
             </tr>
         </table>
       </form>
@@ -151,8 +136,8 @@
 
 <!-- END MAIN -->
 </div>
-<script src="../Resources/jsPadrao.js"/>
 
+<script src="../Resources/jsPadrao.js"/>
 
 </body>
 </html>

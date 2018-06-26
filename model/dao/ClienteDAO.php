@@ -8,7 +8,7 @@
                 $this->conn = new PDO("mysql:dbname=shgourmet;host=127.0.0.1", "shgourmet", "");
             }
             public function insert() {
-                $stmt = $this->conn->prepare("CALL insert_cliente (:nome, :data_nasc, :cpf :endereco);");
+                $stmt = $this->conn->prepare("CALL insert_cliente(:nome, :data_nasc, :cpf, :endereco)");
                 $a = $this->classe->getNome();
                 $stmt->bindParam(":nome", $a);
                 $b = $this->classe->getData_nascimento();
@@ -24,16 +24,16 @@
 
             public function select($consulta) {
                 $stmt = $this->conn->prepare("CALL select_cliente('".$consulta."')");
-
+                $stmt->execute(); 
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $stmt->execute();  
+                 
                 return $result;
             }
             public function selectCPF($consulta) {
-                $stmt = $this->conn->prepare("CALL selectCPF_cliente($consulta)");
-
+                $stmt = $this->conn->prepare("CALL selectCPF_cliente('".$consulta."')");
+                $stmt->execute();
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $stmt->execute();  
+                  
                 return $result;
             }
 

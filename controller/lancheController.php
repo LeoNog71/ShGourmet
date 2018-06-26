@@ -22,12 +22,11 @@
     function recebeJson($array){
             
        $classe = new Lanche();
-       print_r($array);
        $classe->setId((int)$array->id);
        $classe->setNome($array->nome);
        $classe->setDescricao($array->descricao);
        $classe->setPreco_venda(floatval($array->preco_venda));
-       $classe->setQuantidade((int)$array->quantidade);
+       $classe->setQuantidade(100);
        
        $classe->setPreco_compra(floatval($array->preco_compra));
        $classe->setFornecedor($array->fornecedor);

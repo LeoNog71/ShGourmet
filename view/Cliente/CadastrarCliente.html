@@ -8,39 +8,32 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="../Resources/stylePadrao.css">
+<script src="../Resources/jsPadrao.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <script>
   var app = angular.module('funcionario', []);
-  app.controller('busca', ['$scope', '$http', function($scope, $http){
-    $scope.enviar = function(tipoBusca){
-      var op = '';
-      if(tipoBusca == '1'){
-        op = '4';
-      }else if(tipoBusca == '2'){
-        op = '5'
-      }
+  app.controller('cadastrar', ['$scope', '$http', function($scope, $http){
+    $scope.enviar = function(){
       $http.post(
-        'http://localhost/Shgourmet/controller/funcionarioController.php',
+        'http://localhost/Shgourmet/controller/clienteController.php',
         {
           id : '',
-					nome : $scope.busca,
-					email : '',
-					cpf : '',
-					data_admissao : '',
-					data_nascimento : '',
-					operacao : op,
-					endereco : ''
+					nome : $scope.nome,
+					email : $scope.email,
+					cpf : $scope.cpf,
+					data_admissao : $scope.admissao,
+					data_nascimento : $scope.nascimento,
+					operacao : '1',
+					endereco : $scope.endereco
         }
       ).then(
           function mySucess(response){
-            if(response.data == '\nfalse\n'){
-              alert('Nada Encontrado');
-            }
             console.log(response.data);
-						$scope.resposta = response.data;
+						alert('Usuário Cadastrado com Sucesso!');
 					}, 
           function myError(response){
-						alert('Erro Contate o Administrador!');
+            console.log(response.data);
+						alert('Falha ao cadastrar! Contate o Administrador');
 					}
         );
     }
@@ -56,7 +49,7 @@
     <a href="../Pedidos/ConsultarPedidos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Pedidos</a>
     <a href="../Cozinha/FilaCozinha.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Cozinha</a>
     <a href="../Produtos/ConsultarProdutos.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Produtos</a>
-    <a href="ConsultarFuncionario.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Funcionarios</a>
+    <a href="../Funcionario/ConsultarFuncionario.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Funcionarios</a>
     <a href="../Cliente/ConsultarCliente.html" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Cliente</a>
   </div>
 </div>
@@ -70,63 +63,40 @@
   <a href="../Cliente/ConsultarCliente.html" class="w3-bar-item w3-button w3-hover-white">Cliente</a>
 </div>
 
-
 <!-- Barra Lateral -->
 <nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l1 w3-animate-left" id="mySidebar">
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
     <i class="fa fa-remove"></i>
   </a>
-  <h4 class="w3-bar-item"><b>Funcionarios</b></h4>
-  <a class="w3-bar-item w3-button w3-hover-black" href="ConsultarFuncionario.html">Buscar</a>
-  <a class="w3-bar-item w3-button w3-hover-black" href="CadastrarFuncionario.html">Novo</a>
+  <h4 class="w3-bar-item"><b>Cliente</b></h4>
+  <a class="w3-bar-item w3-button w3-hover-black" href="ConsultarCliente.html">Buscar</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="CadastrarCliente.html">Novo</a>
 </nav>
 
 <!-- Barra Lateral Responsiva -->
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
-<!-- Inicio da Busca -->
+<!-- Inicio Formulario -->
 <div class="w3-main" style="margin-left:250px" ng-app="funcionario">
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
-      <h1 class="w3-text-teal">Buscar Funcionário</h1>
-      <form ng-controller="busca">
+      <h1 class="w3-text-teal">Cadastro de Cliente</h1>
+      <form ng-controller="cadastrar">
+        <input class="w3-input" type="text" name="nome" placeholder="Nome Completo" ng-model="nome"><br>
+        <input class="w3-input" type="text" name="cpf" placeholder="CPF (somente números)" ng-model="cpf"><br>
+        <input class="w3-input" type="text" name="endereco" placeholder="Endereço Completo" ng-model="endereco"><br>
         
-        <select class="w3-select" name="tipoBusca" ng-model="tipoBusca">
-          <option value="" disabled selected>Tipo de Busca</option>
-          <option value="1">Nome</option>
-          <option value="2">CPF</option>
-        </select>
-        <br>
-        <br><input class="w3-input" type="text" name="busca" placeholder="Buscar" ng-model="busca"><br>
-        <button class="w3-btn w3-black w3-hover-white" type="submit" ng-click="enviar(tipoBusca)">
-          Buscar!
-        </button><br><br>
-        <table class="w3-table-all w3-hoverable">
-           <thead>
-            <tr class="w3-light-grey">
-              <th width="30px">ID</th>
-              <th width="50px">Nome</th>
-              <th width="30px">Email</th>
-              <th width="50px">Endereço</th>
-              <th width="50px">Nascimento</th>
-              <th width="50px">Admissão</th>
-            </tr>
-          </thead>
-            <tr ng-repeat="x in resposta">
-              <th>{{x.id}}</th>
-              <th>{{x.nome}}</th>
-              <th>{{x.email}}</th>
-              <th>{{x.endereco}}</th>
-              <th>{{x.data_nascimento | date:"dd/MM/yyyy"}}</th>
-              <th>{{x.data_de_admissao | date:"dd/MM/yyyy"}}</th>
-            </tr>
-        </table>
+            Nascimento: <input class="w3-input " type="date" ng-model="nascimento">
+       
+        <br><button class="w3-btn w3-black w3-hover-white" id="botaoForm" ng-click="enviar()">
+          Cadastrar!
+        </button>
+
       </form>
     </div>
     <div class="w3-third w3-container">
-      <p class=" w3-padding-32 w3-center">
-          <img src="../Resources/imagens/Buscar.png" alt="Buscar" style="width: 120%;">
+      <p class="w3-padding-large w3-padding-32 w3-center">
+          <img src="../Resources/imagens/Formulário.png" alt="Formulario" style="width: 100%;">
       </p>
     </div>
   </div>
@@ -140,7 +110,7 @@
 <!-- END MAIN -->
 </div>
 
-<script src="../Resources/jsPadrao.js"/>
+
 
 </body>
 </html>
