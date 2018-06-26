@@ -11,11 +11,11 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <script type="text/javascript">
-  var app = module('pedidos',[]);
-  app.module('abertos',['$scope','$http',function($scope, $http){
+  var app = angular.module('pedidos',[]);
+  app.controller('abertos',['$scope','$http',function($scope, $http){
     var carregar = function(){
       $http.post(
-        'http://localhost/Shgourmet/controller/pedidoController.php',
+        'http://localhost/Shgourmet/controller/pedidosController.php',
             {
               id : '',
               nome : '',
@@ -38,9 +38,32 @@
               }  
         );
     }
-
+    carregar();
     $scope.cancelar = function(){
-      
+      $http.post(
+        'http://localhost/Shgourmet/controller/pedidosController.php',
+            {
+              id : $scope.busca,
+              nome : '',
+              descricao : '',
+              preco_venda : '',
+              quantidade : '',
+              preco_compra : '',
+              fornecedor : '',
+              tamanho : '' ,
+              operacao : '7'
+            }
+          ).then(
+              function mySucess(response){
+                console.log(response.data);
+                alert('Pedido Cancelado');
+                carregar();
+              }, 
+              function myError(response){
+                console.log(response.data);
+                alert('Falha no servidor');
+              }  
+        );
     }
  }]);
 </script>
@@ -105,10 +128,10 @@
             </tr>
           </thead>
             <tr ng-repeat="x in resposta">
-              <th>x.id</th>
-              <th>x.id_cliente</th>
-              <th>x.id_funcionario</th>
-              <th >x.valor_total</th>
+              <th>{{x.id}}</th>
+              <th>{{x.id_cliente}}</th>
+              <th>{{x.id_funcionario}}</th>
+              <th >{{x.valor_total}}</th>
               
             </tr>
         </table>
