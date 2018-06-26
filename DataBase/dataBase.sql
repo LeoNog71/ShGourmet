@@ -702,8 +702,8 @@ delimiter ;
 DELIMITER $$
 CREATE PROCEDURE insert_pedido(in id_cliente_v integer, id_funcionario_v integer, in data_venda_v date )
 BEGIN
-	INSERT INTO `shgourmet`.`pedidos`
-	(insert_pedido_produto`id_cliente`,
+	INSERT INTO `shgourmet`.`pedidos`(
+	`id_cliente`,
 	`id_funcionario`,
 	`data_pedido`,
 	`valor_total`,
@@ -748,7 +748,7 @@ create procedure soma_pedido (in id_v int)
 	from produto_pedido 
     join produtos on produtos.id = produto_pedido.id_produto
     left join pedidos on pedidos.id = produto_pedido.id_pedido
-    where pedidos.situacao = false and produto_pedido.id_pedido = in_v);
+    where pedidos.situacao = false and produto_pedido.id_pedido = id_v);
  
             UPDATE `shgourmet`.`pedidos`
 			SET

@@ -6,6 +6,7 @@
   
     $json = file_get_contents('php://input');
     $array = json_decode($json);
+    
     $id = array();
     if($array->operacao == '1'){
         cadastrar($array,$id);
@@ -23,7 +24,8 @@
         pesquisaAll();
     }
     if($array->operacao =='10'){
-        array_push($id,$array->id);
+        array_push($id,(int)$array->id);
+        print_t($id);
     }
     
  
