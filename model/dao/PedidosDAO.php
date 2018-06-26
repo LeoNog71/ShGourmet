@@ -42,7 +42,7 @@
                 $stmt = $this->conn->prepare("CALL selectID_pedido($consulta)");
                 $stmt->execute(); 
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $result.push($this->selectPedidoProduto());
+                array_push($result,$this->selectPedidoProduto());
                 return $result;
             }
 
@@ -72,8 +72,10 @@
                 $stmt->execute();
             }
             public function insertPedidoProduto(){
-                $array = $this->getProdutos();
-                $id = $this->getId();
+                $array = $this->classe->getProdutos();
+                $tmt = $this->conn->prepare("SELECT id FROM pedidos ORDER BY id DESC LIMIT 1;");
+                $tmt->execute();
+                $id = $tmt->fetch(PDO::FETCH_ASSOC);
                 foreach ($array as $value) {
                     
                     $stmt = $this->conn->prepare("insert_pedido_produto($id, $value );");
@@ -82,7 +84,7 @@
             }
             public function selectPedidoProduto(){
                 
-                $id = $this->getId();
+                $id = $this->classe->getId();
                 $stmt = $this->conn->prepare("SELECT id_produto from produto_pedido WHERE id_pedido = $id");
                 $stmt->execute();
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

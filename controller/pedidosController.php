@@ -20,17 +20,16 @@
     }
  
     function recebeJson($array){
-            
+       print_r($array);   
        $classe = new Pedidos();
        
-       $classe->setId($array->id);
-       $classe->setIdCliente($array->id_cliente);
-       $classe->setIdFuncionario($array->id_funcionario);
-       $classe->setData($array->data_pedido);
-       $classe->setValor_total($array->valor_total);
-       foreach ($array->pedido_produto as $value) {
-           $classe->setProdutos($value->id);
-       }
+       $classe->setId((int)$array->id);
+       echo (int)$array->id;
+       $classe->setIdCliente((int)$array->id_cliente);
+       $classe->setIdFuncionario((int)$array->id_funcionario);
+       $classe->setData('2017-10-10');
+       $classe->setValor_total((double)$array->valor_total);
+      # $classe->setProdutos($array->produto_pedido);
 
         return $classe;
     }
@@ -46,8 +45,9 @@
     }
 
     function cadastrar($array) {
-       $f  = new LancheDAO(recebeJson($array));
+       $f  = new PedidosDAO(recebeJson($array));
        $f->insert();
+       $f->insertPedidoProduto();
     }
 
     function excluir($array) {

@@ -703,8 +703,7 @@ DELIMITER $$
 CREATE PROCEDURE insert_pedido(in id_cliente_v integer, id_funcionario_v integer, in data_venda_v date )
 BEGIN
 	INSERT INTO `shgourmet`.`pedidos`
-	(`id`,
-	`id_cliente`,
+	(`id_cliente`,
 	`id_funcionario`,
 	`data_pedido`,
 	`valor_total`,
@@ -776,12 +775,14 @@ create procedure soma_pedido (in id_v int)
 delimiter ;
 
 DELIMITER $$
-CREATE PROCEDURE insert_pedido_produto(in id_pe int, in id_pr int )
+CREATE PROCEDURE insert_pedido_produto( in id_pr int )
 BEGIN
+	declare id integer;
+    set id = (SELECT id FROM pedidos ORDER BY id DESC LIMIT 1);
 	INSERT INTO `shgourmet`.`produto_pedido`
 	(`id_produto`, `id_pedido`)
 	VALUES
-	(id_pr, id_pe);
+	(id_pr, id);
     call soma_pedido(id_pe);
 
 END $$

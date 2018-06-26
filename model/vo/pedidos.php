@@ -12,6 +12,7 @@
                 
         function __construct() {
             $this->produtos = array();
+            #init_set('memory_limit','26M');
         }
         
         function getId() {
@@ -50,7 +51,7 @@
             return $this->produtos;
         }
         function setProdutos($produtos) {
-            $this->produtos.push($produtos);
+            $this->setProdutos($produtos);
         }
         function getSituacao() {
             return $this->situacao;
