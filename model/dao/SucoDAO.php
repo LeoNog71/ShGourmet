@@ -1,7 +1,7 @@
 <?php
 
  include_once '..\vo\suco.php';
-    class BebidaDAO {
+    class SucoDAO {
              
             private $classe;
             private $conn;
@@ -17,10 +17,10 @@
                 $stmt->bindParam(":nome", $a);
                 $b = $this->classe->getDescricao();
                 $stmt->bindParam(":descricao",$b);
-                $c = $this->classe->getPreco_compra();
-                $stmt->bindParam(":preco_venda",(double)$c);
+                $c = $this->classe->getPreco_venda();
+                $stmt->bindParam(":preco_venda",$c);
                 $d = $this->classe->getQuantidade();
-                $stmt->bindParam(":unidade",(int)$d);
+                $stmt->bindParam(":unidade",$d);
                 $e = $this->classe->getPreco_compra();
                 $stmt->bindParam(":preco_compra", $e);
                 $f = $this->classe->getFornecedor();
@@ -29,7 +29,7 @@
                 $stmt->bindParam(":marca", $g);
                 $h = $this->classe->getTamanho();
                 $stmt->bindParam(":tamanho", $h);
-                $i = $this->calsse->getSabor();
+                $i = $this->classe->getSabor();
                 $stmt->bindParam(":sabor",$i);
 
                 $stmt->execute();

@@ -26,16 +26,16 @@
         $classe = new Suco();
        
        $classe->setId((int)$array->id);
-       $classe->setNome($array->nome);
-       $classe->setSabor($array->sabor);
-       $classe->setDescricao($array->descricao);
-       $classe->setPreco_venda((double)$array->preco_venda);
+       $classe->setNome(strtoupper($array->nome));
+       $classe->setSabor(strtoupper($array->sabor));
+       $classe->setDescricao(strtoupper($array->descricao));
+       $classe->setPreco_venda(floatval($array->preco_venda));
        $classe->setQuantidade((int)$array->quantidade);
        
-       $classe->setPreco_compra((double)$array->preco_compra);
-       $classe->setFornecedor($array->fornecedor);
-       $classe->setMarca($array->marca);
-       $classe->setTamanho($array->tamanho);
+       $classe->setPreco_compra(floatval($array->preco_compra));
+       $classe->setFornecedor(strtoupper($array->fornecedor));
+       $classe->setMarca(strtoupper($array->marca));
+       $classe->setTamanho(strtoupper($array->tamanho));
 
         return $classe;
     }

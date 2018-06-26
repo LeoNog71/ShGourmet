@@ -26,14 +26,14 @@
     function recebeJson($array){
             
        $classe = new Pizza();
-       print_r($array);
        $classe->setId((int)$array->id);
        $classe->setNome(strtoupper($array->nome));
        $classe->setDescricao(strtoupper($array->descricao));
-       $classe->setPreco_venda($array->preco_venda);
-       $classe->setQuantidade($array->quantidade);
+        echo $array->preco_compra;
+       $classe->setPreco_venda(floatval($array->preco_venda));
+       $classe->setQuantidade((int)$array->quantidade);
        
-       $classe->setPreco_compra($array->preco_compra);
+       $classe->setPreco_compra((double)$array->preco_compra);
        $classe->setFornecedor(strtoupper($array->fornecedor));
        $classe->setTamanho(strtoupper($array->tamanho));
 
