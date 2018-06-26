@@ -17,7 +17,7 @@
         
         $scope.enviar = function(tipoProduto){
           console.log(tipoProduto);
-          if($scope.tipo === "2"){
+          if($scope.tipo == '2'){
             console.log('cu');
               $http.post(
             'http://localhost/Shgourmet/controller/bebidaController.php',
@@ -43,7 +43,7 @@
                 alert('Falha ao cadastrar! Contate o Administrador');
               }
             );
-          }else if(tipoProduto === "3"){
+          }else if(tipoProduto == '3'){
             $http.post(
             'http://localhost/Shgourmet/controller/sucoController.php',
             {
@@ -69,7 +69,7 @@
                 alert('Falha ao cadastrar! Contate o Administrador');
               }
             );
-          }else if(tipoProduto === "4"){
+          }else if(tipoProduto == '4'){
             $http.post(
             'http://localhost/Shgourmet/controller/lancheController.php',
             {
@@ -77,7 +77,7 @@
               nome : $scope.nome,
               descricao : $scope.descricao,
               preco_venda : $scope.valor,
-              quantidade : '10',
+              quantidade : $scope.quantidade,
               preco_compra : $scope.custo,
               fornecedor : $scope.fornecedor,
               operacao : '1'
@@ -92,7 +92,7 @@
                 alert('Falha ao cadastrar! Contate o Administrador');
               }
             );
-          }else if(tipoProduto === "5"){
+          }else if(tipoProduto == '5'){
             $http.post(
             'http://localhost/Shgourmet/controller/porcaoController.php',
             {
@@ -116,13 +116,9 @@
                 alert('Falha ao cadastrar! Contate o Administrador');
               }
             );
-<<<<<<< HEAD
-          }else if(tipoProduto === "7"){
-=======
           }else if(tipoProduto == '7'){
             console.log($scope.tamanhoTwo);
             console.log($scope.quantidade)
->>>>>>> origin/master
             $http.post(
             'http://localhost/Shgourmet/controller/pizzaController.php',
             {
