@@ -121,18 +121,20 @@
            <thead>
             <tr class="w3-light-grey">
               <th width="50px">ID</th>
-              <th>Cód do Cliente</th>
-              <th>Cód do Funcionário</th>
+              <th>ID do Cliente</th>
+              <th>Produto</th>
               <th width="50px">Preço(R$)</th>
               
             </tr>
           </thead>
             <tr ng-repeat="x in resposta">
-              <th>{{x.id}}</th>
-              <th>{{x.id_cliente}}</th>
-              <th>{{x.id_funcionario}}</th>
+              <th>
+              {{x.pedido_id}}
+              <th>{{x.cliente_id}}</th>
+              <th>{{x.produto}}</th>
               <th >{{x.valor_total}}</th>
-              
+              </th>
+              <th>{{x.valor_total}}</th>
             </tr>
         </table>
       </form>
