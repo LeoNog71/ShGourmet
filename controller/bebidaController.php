@@ -6,6 +6,7 @@
    # include_once '..\Interfaces\IDAO.php';
    
     $json = file_get_contents('php://input');
+    echo '$json';
     $array = json_decode($json);
     if($array->operacao == '1'){
         cadastrar($array);
@@ -23,17 +24,15 @@
     function recebeJson($array){
             
        $classe = new Bebida();
-       
        $classe->setId((int)$array->id);
-       $classe->setNome($array->nome);
-       $classe->setDescricao($array->descricao);
-       $classe->setPreco_venda((double)$array->preco_venda);
-       $classe->setQuantidade((int)$array->quantidade);
-       
-       $classe->setPreco_compra((double)$array->preco_compra);
-       $classe->setFornecedor($array->fornecedor);
-       $classe->setMarca($array->marca);
-       $classe->setTamanho($array->tamanho);
+       $classe->setNome(strtoupper($array->nome));
+       $classe->setDescricao(strtoupper($array->descricao));
+       $classe->setPreco_venda($array->preco_venda);
+       $classe->setQuantidade($array->quantidade);
+       $classe->setPreco_compra($array->preco_compra);
+       $classe->setFornecedor(strtoupper($array->fornecedor));
+       $classe->setMarca(strtoupper($array->marca));
+       $classe->setTamanho(strtoupper($array->tamanho));
 
         return $classe;
     }

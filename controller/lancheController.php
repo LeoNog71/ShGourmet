@@ -22,7 +22,7 @@
     function recebeJson($array){
             
        $classe = new Lanche();
-       
+       print_r($array);
        $classe->setId((int)$array->id);
        $classe->setNome($array->nome);
        $classe->setDescricao($array->descricao);

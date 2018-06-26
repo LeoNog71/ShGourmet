@@ -7,15 +7,24 @@
         private $preco_venda;
         private $preco_compra;
         private $disponivel;
+        private $quantidade;
         private $fornecedor;
         
         function __construct() {
             
         }
-        
         function getId() {
-            return $this->id;
+          return $this->id;
         }
+        function getQuantidade() {
+            return $this->quantidade;
+        }
+
+        function setQuantidade($quantidade) {
+            $this->quantidade = $quantidade;
+        }
+
+                
 
         function getNome() {
             return $this->nome;
