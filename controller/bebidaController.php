@@ -6,7 +6,7 @@
    # include_once '..\Interfaces\IDAO.php';
    
     $json = file_get_contents('php://input');
-    echo '$json';
+    
     $array = json_decode($json);
     if($array->operacao == '1'){
         cadastrar($array);
@@ -24,6 +24,7 @@
     function recebeJson($array){
             
        $classe = new Bebida();
+       print_r($array);
        $classe->setId((int)$array->id);
        $classe->setNome(strtoupper($array->nome));
        $classe->setDescricao(strtoupper($array->descricao));

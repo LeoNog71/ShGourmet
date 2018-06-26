@@ -35,16 +35,23 @@
 
             public function select($consulta) {
                 $stmt = $this->conn->prepare("CALL select_porcao('".$consulta."')");
-
+                $stmt->execute(); 
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $stmt->execute();  
+                 
                 return $result;
             }
-             public function selectID($consulta) {
+            public function selectID($consulta) {
                 $stmt = $this->conn->prepare("CALL selectID_porcao($consulta)");
-
+                $stmt->execute(); 
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $stmt->execute();  
+                 
+                return $result;
+            }
+            public function selectALL(){
+                $stmt = $this->conn->prepare("CALL selectAll_porcao($consulta)");
+                $stmt->execute(); 
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                 
                 return $result;
             }
 

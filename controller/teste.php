@@ -1,7 +1,8 @@
 <?php
 
     $conn = new PDO("mysql:dbname=shgourmet;host=127.0.0.1", "shgourmet", "");
-    $stmt = $conn->prepare("CALL selectID_funcionario(1)");
+    $consulta = 1;
+    $stmt = $conn->prepare("CALL selectID_pizza($consulta)");
     $stmt->execute();    
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     

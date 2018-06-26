@@ -43,9 +43,9 @@
             }
             public function selectID($consulta) {
                 $stmt = $this->conn->prepare("CALL selectID_bebida($consulta)");
-
+                $stmt->execute(); 
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $stmt->execute();  
+                 
                 return $result;
             }
 

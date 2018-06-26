@@ -38,7 +38,7 @@
     }
     
      function enviaJson($array){
-            
+         print_r($array);   
         echo json_encode($array);
     }
 

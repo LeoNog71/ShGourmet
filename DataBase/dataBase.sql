@@ -524,6 +524,18 @@ BEGIN
     where produtos.nome = nome_l;
 
 END $$
+DELIMITER 
+
+DELIMITER $$
+CREATE PROCEDURE selectID_lanche(in id_l int)
+BEGIN
+	SELECT lanche.id, produtos.nome, produtos.descricao,
+    produtos.preco_venda,produtos.quantidade, produtos.fornecedor
+    from lanche
+    join produtos on produtos.id = lanche.id_produto
+    where produtos.nome = id_l;
+
+END $$
 DELIMITER ;
 
 DELIMITER $$
@@ -577,7 +589,7 @@ BEGIN
     produtos.preco_venda,produtos.quantidade, produtos.fornecedor
     from pizza
     join produtos on produtos.id = pizza.id_produtos
-    where produtos.nome = id_p;
+    where pizza.id = id_p;
 END $$
 DELIMITER ;
 

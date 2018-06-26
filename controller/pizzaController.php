@@ -24,19 +24,18 @@
     }
    
     function recebeJson($array){
-            
+  
        $classe = new Pizza();
        $classe->setId((int)$array->id);
        $classe->setNome(strtoupper($array->nome));
        $classe->setDescricao(strtoupper($array->descricao));
-        echo $array->preco_compra;
        $classe->setPreco_venda(floatval($array->preco_venda));
        $classe->setQuantidade((int)$array->quantidade);
        
        $classe->setPreco_compra((double)$array->preco_compra);
        $classe->setFornecedor(strtoupper($array->fornecedor));
        $classe->setTamanho(strtoupper($array->tamanho));
-
+    
         return $classe;
     }
     
@@ -68,7 +67,8 @@
     function pesquisaId($array) {
         $consulta = recebeJson($array);
         $f = new PizzaDAO(NULL);
-        enviaJson($f->selectID($consulta->getNome()));
+        $teste= $consulta->getId();
+        enviaJson($f->selectID($teste));
     }
     function pesquisaAll() {
         

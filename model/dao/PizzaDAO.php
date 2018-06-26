@@ -35,23 +35,23 @@
 
             public function select($consulta) {
                 $stmt = $this->conn->prepare("CALL select_pizza('".$consulta."')");
-
-                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $stmt->execute();  
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
                 return $result;
             }
             public function selectID($consulta) {
                 $stmt = $this->conn->prepare("CALL selectID_pizza($consulta)");
-
+                $stmt->execute();
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $stmt->execute();  
+                  
                 return $result;
             }
             public function selectALL() {
                 $stmt = $this->conn->prepare("CALL select_all_pizza()");
-
+                $stmt->execute();
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $stmt->execute();  
+                 
                 return $result;
             }
 
