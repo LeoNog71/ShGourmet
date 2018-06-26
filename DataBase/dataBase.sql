@@ -700,12 +700,10 @@ create procedure decrementa_estoque(in id_p int)
 delimiter ;
 
 DELIMITER $$
-CREATE PROCEDURE insert_pedido(in id_cliente_v integer, id_funcionario_v integer,
-in id_mesa_v integer, in id_venda_v int, in data_venda_v date )
+CREATE PROCEDURE insert_pedido(in id_cliente_v integer, id_funcionario_v integer, in data_venda_v date )
 BEGIN
 	INSERT INTO `shgourmet`.`pedidos`
-	(`id`,
-	`id_cliente`,
+	(`id_cliente`,
 	`id_funcionario`,
 	`data_pedido`,
 	`valor_total`,
@@ -718,8 +716,7 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE update_pedidos(in id_v int,in id_cliente_v integer, id_funcionario_v integer,
-in id_mesa_v integer, in data_venda_v date )
+CREATE PROCEDURE update_pedidos(in id_v int,in id_cliente_v integer, id_funcionario_v integer, in data_venda_v date )
 BEGIN
 	UPDATE pedidos
 	SET
@@ -778,12 +775,14 @@ create procedure soma_pedido (in id_v int)
 delimiter ;
 
 DELIMITER $$
-CREATE PROCEDURE insert_pedido_produto(in id_pe int, in id_pr int )
+CREATE PROCEDURE insert_pedido_produto( in id_pr int )
 BEGIN
+	declare id integer;
+    set id = (SELECT id FROM pedidos ORDER BY id DESC LIMIT 1);
 	INSERT INTO `shgourmet`.`produto_pedido`
 	(`id_produto`, `id_pedido`)
 	VALUES
-	(id_pr, id_pe);
+	(id_pr, id);
     call soma_pedido(id_pe);
 
 END $$
@@ -792,15 +791,16 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE finalizar_pedido(in id_pe int)
 BEGIN
-	declare id_ve int;
+
     declare total double;
-    set id_ve  = (select id_venda from pedidos where id = id_pe);
     set total = (select valor_total from pedidos where id = id_pe);
     
-    update venda
-    set 
-    valor_total = total
-    where id = id_ve;
+    INSERT INTO `shgourmet`.`lancamentos`
+	(`valor`,
+	`descricao`)
+	VALUES
+	(total,id_pe);
+
 
 END $$
 DELIMITER ;
@@ -819,6 +819,15 @@ CREATE PROCEDURE selectAll_pedido_finalizado()
 BEGIN
 	
 	select * from pedidos where situacao = true and data_pedido >= now();
+        
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE selectID_pedido(in id_p int)
+BEGIN
+	
+	select * from pedidos where id = id_p;
         
 END $$
 DELIMITER ;

@@ -1,40 +1,89 @@
 <?php
-
-    class Lancamentos{
+    class Pedidos{
+        
         private $id;
-        private $valor;
-        private $descricao;
-        
-        
+        private $idCliente;
+        private $idFuncionario;
+        private $data;
+        private $valor_total;
+        private $produtos;
+        private $situacao;
+        private $cancelado;
+                
         function __construct() {
-            
+            $this->produtos = array();
+            #init_set('memory_limit','26M');
         }
         
         function getId() {
             return $this->id;
         }
-
-        function getValor() {
-            return $this->valor;
+        function getMesa() {
+            return $this->mesa;
         }
-
-        function getDescricao() {
-            return $this->descricao;
+        function getData() {
+            return $this->data;
         }
-
+        function getValor_total() {
+            return $this->valor_total;
+        }
+        function getValor_desconto() {
+            return $this->valor_desconto;
+        }
         function setId($id) {
             $this->id = $id;
         }
-
-        function setValor($valor) {
-            $this->valor = $valor;
+        
+        function setMesa($mesa) {
+            $this->mesa = $mesa;
+        }
+        function setData($data) {
+            $this->data = $data;
+        }
+        function setValor_total($valor_total) {
+            $this->valor_total = $valor_total;
+        }
+        function setValor_desconto($valor_desconto) {
+            $this->valor_desconto = $valor_desconto;
+        }
+        
+        function getProdutos() {
+            return $this->produtos;
+        }
+        function setProdutos($produtos) {
+            $this->setProdutos($produtos);
+        }
+        function getSituacao() {
+            return $this->situacao;
+        }
+        function setSituacao($situacao) {
+            $this->situacao = $situacao;
+        }
+        function getCancelado() {
+            return $this->cancelado;
         }
 
-        function setDescricao($descricao) {
-            $this->descricao = $descricao;
+        function setCancelado($cancelado) {
+            $this->cancelado = $cancelado;
         }
 
+        function getIdCliente() {
+            return $this->idCliente;
+        }
+
+        function getIdFuncionario() {
+            return $this->idFuncionario;
+        }
+
+        function setIdCliente($idCliente) {
+            $this->idCliente = $idCliente;
+        }
+
+        function setIdFuncionario($idFuncionario) {
+            $this->idFuncionario = $idFuncionario;
+        }
 
 
     }
+        
 ?>

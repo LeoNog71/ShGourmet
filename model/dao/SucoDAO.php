@@ -38,16 +38,16 @@
 
             public function select($consulta) {
                 $stmt = $this->conn->prepare("CALL select_suco('".$consulta."')");
-
+                $stmt->execute();
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                $stmt->execute();  
+                  
                 return $result;
             }
             public function selectID($consulta) {
                 $stmt = $this->conn->prepare("CALL select_sucoID($consulta)");
-
+                $stmt->execute(); 
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $stmt->execute();  
+                 
                 return $result;
             }
 

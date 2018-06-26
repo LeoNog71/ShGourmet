@@ -16,7 +16,6 @@
     $scope.inserir=function(){
       var op='5';
       if($scope.tipoProduto == '2'){
-        
         $http.post(
           'http://localhost/Shgourmet/controller/bebidaController.php',
           {
@@ -38,15 +37,25 @@
                 produto_pedido.push($scope.codProduto);
                 console.log(produto_pedido);
                 $scope.produto_pedido.qntd = produto_pedido.lenght;
-
+                $http.post(
+                  'http://localhost/Shgourmet/controller/pedidosController.php',
+                  {
+                    id : $scope.codProduto,
+                    operacao : '10'
+                  }).then(
+                    function mySucess(response){
+                      console.log('god');
+                    }, function myError(response){
+                      console.log('xesque');
+                    });
               }, 
               function myError(response){
                 console.log(response.data);
                 alert('Falha no servidor');
               }
             );
-          }else if($scope.tipoProduto == '3'){
-            $http.post(
+      }else if($scope.tipoProduto == '3'){
+        $http.post(
             'http://localhost/Shgourmet/controller/sucoController.php',
             {
               id : $scope.codProduto,
@@ -68,14 +77,25 @@
                 produto_pedido.push($scope.codProduto);
                 console.log(produto_pedido);
                 $scope.produto_pedido.qntd = produto_pedido.lenght;
+                $http.post(
+                  'http://localhost/Shgourmet/controller/pedidosController.php',
+                  {
+                    id : $scope.codProduto,
+                    operacao : '10'
+                  }).then(
+                    function mySucess(response){
+                      console.log('god');
+                    }, function myError(response){
+                      console.log('xesque');
+                    });
               }, 
               function myError(response){
                 console.log(response.data);
                 alert('Falha no servidor');
               }
             );
-          }else if($scope.tipoProduto == '4'){
-            $http.post(
+      }else if($scope.tipoProduto == '4'){
+        $http.post(
             'http://localhost/Shgourmet/controller/lancheController.php',
             {
               id : $scope.codProduto,
@@ -94,14 +114,25 @@
                 produto_pedido.push($scope.codProduto);
                 console.log(produto_pedido);
                 $scope.produto_pedido.qntd = produto_pedido.lenght;
+                $http.post(
+                  'http://localhost/Shgourmet/controller/pedidosController.php',
+                  {
+                    id : $scope.codProduto,
+                    operacao : '10'
+                  }).then(
+                    function mySucess(response){
+                      console.log('god');
+                    }, function myError(response){
+                      console.log('xesque');
+                    });
               }, 
               function myError(response){
                 console.log(response.data);
                 alert('Falha no servidor');
               }
             );
-          }else if($scope.tipoProduto == '5'){
-            $http.post(
+      }else if($scope.tipoProduto == '5'){
+        $http.post(
             'http://localhost/Shgourmet/controller/porcaoController.php',
             {
               id : $scope.codProduto,
@@ -121,14 +152,25 @@
                 produto_pedido.push($scope.codProduto);
                 console.log(produto_pedido);
                 $scope.produto_pedido.qntd = produto_pedido.lenght;
+                $http.post(
+                  'http://localhost/Shgourmet/controller/pedidosController.php',
+                  {
+                    id : $scope.codProduto,
+                    operacao : '10'
+                  }).then(
+                    function mySucess(response){
+                      console.log('god');
+                    }, function myError(response){
+                      console.log('xesque');
+                    });
               }, 
               function myError(response){
                 console.log(response.data);
                 alert('Falha no servidor');
               }
             );
-          }else if($scope.tipoProduto == '7'){
-            $http.post(
+      }else if($scope.tipoProduto == '7'){
+        $http.post(
             'http://localhost/Shgourmet/controller/pizzaController.php',
             {
               id : $scope.codProduto,
@@ -148,15 +190,24 @@
                 produto_pedido.push($scope.codProduto);
                 console.log(produto_pedido);
                 $scope.produto_pedido.qntd = produto_pedido.lenght;
+                $http.post(
+                  'http://localhost/Shgourmet/controller/pedidosController.php',
+                  {
+                    id : $scope.codProduto,
+                    operacao : '10'
+                  }).then(
+                    function mySucess(response){
+                      console.log('god');
+                    }, function myError(response){
+                      console.log('xesque');
+                    });
               }, 
               function myError(response){
                 console.log(response.data);
                 alert('Falha no servidor');
               }
             );
-          }
-
-          
+      }      
     }
     $scope.enviar=function(){
 
