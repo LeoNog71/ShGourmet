@@ -12,11 +12,10 @@
 <script type="text/javascript">
   var  app = angular.module('pedidos', []);
   app.controller('novo',['$scope', '$http', function($scope, $http){
-    var produto_pedido =[];
+    var produto_pedido=[];
     $scope.inserir=function(){
       var op='5';
       if($scope.tipoProduto == '2'){
-        
         $http.post(
           'http://localhost/Shgourmet/controller/bebidaController.php',
           {
@@ -38,15 +37,25 @@
                 produto_pedido.push($scope.codProduto);
                 console.log(produto_pedido);
                 $scope.produto_pedido.qntd = produto_pedido.lenght;
-
+                $http.post(
+                  'http://localhost/Shgourmet/controller/pedidosController.php',
+                  {
+                    id : $scope.codProduto,
+                    operacao : '10'
+                  }).then(
+                    function mySucess(response){
+                      console.log('god');
+                    }, function myError(response){
+                      console.log('xesque');
+                    });
               }, 
               function myError(response){
                 console.log(response.data);
                 alert('Falha no servidor');
               }
             );
-          }else if($scope.tipoProduto == '3'){
-            $http.post(
+      }else if($scope.tipoProduto == '3'){
+        $http.post(
             'http://localhost/Shgourmet/controller/sucoController.php',
             {
               id : $scope.codProduto,
@@ -68,14 +77,25 @@
                 produto_pedido.push($scope.codProduto);
                 console.log(produto_pedido);
                 $scope.produto_pedido.qntd = produto_pedido.lenght;
+                $http.post(
+                  'http://localhost/Shgourmet/controller/pedidosController.php',
+                  {
+                    id : $scope.codProduto,
+                    operacao : '10'
+                  }).then(
+                    function mySucess(response){
+                      console.log('god');
+                    }, function myError(response){
+                      console.log('xesque');
+                    });
               }, 
               function myError(response){
                 console.log(response.data);
                 alert('Falha no servidor');
               }
             );
-          }else if($scope.tipoProduto == '4'){
-            $http.post(
+      }else if($scope.tipoProduto == '4'){
+        $http.post(
             'http://localhost/Shgourmet/controller/lancheController.php',
             {
               id : $scope.codProduto,
@@ -94,14 +114,25 @@
                 produto_pedido.push($scope.codProduto);
                 console.log(produto_pedido);
                 $scope.produto_pedido.qntd = produto_pedido.lenght;
+                $http.post(
+                  'http://localhost/Shgourmet/controller/pedidosController.php',
+                  {
+                    id : $scope.codProduto,
+                    operacao : '10'
+                  }).then(
+                    function mySucess(response){
+                      console.log('god');
+                    }, function myError(response){
+                      console.log('xesque');
+                    });
               }, 
               function myError(response){
                 console.log(response.data);
                 alert('Falha no servidor');
               }
             );
-          }else if($scope.tipoProduto == '5'){
-            $http.post(
+      }else if($scope.tipoProduto == '5'){
+        $http.post(
             'http://localhost/Shgourmet/controller/porcaoController.php',
             {
               id : $scope.codProduto,
@@ -121,14 +152,25 @@
                 produto_pedido.push($scope.codProduto);
                 console.log(produto_pedido);
                 $scope.produto_pedido.qntd = produto_pedido.lenght;
+                $http.post(
+                  'http://localhost/Shgourmet/controller/pedidosController.php',
+                  {
+                    id : $scope.codProduto,
+                    operacao : '10'
+                  }).then(
+                    function mySucess(response){
+                      console.log('god');
+                    }, function myError(response){
+                      console.log('xesque');
+                    });
               }, 
               function myError(response){
                 console.log(response.data);
                 alert('Falha no servidor');
               }
             );
-          }else if($scope.tipoProduto == '7'){
-            $http.post(
+      }else if($scope.tipoProduto == '7'){
+        $http.post(
             'http://localhost/Shgourmet/controller/pizzaController.php',
             {
               id : $scope.codProduto,
@@ -148,16 +190,25 @@
                 produto_pedido.push($scope.codProduto);
                 console.log(produto_pedido);
                 $scope.produto_pedido.qntd = produto_pedido.lenght;
+                $http.post(
+                  'http://localhost/Shgourmet/controller/pedidosController.php',
+                  {
+                    id : $scope.codProduto,
+                    operacao : '10'
+                  }).then(
+                    function mySucess(response){
+                      console.log('god');
+                    }, function myError(response){
+                      console.log('xesque');
+                    });
               }, 
               function myError(response){
                 console.log(response.data);
                 alert('Falha no servidor');
               }
             );
-          }
-
-          
-    
+      }      
+    }
     $scope.enviar=function(){
 
       $http.post(
@@ -166,10 +217,9 @@
           id : '',
           id_cliente : $scope.codCliente,
           id_funcionario : $scope.codFuncionario,
-          data_pedido : '',
+          data : new Date(),
           valor_total: 0.0,
-          produto_pedido : produto_pedido,
-          operacao : '1'
+          pedido_produto : $scope.produto_pedido
         }
 
         ).then(function mySucess(response){
@@ -268,7 +318,7 @@
             <tr ng-repeat="x in produto_pedido">
               <th>{{x.id}}</th>
               <th>{{x.nome}}</th>
-              <th>{{quantidade}}</th>
+              <th>{{qntd}}</th>
               <th>{{x.preco_venda}}</th>
               <th>{{x.fornecedor}}</th>
             </tr>
