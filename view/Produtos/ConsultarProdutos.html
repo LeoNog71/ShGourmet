@@ -122,8 +122,6 @@
               }
             );
           }else if($scope.tipoProduto == '7'){
-            console.log($scope.tamanhoTwo);
-            console.log($scope.quantidade);
             $http.post(
             'http://localhost/Shgourmet/controller/pizzaController.php',
             {
@@ -226,11 +224,11 @@
             </tr>
           </thead>
             <tr ng-repeat="x in reposta">
-              <th>x.id</th>
-              <th>x.nome</th>
-              <th>x.descricao</th>
-              <th>x.preco</th>
-              <th>x.fornecedor</th>
+              <th>{{x.id}}</th>
+              <th>{{x.nome}}</th>
+              <th>{{x.descricao}}</th>
+              <th>{{x.preco_venda}}</th>
+              <th>{{x.fornecedor}}</th>
             </tr>
         </table>
       </form>
