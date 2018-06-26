@@ -8,6 +8,149 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="../Resources/stylePadrao.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script type="text/javascript">
+  var app = angular.module('produto', []);
+  app.controller('buscar',['$scope','$http', function($scope, $http){
+    $scope.enviar = function(){
+      var op='';
+      if($scope.tipoBusca ==  '1') {
+        op='4';
+      }else if($scope.tipoBusca == '2'){
+        op='5';
+      }else{
+        op='6';
+      } 
+
+      if($scope.tipoProduto == '2'){
+            
+        $http.post(
+          'http://localhost/Shgourmet/controller/bebidaController.php',
+          {
+            id : $scope.busca,
+            nome : $scope.busca,
+            descricao : '',
+            preco_venda : '',
+            quantidade : '',
+            preco_compra : '',
+            fornecedor : '',
+            marca : '',
+            tamanho : '' ,
+            operacao : op
+            }
+          ).then(
+              function mySucess(response){
+                console.log(response.data);
+                $scope.reposta = response.data;
+              }, 
+              function myError(response){
+                console.log(response.data);
+                alert('Falha no servidor');
+              }
+            );
+          }else if($scope.tipoProduto == '3'){
+            $http.post(
+            'http://localhost/Shgourmet/controller/sucoController.php',
+            {
+              id : $scope.busca,
+              nome : $scope.busca,
+              descricao : '',
+              preco_venda : '',
+              quantidade : '',
+              preco_compra : '',
+              fornecedor : '',
+              marca : '',
+              tamanho : '',
+              sabor : '',
+              operacao : op
+            }
+          ).then(
+              function mySucess(response){
+                console.log(response.data);
+                $scope.reposta = response.data;
+              }, 
+              function myError(response){
+                console.log(response.data);
+                alert('Falha no servidor');
+              }
+            );
+          }else if($scope.tipoProduto == '4'){
+            $http.post(
+            'http://localhost/Shgourmet/controller/lancheController.php',
+            {
+              id : $scope.busca,
+              nome : $scope.busca,
+              descricao : '',
+              preco_venda : '',
+              quantidade : '',
+              preco_compra : '',
+              fornecedor : '',
+              operacao : op
+            }
+          ).then(
+              function mySucess(response){
+                console.log(response.data);
+                $scope.reposta = response.data;
+              }, 
+              function myError(response){
+                console.log(response.data);
+                alert('Falha no servidor');
+              }
+            );
+          }else if($scope.tipoProduto == '5'){
+            $http.post(
+            'http://localhost/Shgourmet/controller/porcaoController.php',
+            {
+              id : $scope.busca,
+              nome : $scope.busca,
+              descricao : '',
+              preco_venda : '',
+              quantidade : '',
+              preco_compra : '',
+              fornecedor : '',
+              tamanho : '',
+              operacao : op
+            }
+          ).then(
+              function mySucess(response){
+                console.log(response.data);
+                $scope.reposta = response.data;
+              }, 
+              function myError(response){
+                console.log(response.data);
+                alert('Falha no servidor');
+              }
+            );
+          }else if($scope.tipoProduto == '7'){
+            console.log($scope.tamanhoTwo);
+            console.log($scope.quantidade)
+            $http.post(
+            'http://localhost/Shgourmet/controller/pizzaController.php',
+            {
+              id : $scope.busca,
+              nome : $scope.busca,
+              descricao : '',
+              preco_venda : '',
+              quantidade : '',
+              preco_compra : '',
+              fornecedor : '',
+              tamanho : '' ,
+              operacao : op
+            }
+          ).then(
+              function mySucess(response){
+                console.log(response.data);
+                $scope.reposta = response.data;
+              }, 
+              function myError(response){
+                console.log(response.data);
+                alert('Falha no servidor');
+              }
+            );
+          }
+    }
+  }]);
+</script>
 <body>
 
 <!-- Barra Superior -->
@@ -47,29 +190,29 @@
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- Inicio da Busca -->
-<div class="w3-main" style="margin-left:250px">
+<div class="w3-main" style="margin-left:250px" ng-app="produto">
 
   <div class="w3-row w3-padding-64">
     <div class="w3-twothird w3-container">
       <h1 class="w3-text-teal">Buscar Produto</h1>
-      <form>
-        <select class="w3-select" name="tipoProduto">
+      <form ng-controller="buscar">
+        <select class="w3-select" name="tipoProduto" ng-model="tipoProduto">
           <option value="" disabled selected>Tipo de Produto</option>
-          <option value="1">Sabor Pizza</option>
+          <option value="7">Pizza</option>
           <option value="2">Bebidas</option>
           <option value="3">Sucos</option>
           <option value="4">Lanche</option>
           <option value="5">Porção</option>
-          <option value="6">Adicional</option>
+          
         </select><br><br>
-        <select class="w3-select" name="tipoBusca">
+        <select class="w3-select" name="tipoBusca" ng-model="tipoBusca">
           <option value="" disabled selected>Tipo de Busca</option>
           <option value="1">Nome</option>
           <option value="2">ID</option>
         </select>
         <br>
-        <br><input class="w3-input" type="text" name="busca" placeholder="Buscar"><br>
-        <button class="w3-btn w3-black w3-hover-white" type="submit">
+        <br><input class="w3-input" type="text" name="busca" placeholder="Buscar" ng-model="busca"><br>
+        <button class="w3-btn w3-black w3-hover-white" type="button" ng-click="enviar()">
           Buscar!
         </button><br><br>
         <table class="w3-table-all w3-hoverable">
@@ -79,15 +222,15 @@
               <th>Nome</th>
               <th>Descrição</th>
               <th width="50px">Preço(R$)</th>
-              <th width="50px">Disponível</th>
+              <th width="50px">Fornecedor</th>
             </tr>
           </thead>
-            <tr>
-              <th>001</th>
-              <th>Teste</th>
-              <th>Isso é apenas um teste, aprendi com o cridao</th>
-              <th >14.99</th>
-              <th >YES</th>
+            <tr ng-repeat="x in reposta">
+              <th>x.id</th>
+              <th>x.nome</th>
+              <th>x.descricao</th>
+              <th>x.preco</th>
+              <th>x.fornecedor</th>
             </tr>
         </table>
       </form>
