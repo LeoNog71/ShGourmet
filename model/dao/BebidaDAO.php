@@ -18,9 +18,9 @@
                 $b = $this->classe->getDescricao();
                 $stmt->bindParam(":descricao",$b);
                 $c = $this->classe->getPreco_compra();
-                $stmt->bindParam(":preco_venda",(double)$c);
+                $stmt->bindParam(":preco_venda",$c);
                 $d = $this->classe->getQuantidade();
-                $stmt->bindParam(":unidade",(int)$d);
+                $stmt->bindParam(":unidade",$d);
                 $e = $this->classe->getPreco_compra();
                 $stmt->bindParam(":preco_compra", $e);
                 $f = $this->classe->getFornecedor();

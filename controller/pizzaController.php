@@ -26,7 +26,7 @@
     function recebeJson($array){
             
        $classe = new Pizza();
-       
+       print_r($array);
        $classe->setId((int)$array->id);
        $classe->setNome($array->nome);
        $classe->setDescricao($array->descricao);

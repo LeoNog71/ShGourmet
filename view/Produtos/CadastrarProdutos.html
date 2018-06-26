@@ -62,7 +62,7 @@
           ).then(
               function mySucess(response){
                 console.log(response.data);
-                alert('Bebida Cadastrada com Sucesso!');
+                alert('Suco Cadastrada com Sucesso!');
               }, 
               function myError(response){
                 console.log(response.data);
@@ -109,7 +109,7 @@
           ).then(
               function mySucess(response){
                 console.log(response.data);
-                alert('Bebida Cadastrada com Sucesso!');
+                alert('Porção Cadastrada com Sucesso!');
               }, 
               function myError(response){
                 console.log(response.data);
@@ -117,6 +117,8 @@
               }
             );
           }else if(tipoProduto == '7'){
+            console.log($scope.tamanhoTwo);
+            console.log($scope.quantidade)
             $http.post(
             'http://localhost/Shgourmet/controller/pizzaController.php',
             {
@@ -133,7 +135,7 @@
           ).then(
               function mySucess(response){
                 console.log(response.data);
-                alert('Bebida Cadastrada com Sucesso!');
+                alert('Pizza Cadastrada com Sucesso!');
               }, 
               function myError(response){
                 console.log(response.data);
@@ -189,15 +191,13 @@
     <div class="w3-twothird w3-container">
       <h1 class="w3-text-teal">Cadastrar Produto</h1>
       <form ng-controller="cadastrarProduto">
-        <select class="w3-select" name="tipo" id="comboBox" onchange="formularioProduto()" ng-model="tipo">
+        <select class="w3-select" name="tipo" id="comboBox"  ng-model="tipo">
           <option value="" disabled selected>Tipo de Produto</option>
-          <option value="1">Sabor Pizza</option>
           <option value="7">Pizza</option>
           <option value="2">Bebidas</option>
           <option value="3">Sucos</option>
           <option value="4">Lanche</option>
           <option value="5">Porção</option>
-          <option value="6">Adicional</option>
         </select>
         <br>
         <br><input class="w3-input" type="text" name="nome" placeholder="Nome do Produto" ng-model="nome"><br>
@@ -205,6 +205,12 @@
         <input class="w3-input" type="text" name="custo" placeholder="Preço de Custo(R$)" ng-model="custo"><br>
         <input class="w3-input" type="text" name="preco" placeholder="Preço de Venda(R$)" ng-model="valor"><br>
         <input class="w3-input" type="text" name="fornecedor" placeholder="Fornecedor" ng-model="fornecedor"><br>
+        <input class="w3-input" type="text" name="marca" placeholder="Marca" ng-model="marca" ng-show="(tipo == 2) || (tipo == 3)"><br ng-show="(tipo == 2) || (tipo == 3)">
+        <input class="w3-input" type="text" name="tamanho" placeholder="Tamanho" ng-model="tamanho" ng-show="(tipo == 2) || (tipo == 3)"><br ng-show="(tipo == 2) || (tipo == 3)">
+        <input class="w3-input" type="text" name="quantidade" placeholder="Quantidade" ng-model="quantidade" ng-show="(tipo == 2) || (tipo == 3)"><br ng-show="(tipo == 2) || (tipo == 3)">
+        <input class="w3-input" type="text" name="sabor" placeholder="Sabor" ng-model="sabor" ng-show="tipo == 3"><br ng-show="tipo == 3">
+        <input class="w3-input" type="text" name="tamanho" placeholder="Tamanho" ng-model="tamanhoOne" ng-show="tipo == 5"><br ng-show="tipo == 5">
+        <input class="w3-input" type="text" name="tamanho" placeholder="Tamanho" ng-model="tamanhoTwo" ng-show="tipo == 7"><br ng-show="tipo == 7">
         <button class="w3-btn w3-black w3-hover-white" type="button" id="botaoForm" ng-click="enviar(tipo)">
           Cadastrar!
         </button>
@@ -233,19 +239,10 @@
       .forEach(element => element.remove());
     var x = document.getElementById('comboBox');
     var botao = document.getElementById('botaoForm');
-    if(x.options[x.selectedIndex].value == 2){ 
-      botao.insertAdjacentHTML('beforebegin','<input class="w3-input remove" type="text" name="marca" placeholder="Marca" ng-model="marca"><br class="remove">' );
-      botao.insertAdjacentHTML('beforebegin','<input class="w3-input remove" type="text" name="tamanho" placeholder="Tamanho" ng-model="tamanho" ><br class="remove">' );
-      botao.insertAdjacentHTML('beforebegin','<input class="w3-input remove" type="text" name="quantidade" placeholder="Quantidade" ng-model="quantidade"><br class="remove">' );
-    }else if(x.options[x.selectedIndex].value == 3){   
-      botao.insertAdjacentHTML('beforebegin','<input class="w3-input remove" type="text" name="sabor" placeholder="Sabor" ng-model="sabor"><br class="remove">' );
-      botao.insertAdjacentHTML('beforebegin','<input class="w3-input remove" type="text" name="marca" placeholder="Marca" ng-model="marca"><br class="remove">' );
-      botao.insertAdjacentHTML('beforebegin','<input class="w3-input remove" type="text" name="tamanho" placeholder="Tamanho" ng-model="tamanho" ><br class="remove">' );
-      botao.insertAdjacentHTML('beforebegin','<input class="w3-input remove" type="text" name="quantidade" placeholder="Quantidade" ng-model="quantidade"><br class="remove">' );
-    }else if(x.options[x.selectedIndex].value == 5){   
-      botao.insertAdjacentHTML('beforebegin','<input class="w3-input remove" type="text" name="tamanho" placeholder="Tamanho" ng-model="tamanhoOne"><br class="remove">' );
+if(x.options[x.selectedIndex].value == 5){   
+      botao.insertAdjacentHTML('beforebegin','<input class="w3-input" type="text" name="tamanho" placeholder="Tamanho" ng-model="tamanhoOne"><br>' );
     }else if(x.options[x.selectedIndex].value == 7){
-      botao.insertAdjacentHTML('beforebegin','<input class="w3-input remove" type="text" name="tamanho" placeholder="Tamanho" ng-model="tamanhoTwo"><br class="remove">' );
+      botao.insertAdjacentHTML('beforebegin','<input class="w3-input" type="text" name="tamanho" placeholder="Tamanho" ng-model="tamanhoTwo"><br>' );
     }
   }
   
