@@ -731,11 +731,9 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE cancela_pedido(in id_v int)
 BEGIN
-	IF (select pedidos.cancelado from pedidos where pedidos.id = id_v) then
 		Update`shgourmet`.`pedidos`
 		set `cancelado` = true
         Where id = id_v;
-    END IF;
 END $$
 delimiter $$
 
