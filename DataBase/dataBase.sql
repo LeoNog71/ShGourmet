@@ -793,7 +793,12 @@ DELIMITER $$
 CREATE PROCEDURE selectAll_pedido()
 BEGIN
 	
-	select * from pedidos where situacao = false and cancelado = false;
+	select pedidos.id as pedido_id, pedidos.id_cliente as cliente_id,produtos.id as id_produto, produtos.nome as produto ,produtos.preco_venda, pedidos.valor_total
+	from produto_pedido 
+    join produtos on produtos.id = produto_pedido.id_produto
+    left join pedidos on pedidos.id = produto_pedido.id_pedido
+    where pedidos.situacao = false
+    and pedidos.cancelado = false order by pedidos.id asc;
         
 END $$
 DELIMITER ;
@@ -802,7 +807,12 @@ DELIMITER $$
 CREATE PROCEDURE selectAll_pedido_finalizado()
 BEGIN
 	
-	select * from pedidos where situacao = true and data_pedido >= now();
+	select pedidos.id as pedido_id, pedidos.id_cliente as cliente_id,produtos.id as id_produto, produtos.nome as produto ,produtos.preco_venda, pedidos.valor_total
+	from produto_pedido 
+    join produtos on produtos.id = produto_pedido.id_produto
+    left join pedidos on pedidos.id = produto_pedido.id_pedido
+    where pedidos.situacao = true
+    and pedidos.cancelado = false order by pedidos.id asc;
         
 END $$
 DELIMITER ;
