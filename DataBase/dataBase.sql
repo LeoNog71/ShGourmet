@@ -743,33 +743,17 @@ delimiter $$
 create procedure soma_pedido (in id_v int)
  begin
 
- DECLARE done INT DEFAULT 0;
- DECLARE var1 BIGINT;
- DECLARE var2 double;
- DECLARE curs CURSOR FOR (
-	SELECT produto_pedido.id_produto FROM produto_pedido where produto_pedido.id_pedido = id_v
-	);
-
- DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
-
- OPEN curs;
-
- REPEAT
-
- 	FETCH curs INTO var1;
-	
-		IF NOT done THEN
-			set var2 = (SELECT produtos.preco_venda from produtos where produtos.id = var1);
+ DECLARE var2 double ;
+ set var2 = (select sum(produtos.preco_venda)
+	from produto_pedido 
+    join produtos on produtos.id = produto_pedido.id_produto
+    left join pedidos on pedidos.id = produto_pedido.id_pedido
+    where pedidos.situacao = false and produto_pedido.id_pedido = in_v);
+ 
             UPDATE `shgourmet`.`pedidos`
 			SET
-			`valor_total` = (valor_total + var2)
+			`valor_total` = var2
 			WHERE `id` = id_v;
-
-            
-		END IF;
- UNTIL done END REPEAT;
-
- CLOSE curs;
 
  end $$
 delimiter ;
@@ -778,7 +762,7 @@ DELIMITER $$
 CREATE PROCEDURE insert_pedido_produto( in id_pr int )
 BEGIN
 	declare id_f integer;
-    set id = (SELECT id FROM pedidos ORDER BY id DESC LIMIT 1);
+    set id_f = (SELECT id FROM pedidos ORDER BY id DESC LIMIT 1);
 	INSERT INTO `shgourmet`.`produto_pedido`
 	(`id_produto`, `id_pedido`)
 	VALUES

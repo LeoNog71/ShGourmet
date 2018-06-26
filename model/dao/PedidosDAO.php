@@ -27,14 +27,16 @@
             public function selectAll() {
                 $stmt = $this->conn->prepare("CALL selectAll_pedido()");
                 $stmt->execute();
-                $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                  
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                array_push($result,$this->selectPedidoProduto());
                 return $result;
             }
             public function selectAllFinalizado() {
                 $stmt = $this->conn->prepare("CALL selectAll_pedido_finalizado()");
                  $stmt->execute(); 
-                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                array_push($result,$this->selectPedidoProduto());
                 
                 return $result;
             }
