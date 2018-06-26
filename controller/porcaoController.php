@@ -27,10 +27,10 @@
        $classe->setId((int)$array->id);
        $classe->setNome($array->nome);
        $classe->setDescricao($array->descricao);
-       $classe->setPreco_venda((double)$array->preco_venda);
+       $classe->setPreco_venda(floatval($array->preco_venda));
        $classe->setQuantidade((int)$array->quantidade);
        
-       $classe->setPreco_compra((double)$array->preco_compra);
+       $classe->setPreco_compra(floatval($array->preco_compra));
        $classe->setFornecedor($array->fornecedor);
        $classe->setTamanho($array->tamanho);
 

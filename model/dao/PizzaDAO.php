@@ -64,7 +64,7 @@
                 $stmt->bindParam(":nome", $a);
                 $b = $this->classe->getDescricao();
                 $stmt->bindParam(":descricao",$b);
-                $c = $this->classe->getPreco_compra();
+                $c = $this->classe->getPreco_venda();
                 $stmt->bindParam(":preco_venda",$c);
                 $d = $this->classe->getQuantidade();
                 $stmt->bindParam(":unidade",$d);

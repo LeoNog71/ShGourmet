@@ -27,9 +27,9 @@
        $classe->setId((int)$array->id);
        $classe->setNome(strtoupper($array->nome));
        $classe->setDescricao(strtoupper($array->descricao));
-       $classe->setPreco_venda($array->preco_venda);
-       $classe->setQuantidade($array->quantidade);
-       $classe->setPreco_compra($array->preco_compra);
+       $classe->setPreco_venda(floatval($array->preco_venda));
+       $classe->setQuantidade((int)$array->quantidade);
+       $classe->setPreco_compra(floatval($array->preco_compra));
        $classe->setFornecedor(strtoupper($array->fornecedor));
        $classe->setMarca(strtoupper($array->marca));
        $classe->setTamanho(strtoupper($array->tamanho));
