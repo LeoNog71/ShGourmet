@@ -18,12 +18,14 @@ call insert_sabor_pizza(1,' QUEIJ');
 call insert_pedido(1,1,'2008-10-10');
 call selectAll_pedido();
 call insert_pedido_produto(1);
+CALL cancela_pedido(1);
 
-select pedidos.id as pedido_id, pedidos.id_cliente,produtos.id, produtos.nome,produtos.preco_venda, pedidos.valor_total
+select pedidos.id as pedido_id, pedidos.id_cliente as cliente_id,produtos.id as id_produto, produtos.nome as produto ,produtos.preco_venda, pedidos.valor_total
 	from produto_pedido 
     join produtos on produtos.id = produto_pedido.id_produto
     left join pedidos on pedidos.id = produto_pedido.id_pedido
-    where pedidos.situacao = false;
+    where pedidos.situacao = false
+    and pedidos.cancelado = false order by pedidos.id asc;
     
 select sum(produtos.preco_venda)
 	from produto_pedido 
