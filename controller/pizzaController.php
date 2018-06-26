@@ -28,14 +28,14 @@
        $classe = new Pizza();
        print_r($array);
        $classe->setId((int)$array->id);
-       $classe->setNome($array->nome);
-       $classe->setDescricao($array->descricao);
-       $classe->setPreco_venda((double)$array->preco_venda);
-       $classe->setQuantidade((int)$array->quantidade);
+       $classe->setNome(strtoupper($array->nome));
+       $classe->setDescricao(strtoupper($array->descricao));
+       $classe->setPreco_venda($array->preco_venda);
+       $classe->setQuantidade($array->quantidade);
        
-       $classe->setPreco_compra((double)$array->preco_compra);
-       $classe->setFornecedor($array->fornecedor);
-       $classe->setTamanho($array->tamanho);
+       $classe->setPreco_compra($array->preco_compra);
+       $classe->setFornecedor(strtoupper($array->fornecedor));
+       $classe->setTamanho(strtoupper($array->tamanho));
 
         return $classe;
     }

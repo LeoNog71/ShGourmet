@@ -23,9 +23,7 @@
             return $this->tamanho;
         }
 
-        function getQuantidade() {
-            return $this->quantidade;
-        }
+        
 
         function setId($id) {
             $this->id = $id;
@@ -39,9 +37,6 @@
             $this->tamanho = $tamanho;
         }
 
-        function setQuantidade($quantidade) {
-            $this->quantidade = $quantidade;
-        }
 
 
     }

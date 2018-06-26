@@ -15,6 +15,7 @@ call select_lanche('X-SALADA');
 call insert_pizza('PIZZA SALGADA', 'SUCO DE FRUTAS NATURAL', 5.00, 100, 3.50,'CASA', 'GRANDE');
 call insert_pizza('PIZZA DOCE', 'SUCO DE FRUTAS NATURAL', 5.00, 100, 3.50,'CASA', 'GRANDE');
 call insert_sabor_pizza(1,' QUEIJ');
+call select_all_pizza();
 
 select sum(produtos.preco_venda) from produtos;
 

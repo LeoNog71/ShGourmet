@@ -45,7 +45,7 @@ create table if not exists produtos(
     nome varchar(50) not null,
     descricao varchar(300),
     preco_venda double not null,
-    quantidade integer not null,
+    quantidade integer ,
     preco_compra double not null,
     disponivel boolean not null,
     fornecedor varchar(50) not null
@@ -72,14 +72,6 @@ create table if not exists lanche(
     foreign key (id_produto) references produtos (id)
 );
 
-
-create table if not exists sabor_pizza(
-	id integer auto_increment primary key,
-	sabor varchar(50) not null,
-    disponivel boolean,
-	id_produtos integer not null,
-    foreign key (id_produtos) references produtos (id)
-);
 create table if not exists pizza(
 	id integer auto_increment primary key,
     id_produtos integer not null,
@@ -96,38 +88,16 @@ create table if not exists porcao(
     foreign key (id_produtos) references produtos (id)
 );
 
-create table if not exists mesa(
-	id integer auto_increment primary key not null,
-    num_mesa integer not null,
-    disponivel boolean not null
-);
-
 create table if not exists pedidos(
 	id integer auto_increment not null primary key,
     id_cliente integer not null,
     id_funcionario integer not null,
-    id_mesa integer not null,
     data_pedido date not null,
     valor_total double not null,
     situacao boolean not null,
     cancelado boolean not null,
 	foreign key (id_cliente) references cliente (id),
-    foreign key (id_funcionario) references funcionario (id),
-    foreign key (id_mesa) references mesa (id)
-);
-
-create table if not exists venda (
-	id integer auto_increment not null primary key,
-    id_cliente integer not null,
-    id_funcionario integer not null,
-    id_mesa integer not null,
-    data_venda date not null,
-    valor_total double not null,
-    valor_desconto double not null,
-    situacao boolean not null,
-    foreign key (id_cliente) references cliente (id),
-    foreign key (id_funcionario) references funcionario (id),
-    foreign key (id_mesa) references mesa (id)
+    foreign key (id_funcionario) references funcionario (id)
 );
 
 create table if not exists produto_pedido(
@@ -137,19 +107,6 @@ create table if not exists produto_pedido(
     foreign key (id_pedido) references pedidos (id)
 );
 
-create table if not exists pedidos_venda(
-	id_venda integer not null,
-    id_pedido integer not null,
-	foreign key (id_pedido) references pedidos (id),
-    foreign key (id_venda) references venda (id)
-);
-
-create table if not exists entrega(
-	id integer auto_increment primary key not null,
-    endereco varchar(500) not null,
-    id_venda integer not null,
-    foreign key (id_venda) references venda (id)
-);
 
 create table if not exists lancamentos(
 	id integer auto_increment primary key not null, 
@@ -635,48 +592,6 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE insert_sabor_pizza (in id_pizza int, in sabor_p varchar(50))
-BEGIN
-	INSERT INTO `shgourmet`.`sabor_pizza`
-	(`id_produtos`,sabor,disponivel)
-	VALUES
-	(id_pizza, sabor_p, true);
-
-END $$
-DELIMITER ;
-
-DELIMITER $$
-CREATE PROCEDURE update_sabor_pizza (in id_s int, in sabor_p varchar(50), in disponivel_p boolean)
-BEGIN
-
-	UPDATE `shgourmet`.`sabor_pizza`
-	SET
-	sabor = sabor_p,
-	disponivel = disponivel_p
-	WHERE `id` = id_s;
-
-END $$
-DELIMITER ;
-
-
-DELIMITER $$
-CREATE PROCEDURE selectID_sabor_pizza (in id_p int)
-BEGIN
-	select * from sabor_pizza
-	where sabor_pizza.id_produtos = id_p;
-
-END $$
-DELIMITER ;
-
-DELIMITER $$
-CREATE PROCEDURE select_all_sabor_pizza ()
-BEGIN
-	select * from sabor_pizza;
-
-END $$
-DELIMITER ;
-
-DELIMITER $$
 CREATE PROCEDURE insert_porcao(in nome_p varchar(50), in descricao_p varchar(300), in preco_venda_p double, in quantidade_p integer, in preco_compra_p double, in fornecedor_p varchar(50), in tamanho_p varchar(10))
 BEGIN
 	INSERT INTO produtos(nome, descricao, preco_venda, quantidade, preco_compra, disponivel, fornecedor)
@@ -743,82 +658,6 @@ END $$
 DELIMITER ;
 
 
-DELIMITER $$
-CREATE PROCEDURE insert_mesa(in numero_m int)
-BEGIN
-	INSERT INTO `shgourmet`.`mesa`
-	(num_mesa, disponivel)
-	VALUES
-	(numero_m,true);
-
-END $$
-DELIMITER ;
-
-DELIMITER $$
-CREATE PROCEDURE select_mesa(in numero_m int)
-BEGIN
-	select * from mesa
-    where mesa.num_mesa = numero_m
-    and mesa.disponivel = true;
-
-END $$
-DELIMITER ;
-
-DELIMITER $$
-CREATE PROCEDURE select_all_mesa()
-BEGIN
-	select * from mesa
-    where mesa.disponivel = true;
-
-END $$
-DELIMITER ;
-
-DELIMITER $$
-CREATE PROCEDURE update_mesa(in id_m int, in disponivel_m boolean)
-BEGIN
-	UPDATE `shgourmet`.`mesa`
-	SET
-	`disponivel` = disponivel_m
-	WHERE `id` = id_m;
-
-END $$
-DELIMITER ;
-
-DELIMITER $$
-CREATE PROCEDURE insert_venda(in id_cliente_v integer, id_funcionario_v integer,
-in id_mesa_v integer, in data_venda_v date ,in valor_total_v double ,in valor_desconto_v double)
-BEGIN
-	INSERT INTO `shgourmet`.`venda`
-	(`id_cliente`,
-	`id_funcionario`,
-	`id_mesa`,
-	`data_venda`,
-	`valor_total`,
-	`valor_desconto`,
-	`situacao`)
-	VALUES
-	(id_cliente_v, id_funcionario_v, id_mesa_v, data_venda_v,valor_total_v, valor_desconto_v, false);
-
-END $$
-DELIMITER ;
-
-DELIMITER $$
-CREATE PROCEDURE update_venda(in id_v int,in id_cliente_v integer, id_funcionario_v integer,
-in id_mesa_v integer, in data_venda_v date ,in valor_total_v double ,in valor_desconto_v double)
-BEGIN
-	UPDATE `shgourmet`.`venda`
-	SET
-	`id_cliente` = id_cliente_v,
-	`id_funcionario` = id_funcionario_v,
-	`id_mesa` = id_mesa_v,
-	`data_venda` = data_venda_v,
-	`valor_total` = valor_total_v,
-	`valor_desconto` = valor_desconto_v
-	WHERE `id` = id_v;
-
-END $$
-DELIMITER ;
-
 delimiter $$
 create procedure decrementa_estoque(in id_p int)
  begin
@@ -850,19 +689,18 @@ delimiter ;
 
 DELIMITER $$
 CREATE PROCEDURE insert_pedido(in id_cliente_v integer, id_funcionario_v integer,
-in id_mesa_v integer, in data_venda_v date )
+in id_mesa_v integer, in id_venda_v int, in data_venda_v date )
 BEGIN
 	INSERT INTO `shgourmet`.`pedidos`
 	(`id`,
 	`id_cliente`,
 	`id_funcionario`,
-	`id_mesa`,
 	`data_pedido`,
 	`valor_total`,
 	`situacao`,
 	`cancelado`)
 	VALUES
-	(id_cliente_v, id_funcionario_v, id_mesa_v, data_venda_v,0.0, false,false);
+	(id_cliente_v, id_funcionario_v, data_venda_v,0.0, false,false);
 
 END $$
 DELIMITER ;
@@ -875,7 +713,6 @@ BEGIN
 	SET
 	`id_cliente` = id_cliente_v,
 	`id_funcionario` = id_funcionario_v,
-	`id_mesa` = id_mesa_v,
 	`data_venda` = data_venda_v
 	WHERE `id` = id_v;
 
@@ -886,10 +723,9 @@ DELIMITER $$
 CREATE PROCEDURE cancela_pedido(in id_v int)
 BEGIN
 	IF (select pedidos.cancelado from pedidos where pedidos.id = id_v) then
-		INSERT INTO `shgourmet`.`pedidos`
-		(`cancelado`)
-		VALUES
-		(true);
+		Update`shgourmet`.`pedidos`
+		set `cancelado` = true
+        Where id = id_v;
     END IF;
 END $$
 delimiter $$
@@ -938,6 +774,53 @@ BEGIN
 	(id_pr, id_pe);
     call soma_pedido(id_pe);
 
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE finalizar_pedido(in id_pe int)
+BEGIN
+	declare id_ve int;
+    declare total double;
+    set id_ve  = (select id_venda from pedidos where id = id_pe);
+    set total = (select valor_total from pedidos where id = id_pe);
+    
+    update venda
+    set 
+    valor_total = total
+    where id = id_ve;
+
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE selectAll_pedido()
+BEGIN
+	
+	select * from pedidos where situacao = false and cancelado = false;
+        
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE selectAll_pedido_finalizado()
+BEGIN
+	
+	select * from pedidos where situacao = true and data_pedido >= now();
+        
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE finaliza_pedido(in id_pe int)
+BEGIN
+	
+	Update`shgourmet`.`pedidos`
+	set situacao = true
+    where id = id_pe;
+        call decrementa_estoque(id_pe);
+        call finalizar_pedido(id_pe);
+        
 END $$
 DELIMITER ;
 

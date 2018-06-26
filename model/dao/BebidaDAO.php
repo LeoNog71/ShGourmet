@@ -53,15 +53,15 @@
                 
                 $stmt = $this->conn->prepare("call update_bebida(:id,:nome, :descricao, :preco_venda, :unidade, :preco_compra,:fornecedor,:marca, :tamanho);");
                 $id = $this->classe->getId();
-                $stmt->bindParam(":id",(int)$id);
+                $stmt->bindParam(":id",$id);
                 $a = $this->classe->getNome();
                 $stmt->bindParam(":nome", $a);
                 $b = $this->classe->getDescricao();
                 $stmt->bindParam(":descricao",$b);
                 $c = $this->classe->getPreco_compra();
-                $stmt->bindParam(":preco_venda",(double)$c);
+                $stmt->bindParam(":preco_venda",$c);
                 $d = $this->classe->getQuantidade();
-                $stmt->bindParam(":unidade",(int)$d);
+                $stmt->bindParam(":unidade",$d);
                 $e = $this->classe->getPreco_compra();
                 $stmt->bindParam(":preco_compra", $e);
                 $f = $this->classe->getFornecedor();
