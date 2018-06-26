@@ -5,7 +5,8 @@
     $stmt = $conn->prepare("CALL selectID_pizza($consulta)");
     $stmt->execute();    
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+    $a = (array) $result;
+    print_r($a);
     echo json_encode($result);
 ?>
 
