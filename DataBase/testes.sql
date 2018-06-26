@@ -1,4 +1,4 @@
-call insert_funcionario ('VIVIANE','2008-10-10', "55", "LSSA", '2008-10-10', "rua");
+call insert_funcionario ('VENDAS BALCAO','2008-10-10', "55", "LSSA", '2008-10-10', "rua");
 call select_funcionario('LEONARDO NOGUEIRA');
 call update_funcionario(1,'LEONARDO N','2008-10-10', "55", "LSSA", '2008-10-10');
 
@@ -20,12 +20,12 @@ call selectAll_pedido();
 call insert_pedido_produto(1);
 CALL cancela_pedido(1);
 
-select pedidos.id as pedido_id, pedidos.id_cliente as cliente_id,produtos.id as id_produto, produtos.nome as produto ,produtos.preco_venda, pedidos.valor_total
+select pedidos.id as pedido_id, pedidos.id_cliente as cliente_id,COUNT(produtos.id) as quantidade, produtos.nome as produto ,produtos.preco_venda, pedidos.valor_total
 	from produto_pedido 
     join produtos on produtos.id = produto_pedido.id_produto
     left join pedidos on pedidos.id = produto_pedido.id_pedido
     where pedidos.situacao = false
-    and pedidos.cancelado = false order by pedidos.id asc;
+    and pedidos.cancelado = false  GROUP BY pedidos.id asc;
     
 select sum(produtos.preco_venda)
 	from produto_pedido 

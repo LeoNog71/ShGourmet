@@ -25,6 +25,12 @@
     if($array->operacao =='7'){
         excluir($array);
     }
+    if($array->operacao =='8'){
+       finaliza($array);
+    }
+    if($array->operacao =='9'){
+        pesquisaAllF();
+    }
     if($array->operacao =='10'){
        $f = new PedidosDAO(NULL);
        $f->insertPedidoProduto($array->id);
@@ -39,7 +45,7 @@
        echo (int)$array->id;
        $classe->setIdCliente((int)$array->id_cliente);
        $classe->setIdFuncionario((int)$array->id_funcionario);
-       $classe->setData('2017-10-10');
+       $classe->setData('2018-26-06');
        $classe->setValor_total((double)$array->valor_total);
        //$classe->setProdutos($id);
 
@@ -57,7 +63,7 @@
     }
 
     function cadastrar($array) {
-        echo "cu";
+      
        $f  = new PedidosDAO(recebeJson($array));
        $f->insert();
        
@@ -82,7 +88,14 @@
         $f = new PedidosDAO(NULL);
         enviaJson($f->selectAll());
     }
-
+    function pesquisaAllF(){
+        $f = new PedidosDAO(NULL);
+        enviaJson($f->selectAll());
+    }
+    function finaliza($array){
+       $f  = new PedidosDAO(recebeJson($array));
+       $f->finaliza();
+    }
 
 ?>
 
