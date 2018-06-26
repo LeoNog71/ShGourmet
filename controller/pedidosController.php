@@ -6,20 +6,28 @@
   
     $json = file_get_contents('php://input');
     $array = json_decode($json);
+    $id = array();
     if($array->operacao == '1'){
-        cadastrar($array);
+        cadastrar($array,$id);
     }
     if($array->operacao == '2'){
-        atualizar($array);
+        atualizar($array,$id);
     }
     if($array->operacao =='4'){
-        pesquisa($array);
+        pesquisa($array,$id);
     }
     if($array->operacao =='5'){
-        pesquisaId($array);
+        pesquisaId($array,$id);
     }
+    if($array->operacao =='6'){
+        pesquisaAll();
+    }
+    if($array->operacao =='10'){
+        array_push($id,$array->id);
+    }
+    
  
-    function recebeJson($array){
+    function recebeJson($array,$id){
        print_r($array);   
        $classe = new Pedidos();
        
@@ -29,7 +37,7 @@
        $classe->setIdFuncionario((int)$array->id_funcionario);
        $classe->setData('2017-10-10');
        $classe->setValor_total((double)$array->valor_total);
-      # $classe->setProdutos($array->produto_pedido);
+       $classe->setProdutos($id);
 
         return $classe;
     }
@@ -39,31 +47,35 @@
         echo json_encode($array);
     }
 
-    function atualizar($array) {
-        $f  = new LacheDAO(recebeJson($array));
+    function atualizar($array,$id) {
+        $f  = new PedidosDAO(recebeJson($array,$id));
         $f->update();
     }
 
-    function cadastrar($array) {
-       $f  = new PedidosDAO(recebeJson($array));
+    function cadastrar($array,$id) {
+       $f  = new PedidosDAO(recebeJson($array,$id));
        $f->insert();
        $f->insertPedidoProduto();
     }
 
-    function excluir($array) {
-       $f  = new LancheDAO(recebeJson($array));
+    function excluir($array,$id) {
+       $f  = new PedidosDAO(recebeJson($array,$id));
        $f->delete();
     }
 
-    function pesquisa($array) {
-        $consulta = recebeJson($array);
-        $f = new LancheDAO(NULL);
+    function pesquisa($array,$id) {
+        $consulta = recebeJson($array,$id);
+        $f = new PedidosDAO(NULL);
         enviaJson($f->select(strtoupper($consulta->getNome())));
     }
-    function pesquisaId($array) {
-        $consulta = recebeJson($array);
-        $f = new LancheDAO(NULL);
+    function pesquisaId($array,$id) {
+        $consulta = recebeJson($array,$id);
+        $f = new PedidosDAO(NULL);
         enviaJson($f->selectID($consulta->getNome()));
+    }
+    function pesquisaAll(){
+        $f = new PedidosDAO(NULL);
+        enviaJson($f->selectAll());
     }
 
 
