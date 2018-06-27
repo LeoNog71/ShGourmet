@@ -24,7 +24,7 @@
     function recebeJson($array){
             
        $classe = new Bebida();
-       print_r($array);
+       
        $classe->setId((int)$array->id);
        $classe->setNome(strtoupper($array->nome));
        $classe->setDescricao(strtoupper($array->descricao));

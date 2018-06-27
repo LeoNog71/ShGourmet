@@ -785,13 +785,13 @@ DELIMITER $$
 CREATE PROCEDURE selectAll_pedido()
 BEGIN
 	
-	select pedidos.id as pedido_id, pedidos.id_cliente as cliente_id,COUNT(produtos.id) as quantidade, produtos.nome as produto ,produtos.preco_venda, pedidos.valor_total
+select pedidos.id as pedido_id, pedidos.id_cliente as cliente_id, produtos.nome as produto ,produtos.preco_venda, pedidos.valor_total
 	from produto_pedido 
     join produtos on produtos.id = produto_pedido.id_produto
-    left join pedidos on pedidos.id = produto_pedido.id_pedido
+	join pedidos on pedidos.id = produto_pedido.id_pedido
     where pedidos.situacao = false
-    and pedidos.cancelado = false  GROUP BY pedidos.id asc;
-        
+    and pedidos.cancelado = false  order by  pedidos.id asc;
+    
 END $$
 DELIMITER ;
 
@@ -799,10 +799,10 @@ DELIMITER $$
 CREATE PROCEDURE selectAll_pedido_finalizado()
 BEGIN
 	
-	select pedidos.id as pedido_id, pedidos.id_cliente as cliente_id,produtos.id as id_produto, produtos.nome as produto ,produtos.preco_venda, pedidos.valor_total
+	select pedidos.id as pedido_id, pedidos.id_cliente as cliente_id, produtos.nome as produto ,produtos.preco_venda, pedidos.valor_total
 	from produto_pedido 
     join produtos on produtos.id = produto_pedido.id_produto
-    left join pedidos on pedidos.id = produto_pedido.id_pedido
+	join pedidos on pedidos.id = produto_pedido.id_pedido
     where pedidos.situacao = true
     and pedidos.cancelado = false order by pedidos.id asc;
         

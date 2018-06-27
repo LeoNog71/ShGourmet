@@ -4,8 +4,12 @@
     @include_once '..\model\dao\PedidosDAO.php';
     
     
-    $f = new PedidosDAO(NULL);
-    
-    echo json_encode($f->selectAll());
+    $conn = new PDO("mysql:dbname=shgourmet;host=127.0.0.1", "shgourmet", "");
+    $stmt = $conn->prepare("CALL select_usuario('LEONARDO','0808')");
+    $stmt->execute();  
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $F = false;
+    echo ($F);
+    echo json_encode($result);
 ?>
 
